@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Calculateur Builders - Pergola</title>
+<style>
+:root {
+  --bg:#f4f6f7; --card:#ffffff; --text:#17212b; --muted:#6b7280;
+  --brand:#136f63; --brand-2:#0f5b52; --line:#d9e1e7;
+}
+* { box-sizing:border-box; }
+body { font-family: Arial, sans-serif; margin:0; background:var(--bg); color:var(--text); }
+.wrapper { max-width:1280px; margin:0 auto; padding:24px; }
+h1 { margin:0 0 10px; font-size:28px; }
+h2 { margin:0 0 12px; font-size:20px; }
+h3 { margin:0 0 10px; font-size:16px; }
+p.small, .small { color:var(--muted); font-size:14px; margin:0; }
+.grid { display:grid; gap:18px; grid-template-columns: 420px 1fr; }
+.card {
+  background:var(--card); border:1px solid var(--line); border-radius:16px; padding:18px;
+  box-shadow:0 4px 14px rgba(0,0,0,0.05);
+}
+.form-grid { display:grid; grid-template-columns:1fr 1fr; gap:10px 12px; }
+label { font-size:14px; font-weight:700; display:block; margin-bottom:5px; }
+input, select {
+  width:100%; padding:10px 11px; border-radius:10px; border:1px solid #cbd5e1; background:#fff;
+}
+button {
+  width:100%; padding:12px 14px; border:none; border-radius:12px; background:var(--brand); color:#fff;
+  font-weight:700; cursor:pointer; margin-top:8px;
+}
+button:hover { background:var(--brand-2); }
+.result-grid { display:grid; gap:16px; grid-template-columns: 1.1fr 0.9fr; }
+.kpi-grid { display:grid; grid-template-columns: repeat(4, 1fr); gap:10px; margin-bottom:16px; }
+.kpi { background:#f8fafc; border:1px solid var(--line); border-radius:14px; padding:12px; }
+.kpi .label { font-size:12px; color:var(--muted); margin-bottom:4px; }
+.kpi .value { font-size:22px; font-weight:700; }
+table { width:100%; border-collapse:collapse; font-size:14px; }
+th, td { padding:9px 8px; border-bottom:1px solid var(--line); text-align:left; vertical-align:top; }
+th { font-size:12px; color:var(--muted); text-transform:uppercase; letter-spacing:.04em; }
+.total-row td { font-weight:700; font-size:16px; }
+.badge { display:inline-block; border-radius:999px; padding:5px 10px; font-size:13px; font-weight:700; }
+.badge.ok { background:#dcfce7; color:#166534; }
+.badge.warn { background:#fef3c7; color:#92400e; }
+.badge.bad { background:#fee2e2; color:#991b1b; }
+.note { font-size:13px; color:var(--muted); line-height:1.45; }
+canvas { width:100%; max-width:100%; border:1px solid var(--line); border-radius:12px; background:#fff; }
+ul.clean { margin:10px 0 0 18px; padding:0; }
+.section-block {
+  grid-column:1 / -1; background:#fbfdff; border:1px solid var(--line); border-radius:12px; padding:12px;
+}
+.hidden { display:none; }
+@media (max-width: 980px) {
+  .grid, .result-grid, .kpi-grid, .form-grid { grid-template-columns:1fr; }
+}
+</style>
+</head>
+<body>
+<div class="wrapper">
+  <h1>🪵 Calculateur pergola Builders</h1>
+  <p class="small">Base de chiffrage rapide : pergola adossée ou autoportée, toiture ajourée, polycarbonate ou bac acier. Catalogue préchargé avec références type Vivre en Bois.</p>
+
+  <div class="grid" style="margin-top:18px;">
+    <div class="card">
+      <h2>🔧 Données chantier</h2>
+      <div class="form-grid">
+        <div style="grid-column:1 / -1">
+          <label for="typePergola">Type de pergola</label>
+          <select id="typePergola">
+            <option value="adossee">Adossée</option>
+            <option value="autoportee">Autoportée</option>
+          </select>
+        </div>
+
+        <div>
+          <label for="largeur">Largeur façade (m)</label>
+          <input id="largeur" type="number" min="0" step="0.01" value="4">
+        </div>
+        <div>
+          <label for="avancee">Avancée / profondeur (m)</label>
+          <input id="avancee" type="number" min="0" step="0.01" value="3">
+        </div>
+
+        <div>
+          <label for="hauteurAvant">Hauteur sous poutre avant (m)</label>
+          <input id="hauteurAvant" type="number" min="0" step="0.01" value="2.2">
+        </div>
+        <div>
+          <label for="hauteurMur">Hauteur côté mur / arrière (m)</label>
+          <input id="hauteurMur" type="number" min="0" step="0.01" value="2.6">
+        </div>
+
+        <div>
+          <label for="toiture">Type de toiture</label>
+          <select id="toiture">
+            <option value="ajouree">Ajourée / non couverte</option>
+            <option value="polycarbonate">Polycarbonate</option>
+            <option value="bacacier">Bac acier</option>
+          </select>
+        </div>
+        <div>
+          <label for="formeToit">Forme de toiture</label>
+          <select id="formeToit">
+            <option value="mono">Monopente</option>
+            <option value="plate">Plate légère</option>
+          </select>
+        </div>
+
+        <div>
+          <label for="nbPoteauxFace">Poteaux en façade</label>
+          <input id="nbPoteauxFace" type="number" min="2" step="1" value="2">
+        </div>
+        <div>
+          <label for="nbPoteauxArriere">Poteaux arrière supplémentaires</label>
+          <input id="nbPoteauxArriere" type="number" min="0" step="1" value="0">
+        </div>
+
+        <div>
+          <label for="sectionPoteau">Section poteaux</label>
+          <select id="sectionPoteau"></select>
+        </div>
+        <div>
+          <label for="sectionPoutre">Section poutres porteuses</label>
+          <select id="sectionPoutre"></select>
+        </div>
+
+        <div>
+          <label for="sectionChevron">Section chevrons / traverses</label>
+          <select id="sectionChevron"></select>
+        </div>
+        <div>
+          <label for="entraxeChevron">Entraxe chevrons (cm)</label>
+          <input id="entraxeChevron" type="number" min="20" step="1" value="60">
+        </div>
+
+        <div>
+          <label for="platines">Platines poteaux</label>
+          <select id="platines">
+            <option value="oui">Oui</option>
+            <option value="non">Non</option>
+          </select>
+        </div>
+        <div>
+          <label for="sabots">Sabots / équerres renfort</label>
+          <select id="sabots">
+            <option value="oui">Oui</option>
+            <option value="non">Non</option>
+          </select>
+        </div>
+
+        <div>
+          <label for="finitions">Finition bois</label>
+          <select id="finitions">
+            <option value="brut">Brut</option>
+            <option value="sature">Saturateur</option>
+            <option value="lasure">Lasure</option>
+          </select>
+        </div>
+        <div>
+          <label for="marge">Marge / pertes (%)</label>
+          <input id="marge" type="number" min="0" step="1" value="8">
+        </div>
+      </div>
+
+      <button onclick="calculPergola()">Calculer</button>
+
+      <div class="note" style="margin-top:12px;">
+        Outil de pré-chiffrage Builders pour cadrer une pergola rapidement.
+        Les sections et quantités restent à valider selon le vrai cas de charge, les portées, le vent et le mode d’ancrage. Les références intégrées sont basées sur des produits Vivre en Bois.
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="result-grid">
+        <div>
+          <h2>📊 Résultat</h2>
+          <div class="kpi-grid">
+            <div class="kpi">
+              <div class="label">Surface couverte</div>
+              <div class="value" id="kpiSurface">-</div>
+            </div>
+            <div class="kpi">
+              <div class="label">Bois total</div>
+              <div class="value" id="kpiBois">-</div>
+            </div>
+            <div class="kpi">
+              <div class="label">Total HT</div>
+              <div class="value" id="kpiTotal">-</div>
+            </div>
+            <div class="kpi">
+              <div class="label">Prix au m² HT</div>
+              <div class="value" id="kpiM2">-</div>
+            </div>
+          </div>
+
+          <table id="tableResult">
+            <thead>
+              <tr><th>Poste</th><th>Quantité</th><th>PU HT</th><th>Total HT</th></tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+
+          <div id="blocTechnique" style="margin-top:14px;"></div>
+        </div>
+
+        <div>
+          <h2>📐 Croquis</h2>
+          <p class="small" style="margin-bottom:10px;">Vue de dessus simplifiée : poteaux, poutres et chevrons.</p>
+          <canvas id="canvasPlan" width="860" height="560"></canvas>
+          <div id="resumePose" class="note" style="margin-top:10px;"></div>
+
+          <h3 style="margin-top:18px;">📏 Vue de côté</h3>
+          <p class="small" style="margin-bottom:10px;">Hauteurs avant / arrière et pente simplifiée.</p>
+          <canvas id="canvasSide" width="860" height="420"></canvas>
+          <div id="resumeStructure" class="note" style="margin-top:10px;"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const catalogue = [
+  {"Famille":"Poteau","Reference":"P2AA22398-A00","Designation":"Poteau pour platine bois lamellé-collé pin marron 90x90","Largeur_mm":90,"Hauteur_mm":90,"Longueur_m":2,"Unite":"u","Prix_public_HT":26.70,"Fournisseur":"Vivre en Bois"},
+  {"Famille":"Poteau","Reference":"P2A072004-008","Designation":"Poteau bois raboté pin marron 120x120","Largeur_mm":120,"Hauteur_mm":120,"Longueur_m":3,"Unite":"u","Prix_public_HT":54.24,"Fournisseur":"Vivre en Bois"},
+  {"Famille":"Poteau","Reference":"P3A191806-003","Designation":"Poteau bois lamellé-collé pin marron 140x140","Largeur_mm":140,"Hauteur_mm":140,"Longueur_m":3,"Unite":"u","Prix_public_HT":98.35,"Fournisseur":"Vivre en Bois"},
+
+  {"Famille":"Poutre","Reference":"D29082003-001","Designation":"Madrier bois raboté Douglas pré-grisé 45x145","Largeur_mm":45,"Hauteur_mm":145,"Longueur_m":5,"Unite":"u","Prix_public_HT":30.53,"Fournisseur":"Vivre en Bois"},
+  {"Famille":"Poutre","Reference":"P2A072002-012","Designation":"Chevron lambourde bois raboté pin marron 68x120","Largeur_mm":68,"Hauteur_mm":120,"Longueur_m":4,"Unite":"u","Prix_public_HT":36.18,"Fournisseur":"Vivre en Bois"},
+  {"Famille":"Poutre","Reference":"P27072003-015","Designation":"Madrier bois raboté pin marron 68x145","Largeur_mm":68,"Hauteur_mm":145,"Longueur_m":4,"Unite":"u","Prix_public_HT":39.74,"Fournisseur":"Vivre en Bois"},
+
+  {"Famille":"Chevron","Reference":"P2A072002-023","Designation":"Chevron lambourde bois raboté pin marron 45x68","Largeur_mm":45,"Hauteur_mm":68,"Longueur_m":4,"Unite":"u","Prix_public_HT":13.75,"Fournisseur":"Vivre en Bois"},
+  {"Famille":"Chevron","Reference":"P2A072002-031","Designation":"Chevron lambourde bois raboté pin marron 45x90","Largeur_mm":45,"Hauteur_mm":90,"Longueur_m":5,"Unite":"u","Prix_public_HT":22.61,"Fournisseur":"Vivre en Bois"},
+  {"Famille":"Chevron","Reference":"D28082002-001","Designation":"Chevron bois raboté Douglas 45x120","Largeur_mm":45,"Hauteur_mm":120,"Longueur_m":5,"Unite":"u","Prix_public_HT":22.50,"Fournisseur":"Vivre en Bois"},
+
+  {"Famille":"Couverture","Reference":"POLY_16_VEB","Designation":"Plaque polycarbonate 16 mm (base Vivre en Bois)","Unite":"m2","Prix_public_HT":29.00,"Fournisseur":"Vivre en Bois"},
+  {"Famille":"Couverture","Reference":"BAC_ACIER_VEB","Designation":"Bac acier simple peau (base Vivre en Bois)","Unite":"m2","Prix_public_HT":18.50,"Fournisseur":"Vivre en Bois"},
+  {"Famille":"Couverture","Reference":"AJOUREE","Designation":"Toiture ajourée","Unite":"m2","Prix_public_HT":0,"Fournisseur":"Vivre en Bois"},
+
+  {"Famille":"Accessoire","Reference":"730530125","Designation":"Pied de poteau carré fermé à boulonner 91x91","Unite":"u","Prix_public_HT":20.50,"Fournisseur":"Vivre en Bois"},
+  {"Famille":"Accessoire","Reference":"730500594","Designation":"Pied de poteau réglable 100x100 noir","Unite":"u","Prix_public_HT":23.09,"Fournisseur":"Vivre en Bois"},
+  {"Famille":"Accessoire","Reference":"730530460","Designation":"Grand sabot à ailes extérieures 90x90x255","Unite":"u","Prix_public_HT":16.58,"Fournisseur":"Vivre en Bois"},
+  {"Famille":"Accessoire","Reference":"730500061","Designation":"Sabot à ailes extérieures 84x76x182","Unite":"u","Prix_public_HT":6.58,"Fournisseur":"Vivre en Bois"},
+  {"Famille":"Accessoire","Reference":"730520848","Designation":"Visserie structure / charpente inox","Unite":"forfait","Prix_public_HT":70.83,"Fournisseur":"Vivre en Bois"},
+  {"Famille":"Accessoire","Reference":"SATURATEUR","Designation":"Finition saturateur","Unite":"m2","Prix_public_HT":6.50,"Fournisseur":"Vivre en Bois"},
+  {"Famille":"Accessoire","Reference":"LASURE","Designation":"Finition lasure","Unite":"m2","Prix_public_HT":8.20,"Fournisseur":"Vivre en Bois"}
+];
+
+
+const capacities = {
+  "P2AA22398-A00": {maxHeight:2.3, badge:"warn"},
+  "P2A072004-008": {maxHeight:2.8, badge:"ok"},
+  "P3A191806-003": {maxHeight:3.2, badge:"ok"},
+  "D29082003-001": {maxSpan:3.2, badge:"warn"},
+  "P2A072002-012": {maxSpan:4.0, badge:"ok"},
+  "P27072003-015": {maxSpan:4.6, badge:"ok"},
+  "P2A072002-023": {maxSpan:2.0, badge:"warn"},
+  "P2A072002-031": {maxSpan:2.8, badge:"ok"},
+  "D28082002-001": {maxSpan:3.6, badge:"ok"}
+};
+
+function euro(v) {
+  return new Intl.NumberFormat('fr-FR', { style:'currency', currency:'EUR' }).format(v || 0);
+}
+function n2(v) {
+  return new Intl.NumberFormat('fr-FR', { minimumFractionDigits:2, maximumFractionDigits:2 }).format(v || 0);
+}
+function n0(v) {
+  return new Intl.NumberFormat('fr-FR', { maximumFractionDigits:0 }).format(v || 0);
+}
+function getByReference(ref) {
+  return catalogue.find(x => x.Reference === ref);
+}
+function getByFamily(famille) {
+  return catalogue.filter(x => x.Famille.toLowerCase() === famille.toLowerCase());
+}
+
+function getAccessoryPlatine() {
+  const poteau = getByReference(document.getElementById('sectionPoteau').value);
+  if (!poteau) return catalogue.find(x => x.Reference === '730530125');
+  return poteau.Largeur_mm >= 120 ? catalogue.find(x => x.Reference === '730500594') : catalogue.find(x => x.Reference === '730530125');
+}
+
+function getAccessorySabot() {
+  const chevron = getByReference(document.getElementById('sectionChevron').value);
+  if (!chevron) return catalogue.find(x => x.Reference === '730500061');
+  return chevron.Hauteur_mm >= 90 ? catalogue.find(x => x.Reference === '730530460') : catalogue.find(x => x.Reference === '730500061');
+}
+
+function populateSelect(selectId, items, formatter, valueField='Reference') {
+  const sel = document.getElementById(selectId);
+  sel.innerHTML = items.map(item => `<option value="${item[valueField]}">${formatter(item)}</option>`).join('');
+}
+function initForm() {
+  populateSelect('sectionPoteau', getByFamily('Poteau'), item =>
+    `${item.Designation} — réf ${item.Reference} — ${n2(item.Longueur_m)} m — ${euro(item.Prix_public_HT)}`);
+  populateSelect('sectionPoutre', getByFamily('Poutre'), item =>
+    `${item.Designation} — réf ${item.Reference} — ${n2(item.Longueur_m)} m — ${euro(item.Prix_public_HT)}`);
+  populateSelect('sectionChevron', getByFamily('Chevron'), item =>
+    `${item.Designation} — réf ${item.Reference} — ${n2(item.Longueur_m)} m — ${euro(item.Prix_public_HT)}`);
+
+  document.getElementById('sectionPoteau').value = 'P2A072004-008';
+  document.getElementById('sectionPoutre').value = 'P27072003-015';
+  document.getElementById('sectionChevron').value = 'P2A072002-031';
+
+  ['typePergola','largeur','avancee','hauteurAvant','hauteurMur','formeToit'].forEach(id =>
+    document.getElementById(id).addEventListener('change', autoConfig)
+  );
+  autoConfig();
+}
+function autoConfig() {
+  const typePergola = document.getElementById('typePergola').value;
+  const largeur = parseFloat(document.getElementById('largeur').value) || 0;
+  const avancee = parseFloat(document.getElementById('avancee').value) || 0;
+  if (typePergola === 'autoportee') {
+    document.getElementById('nbPoteauxFace').value = largeur > 5 ? 3 : 2;
+    document.getElementById('nbPoteauxArriere').value = largeur > 5 ? 3 : 2;
+  } else {
+    document.getElementById('nbPoteauxFace').value = largeur > 5 ? 3 : 2;
+    document.getElementById('nbPoteauxArriere').value = 0;
+  }
+
+  if (avancee > 3.2) {
+    document.getElementById('sectionChevron').value = 'D28082002-001';
+  } else if (avancee > 2.2) {
+    document.getElementById('sectionChevron').value = 'P2A072002-031';
+  } else {
+    document.getElementById('sectionChevron').value = 'P2A072002-023';
+  }
+
+  if (largeur > 4.2) {
+    document.getElementById('sectionPoutre').value = 'P27072003-015';
+  } else {
+    document.getElementById('sectionPoutre').value = 'P27072003-015';
+  }
+}
+function getBadgeClass(ok, limit=false) {
+  if (ok) return ['ok', 'OK'];
+  if (limit) return ['warn', 'Limite'];
+  return ['bad', 'À renforcer'];
+}
+function calculPergola() {
+  const largeur = parseFloat(document.getElementById('largeur').value) || 0;
+  const avancee = parseFloat(document.getElementById('avancee').value) || 0;
+  const hauteurAvant = parseFloat(document.getElementById('hauteurAvant').value) || 0;
+  const hauteurMur = parseFloat(document.getElementById('hauteurMur').value) || 0;
+  const typePergola = document.getElementById('typePergola').value;
+  const toiture = document.getElementById('toiture').value;
+  const formeToit = document.getElementById('formeToit').value;
+  const nbPoteauxFace = Math.max(0, parseInt(document.getElementById('nbPoteauxFace').value || '0', 10));
+  const nbPoteauxArriere = Math.max(0, parseInt(document.getElementById('nbPoteauxArriere').value || '0', 10));
+  const entraxeChevron = (parseFloat(document.getElementById('entraxeChevron').value) || 60) / 100;
+  const marge = (parseFloat(document.getElementById('marge').value) || 0) / 100;
+  const platinesActive = document.getElementById('platines').value === 'oui';
+  const sabotsActive = document.getElementById('sabots').value === 'oui';
+  const finitions = document.getElementById('finitions').value;
+
+  if (largeur <= 0 || avancee <= 0 || hauteurAvant <= 0 || hauteurMur <= 0) {
+    alert('Entre des dimensions valides.');
+    return;
+  }
+
+  const poteau = getByReference(document.getElementById('sectionPoteau').value);
+  const poutre = getByReference(document.getElementById('sectionPoutre').value);
+  const chevron = getByReference(document.getElementById('sectionChevron').value);
+  const couverture = getByReference(
+    toiture === 'polycarbonate' ? 'POLY_16_VEB' :
+    toiture === 'bacacier' ? 'BAC_ACIER_VEB' : 'AJOUREE'
+  ) || {Designation:'Couverture', Reference:'N/A', Prix_public_HT:0};
+
+  const nbPoteaux = typePergola === 'autoportee'
+    ? nbPoteauxFace + nbPoteauxArriere
+    : nbPoteauxFace;
+
+  const pente = Math.max(0, hauteurMur - hauteurAvant);
+  const longueurChevron = formeToit === 'plate'
+    ? avancee
+    : Math.sqrt(Math.pow(avancee, 2) + Math.pow(pente, 2));
+
+  const nbChevrons = Math.max(2, Math.floor(largeur / entraxeChevron) + 1);
+  const surface = largeur * avancee;
+  const lineairePoutres = typePergola === 'autoportee' ? largeur * 2 : largeur * 2;
+  const nbPoutres = Math.ceil(lineairePoutres / poutre.Longueur_m);
+
+  const mlPoteauxUtiles = nbPoteaux * ((hauteurAvant + (typePergola === 'autoportee' ? hauteurMur : 0)) / Math.max(nbPoteaux,1));
+  const nbPoteauxPieces = nbPoteaux;
+  const coutPoteaux = nbPoteauxPieces * poteau.Prix_public_HT;
+
+  const mlPoutresUtiles = lineairePoutres;
+  const coutPoutres = nbPoutres * poutre.Prix_public_HT;
+
+  const mlChevronsUtiles = nbChevrons * longueurChevron;
+  const nbChevronsPieces = Math.ceil((mlChevronsUtiles * (1 + marge)) / chevron.Longueur_m);
+  const coutChevrons = nbChevronsPieces * chevron.Prix_public_HT;
+
+  const surfaceCouverture = toiture === 'ajouree' ? 0 : surface * (1 + marge);
+  const coutCouverture = surfaceCouverture * couverture.Prix_public_HT;
+
+  const nbPlatines = platinesActive ? nbPoteaux : 0;
+  const coutPlatines = nbPlatines * getAccessoryPlatine().Prix_public_HT;
+
+  const nbSabots = sabotsActive ? (nbChevrons * 2) : 0;
+  const coutSabots = nbSabots * getAccessorySabot().Prix_public_HT;
+
+  const visserie = getByReference('730520848');
+  const coutVisserie = visserie ? visserie.Prix_public_HT : 0;
+
+  let coutFinition = 0;
+  let finitionLibelle = 'Brut';
+  if (finitions === 'sature') {
+    coutFinition = surface * getByReference('SATURATEUR').Prix_public_HT;
+    finitionLibelle = 'Saturateur';
+  } else if (finitions === 'lasure') {
+    coutFinition = surface * getByReference('LASURE').Prix_public_HT;
+    finitionLibelle = 'Lasure';
+  }
+
+  const totalHT = coutPoteaux + coutPoutres + coutChevrons + coutCouverture + coutPlatines + coutSabots + coutVisserie + coutFinition;
+  const mlBois = mlPoteauxUtiles + mlPoutresUtiles + mlChevronsUtiles;
+
+  document.getElementById('kpiSurface').textContent = n2(surface) + ' m²';
+  document.getElementById('kpiBois').textContent = n2(mlBois) + ' ml';
+  document.getElementById('kpiTotal').textContent = euro(totalHT);
+  document.getElementById('kpiM2').textContent = surface > 0 ? euro(totalHT / surface) : '-';
+
+  const rows = [
+    ['Poteaux', `${n0(nbPoteauxPieces)} u de ${n2(poteau.Longueur_m)} m`, euro(poteau.Prix_public_HT), euro(coutPoteaux), `${poteau.Designation} · réf ${poteau.Reference}`],
+    ['Poutres', `${n0(nbPoutres)} u de ${n2(poutre.Longueur_m)} m`, euro(poutre.Prix_public_HT), euro(coutPoutres), `${poutre.Designation} · réf ${poutre.Reference} · ${n2(mlPoutresUtiles)} ml utiles`],
+    ['Chevrons / traverses', `${n0(nbChevronsPieces)} u de ${n2(chevron.Longueur_m)} m`, euro(chevron.Prix_public_HT), euro(coutChevrons), `${n0(nbChevrons)} lignes · ${n2(longueurChevron)} m / chevron`],
+    ['Couverture', toiture === 'ajouree' ? 'Non' : `${n2(surfaceCouverture)} m²`, toiture === 'ajouree' ? '-' : euro(couverture.Prix_public_HT), euro(coutCouverture), `${couverture.Designation} · réf ${couverture.Reference}`],
+    ['Platines', nbPlatines ? `${n0(nbPlatines)} u` : 'Non', nbPlatines ? euro(getAccessoryPlatine().Prix_public_HT) : '-', euro(coutPlatines), `1 par poteau · réf ${getAccessoryPlatine().Reference}`],
+    ['Sabots / équerres', nbSabots ? `${n0(nbSabots)} u` : 'Non', nbSabots ? euro(getAccessorySabot().Prix_public_HT) : '-', euro(coutSabots), `renfort chevrons · réf ${getAccessorySabot().Reference}`],
+    ['Visserie structure', '1 forfait', euro(coutVisserie), euro(coutVisserie), 'vis, tirefonds, petites fournitures'],
+    ['Finition', finitionLibelle, finitions === 'brut' ? '-' : euro(coutFinition / surface), euro(coutFinition), 'base surface projet']
+  ];
+
+  const tbody = document.querySelector('#tableResult tbody');
+  tbody.innerHTML = rows.map(r => `
+    <tr>
+      <td><strong>${r[0]}</strong><br><span class="small">${r[4]}</span></td>
+      <td>${r[1]}</td>
+      <td>${r[2]}</td>
+      <td>${r[3]}</td>
+    </tr>
+  `).join('') + `
+    <tr class="total-row">
+      <td>Total matériaux HT</td>
+      <td></td>
+      <td></td>
+      <td>${euro(totalHT)}</td>
+    </tr>
+  `;
+
+  const poteauCheck = capacities[poteau.Reference] || {maxHeight:999};
+  const poutreCheck = capacities[poutre.Reference] || {maxSpan:999};
+  const chevronCheck = capacities[chevron.Reference] || {maxSpan:999};
+
+  const [badgePClass, badgePText] = getBadgeClass(
+    Math.max(hauteurAvant, hauteurMur) <= poteauCheck.maxHeight,
+    Math.max(hauteurAvant, hauteurMur) <= poteauCheck.maxHeight * 1.1
+  );
+  const [badgePuClass, badgePuText] = getBadgeClass(
+    largeur <= poutreCheck.maxSpan,
+    largeur <= poutreCheck.maxSpan * 1.12
+  );
+  const [badgeCClass, badgeCText] = getBadgeClass(
+    longueurChevron <= chevronCheck.maxSpan,
+    longueurChevron <= chevronCheck.maxSpan * 1.12
+  );
+
+  document.getElementById('blocTechnique').innerHTML = `
+    <div class="card" style="padding:14px; box-shadow:none; background:#fbfdff;">
+      <strong>Contrôle technique simplifié</strong><br><br>
+      Type : <strong>${typePergola === 'adossee' ? 'Pergola adossée' : 'Pergola autoportée'}</strong><br>
+      Toiture : <strong>${toiture}</strong> — forme : <strong>${formeToit}</strong><br>
+      Pente calculée : <strong>${n2(pente)} m</strong><br><br>
+
+      Poteaux : <strong>${poteau.Designation}</strong> — hauteur max simplifiée <strong>${n2(poteauCheck.maxHeight)} m</strong>
+      <span class="badge ${badgePClass}">${badgePText}</span><br>
+      Poutres : <strong>${poutre.Designation}</strong> — portée max simplifiée <strong>${n2(poutreCheck.maxSpan)} m</strong>
+      <span class="badge ${badgePuClass}">${badgePuText}</span><br>
+      Chevrons : <strong>${chevron.Designation}</strong> — portée max simplifiée <strong>${n2(chevronCheck.maxSpan)} m</strong>
+      <span class="badge ${badgeCClass}">${badgeCText}</span><br><br>
+
+      <ul class="clean">
+        <li>Surface projet : <strong>${n2(surface)} m²</strong></li>
+        <li>Nombre total de poteaux : <strong>${n0(nbPoteaux)}</strong></li>
+        <li>Nombre de chevrons : <strong>${n0(nbChevrons)}</strong></li>
+        <li>Entraxe chevrons : <strong>${n2(entraxeChevron)} m</strong></li>
+        <li>Longueur réelle d’un chevron : <strong>${n2(longueurChevron)} m</strong></li>
+        <li>Bois total estimé : <strong>${n2(mlBois)} ml</strong></li>
+        <li>Marge pertes appliquée : <strong>${n2(marge * 100)} %</strong></li>
+      </ul>
+    </div>
+  `;
+
+  document.getElementById('resumePose').innerHTML = `
+    Emprise au sol <strong>${n2(largeur)} x ${n2(avancee)} m</strong>,
+    avec <strong>${n0(nbPoteaux)}</strong> poteaux, <strong>${n0(nbChevrons)}</strong> chevrons
+    et une toiture <strong>${toiture === 'ajouree' ? 'ajourée' : toiture}</strong>.
+  `;
+  document.getElementById('resumeStructure').innerHTML = `
+    Hauteur avant <strong>${n2(hauteurAvant)} m</strong>, hauteur arrière <strong>${n2(hauteurMur)} m</strong>,
+    pente simplifiée <strong>${n2(pente)} m</strong>. Base utile pour valider rapidement un avant-métré.
+  `;
+
+  dessinerPlan({largeur, avancee, typePergola, nbPoteauxFace, nbPoteauxArriere, nbChevrons});
+  dessinerCote({largeur, avancee, hauteurAvant, hauteurMur, typePergola});
+}
+function dessinerPlan(data) {
+  const canvas = document.getElementById('canvasPlan');
+  const ctx = canvas.getContext('2d');
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  const marge = 70;
+  const scale = Math.min((canvas.width - marge * 2) / data.largeur, (canvas.height - marge * 2) / data.avancee);
+  const w = data.largeur * scale;
+  const h = data.avancee * scale;
+  const x0 = (canvas.width - w) / 2;
+  const y0 = (canvas.height - h) / 2;
+
+  ctx.fillStyle = '#f6efe5';
+  ctx.fillRect(x0, y0, w, h);
+  ctx.strokeStyle = '#1f2937';
+  ctx.lineWidth = 3;
+  ctx.strokeRect(x0, y0, w, h);
+
+  ctx.strokeStyle = '#6b7280';
+  ctx.lineWidth = 2;
+  for (let i = 0; i < data.nbChevrons; i++) {
+    const x = x0 + (w / Math.max(data.nbChevrons - 1, 1)) * i;
+    ctx.beginPath();
+    ctx.moveTo(x, y0);
+    ctx.lineTo(x, y0 + h);
+    ctx.stroke();
+  }
+
+  function drawPoteau(px, py) {
+    ctx.fillStyle = '#136f63';
+    ctx.fillRect(px - 8, py - 8, 16, 16);
+  }
+
+  for (let i = 0; i < data.nbPoteauxFace; i++) {
+    const x = x0 + (w / Math.max(data.nbPoteauxFace - 1, 1)) * i;
+    drawPoteau(x, y0 + h);
+  }
+  if (data.typePergola === 'autoportee') {
+    for (let i = 0; i < data.nbPoteauxArriere; i++) {
+      const x = x0 + (w / Math.max(data.nbPoteauxArriere - 1, 1)) * i;
+      drawPoteau(x, y0);
+    }
+  } else {
+    ctx.strokeStyle = '#1e3a8a';
+    ctx.lineWidth = 4;
+    ctx.beginPath();
+    ctx.moveTo(x0, y0);
+    ctx.lineTo(x0 + w, y0);
+    ctx.stroke();
+    ctx.fillStyle = '#1e3a8a';
+    ctx.font = '13px Arial';
+    ctx.fillText('Mur / support', x0 + 10, y0 - 10);
+  }
+
+  ctx.fillStyle = '#111827';
+  ctx.font = '14px Arial';
+  ctx.fillText(`${data.largeur.toFixed(2).replace('.', ',')} m`, x0 + w / 2 - 22, y0 + h + 28);
+  ctx.save();
+  ctx.translate(x0 - 38, y0 + h / 2);
+  ctx.rotate(-Math.PI / 2);
+  ctx.fillText(`${data.avancee.toFixed(2).replace('.', ',')} m`, 0, 0);
+  ctx.restore();
+}
+function dessinerCote(data) {
+  const canvas = document.getElementById('canvasSide');
+  const ctx = canvas.getContext('2d');
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  const baseX = 100;
+  const baseY = 340;
+  const largeurDraw = 620;
+  const scaleX = largeurDraw / Math.max(data.avancee, 0.1);
+  const maxH = Math.max(data.hauteurAvant, data.hauteurMur);
+  const scaleY = 240 / Math.max(maxH, 0.1);
+
+  const xRear = baseX;
+  const xFront = baseX + data.avancee * scaleX;
+  const yRear = baseY - data.hauteurMur * scaleY;
+  const yFront = baseY - data.hauteurAvant * scaleY;
+
+  ctx.strokeStyle = '#1f2937';
+  ctx.lineWidth = 3;
+  ctx.beginPath();
+  ctx.moveTo(baseX - 20, baseY);
+  ctx.lineTo(xFront + 30, baseY);
+  ctx.stroke();
+
+  if (data.typePergola === 'autoportee') {
+    ctx.strokeStyle = '#136f63';
+    ctx.beginPath();
+    ctx.moveTo(xRear, baseY);
+    ctx.lineTo(xRear, yRear);
+    ctx.moveTo(xFront, baseY);
+    ctx.lineTo(xFront, yFront);
+    ctx.stroke();
+  } else {
+    ctx.strokeStyle = '#1e3a8a';
+    ctx.lineWidth = 5;
+    ctx.beginPath();
+    ctx.moveTo(xRear, baseY);
+    ctx.lineTo(xRear, yRear - 30);
+    ctx.stroke();
+
+    ctx.strokeStyle = '#136f63';
+    ctx.lineWidth = 3;
+    ctx.beginPath();
+    ctx.moveTo(xFront, baseY);
+    ctx.lineTo(xFront, yFront);
+    ctx.stroke();
+  }
+
+  ctx.strokeStyle = '#6b7280';
+  ctx.lineWidth = 4;
+  ctx.beginPath();
+  ctx.moveTo(xRear, yRear);
+  ctx.lineTo(xFront, yFront);
+  ctx.stroke();
+
+  ctx.fillStyle = '#111827';
+  ctx.font = '14px Arial';
+  ctx.fillText(`avant ${data.hauteurAvant.toFixed(2).replace('.', ',')} m`, xFront - 30, yFront - 12);
+  ctx.fillText(`arrière ${data.hauteurMur.toFixed(2).replace('.', ',')} m`, xRear + 8, yRear - 12);
+  ctx.fillText(`avancée ${data.avancee.toFixed(2).replace('.', ',')} m`, baseX + largeurDraw / 2 - 35, baseY + 26);
+}
+initForm();
+calculPergola();
+</script>
+</body>
+</html>
