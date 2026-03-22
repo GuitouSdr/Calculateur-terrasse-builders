@@ -562,7 +562,12 @@ function calculateComplexScenario(params) {
   const m2Geotextile = geotextileActive ? surface : 0;
   const coutGeotextile = m2Geotextile * (geotextile ? geotextile.Prix_public_HT : 0);
 
-  const totalHT = coutLames + coutLambourdes + coutPlots + coutVis + coutBandeBitume + coutGeotextile;
+  // Dallettes sous plots
+const prixDallette = 2;
+const nbDallettes = nbPlots;
+const coutDallettes = nbDallettes * prixDallette;
+
+  const totalHT = coutLames + coutLambourdes + coutPlots + coutVis + coutBandeBitume + coutGeotextile + coutDallettes;
   const longueurTrav = orientation === 'longueur' ? geometry.outerLength : geometry.outerWidth;
   const largeurCov = orientation === 'longueur' ? geometry.outerWidth : geometry.outerLength;
 
