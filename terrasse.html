@@ -513,8 +513,12 @@ function calculateRectangleScenario(params) {
   const m2Geotextile = geotextileActive ? surface : 0;
   const coutGeotextile = m2Geotextile * (geotextile ? geotextile.Prix_public_HT : 0);
 
-  const totalHT = coutLames + coutLambourdes + coutPlots + coutVis + coutBandeBitume + coutGeotextile;
-  return {orientation, dimPose, surface, perimeter, entraxeLamb, entraxePlot, nbRangees, nbPiecesLames, mlLamesAchetes, mlLamesUtiles, chuteLamesMl, prixUnitaireLame, prixMlLame, coutLames, nbLambourdes, mlLambourdesBase, mlLambourdes, nbPiecesLambourdes, mlLambourdesAchetes, coutLambourdes, plotsParLambourde, nbPlots, coutPlots, nbVis, coutVis, mlBandeBitume, coutBandeBitume, m2Geotextile, coutGeotextile, totalHT, prixM2: totalHT / surface, lambourde, bandeBitume, geotextile, lame, plot, vis, section, marginApplied:margePct, margeLambourdesPct };
+  const prixDallette = 2;
+  const nbDallettes = nbPlots;
+  const coutDallettes = nbDallettes * prixDallette;
+
+  const totalHT = coutLames + coutLambourdes + coutPlots + coutDallettes + coutVis + coutBandeBitume + coutGeotextile;
+  return {orientation, dimPose, surface, perimeter, entraxeLamb, entraxePlot, nbRangees, nbPiecesLames, mlLamesAchetes, mlLamesUtiles, chuteLamesMl, prixUnitaireLame, prixMlLame, coutLames, nbLambourdes, mlLambourdesBase, mlLambourdes, nbPiecesLambourdes, mlLambourdesAchetes, coutLambourdes, plotsParLambourde, nbPlots, coutPlots, prixDallette, nbDallettes, coutDallettes, nbVis, coutVis, mlBandeBitume, coutBandeBitume, m2Geotextile, coutGeotextile, totalHT, prixM2: totalHT / surface, lambourde, bandeBitume, geotextile, lame, plot, vis, section, marginApplied:margePct, margeLambourdesPct };
 }
 
 function calculateComplexScenario(params) {
@@ -562,16 +566,15 @@ function calculateComplexScenario(params) {
   const m2Geotextile = geotextileActive ? surface : 0;
   const coutGeotextile = m2Geotextile * (geotextile ? geotextile.Prix_public_HT : 0);
 
-  // Dallettes sous plots
-const prixDallette = 2;
-const nbDallettes = nbPlots;
-const coutDallettes = nbDallettes * prixDallette;
+  const prixDallette = 2;
+  const nbDallettes = nbPlots;
+  const coutDallettes = nbDallettes * prixDallette;
 
-  const totalHT = coutLames + coutLambourdes + coutPlots + coutVis + coutBandeBitume + coutGeotextile + coutDallettes;
+  const totalHT = coutLames + coutLambourdes + coutPlots + coutDallettes + coutVis + coutBandeBitume + coutGeotextile;
   const longueurTrav = orientation === 'longueur' ? geometry.outerLength : geometry.outerWidth;
   const largeurCov = orientation === 'longueur' ? geometry.outerWidth : geometry.outerLength;
 
-  return {orientation, dimPose:{longueurLame: longueurTrav, largeurCouverture: largeurCov}, surface, perimeter, entraxeLamb, entraxePlot, nbRangees: Math.ceil(largeurCov / largeurUtile), nbPiecesLames, mlLamesAchetes, mlLamesUtiles, chuteLamesMl, prixUnitaireLame, prixMlLame, coutLames, nbLambourdes, mlLambourdesBase, mlLambourdes, nbPiecesLambourdes, mlLambourdesAchetes, coutLambourdes, plotsParLambourde, nbPlots, coutPlots, nbVis, coutVis, mlBandeBitume, coutBandeBitume, m2Geotextile, coutGeotextile, totalHT, prixM2: totalHT / surface, lambourde, bandeBitume, geotextile, lame, plot, vis, section, marginApplied:margePct * complexityBoost, margeLambourdesPct };
+  return {orientation, dimPose:{longueurLame: longueurTrav, largeurCouverture: largeurCov}, surface, perimeter, entraxeLamb, entraxePlot, nbRangees: Math.ceil(largeurCov / largeurUtile), nbPiecesLames, mlLamesAchetes, mlLamesUtiles, chuteLamesMl, prixUnitaireLame, prixMlLame, coutLames, nbLambourdes, mlLambourdesBase, mlLambourdes, nbPiecesLambourdes, mlLambourdesAchetes, coutLambourdes, plotsParLambourde, nbPlots, coutPlots, prixDallette, nbDallettes, coutDallettes, nbVis, coutVis, mlBandeBitume, coutBandeBitume, m2Geotextile, coutGeotextile, totalHT, prixM2: totalHT / surface, lambourde, bandeBitume, geotextile, lame, plot, vis, section, marginApplied:margePct * complexityBoost, margeLambourdesPct };
 }
 
 function calculScenario(params) {
@@ -609,7 +612,7 @@ function calculTerrasse() {
   }));
   const choisi = sensPose === 'auto' ? scenarios.sort((a, b) => a.totalHT - b.totalHT)[0] : scenarios.find(s => s.orientation === sensPose);
 
-  const {dimPose, surface, perimeter, entraxeLamb, entraxePlot, nbRangees, nbPiecesLames, mlLamesAchetes, mlLamesUtiles, chuteLamesMl, prixUnitaireLame, prixMlLame, coutLames, nbLambourdes, mlLambourdesBase, mlLambourdes, nbPiecesLambourdes, mlLambourdesAchetes, coutLambourdes, plotsParLambourde, nbPlots, coutPlots, nbVis, coutVis, mlBandeBitume, coutBandeBitume, m2Geotextile, coutGeotextile, totalHT, prixM2, lambourde, bandeBitume, geotextile, marginApplied, margeLambourdesPct} = choisi;
+  const {dimPose, surface, perimeter, entraxeLamb, entraxePlot, nbRangees, nbPiecesLames, mlLamesAchetes, mlLamesUtiles, chuteLamesMl, prixUnitaireLame, prixMlLame, coutLames, nbLambourdes, mlLambourdesBase, mlLambourdes, nbPiecesLambourdes, mlLambourdesAchetes, coutLambourdes, plotsParLambourde, nbPlots, coutPlots, prixDallette, nbDallettes, coutDallettes, nbVis, coutVis, mlBandeBitume, coutBandeBitume, m2Geotextile, coutGeotextile, totalHT, prixM2, lambourde, bandeBitume, geotextile, marginApplied, margeLambourdesPct} = choisi;
 
   const porteeMax = sections[section] || 0;
   const entraxeLambMaxReco = getEntaxeLambourdeMax(lame);
@@ -631,6 +634,7 @@ function calculTerrasse() {
     ['Lames', `${n0(nbPiecesLames)} pièces de ${n2(lame.Longueur_m)} m`, `${n2(prixUnitaireLame)} €/u`, euro(coutLames), `utiles ${n2(mlLamesUtiles)} ml · achetés ${n2(mlLamesAchetes)} ml · chutes ${n2(chuteLamesMl)} ml · soit ${n2(prixMlLame)} €/ml`],
     ['Lambourdes', `${n0(nbPiecesLambourdes)} pièces de ${n2(lambourde.Longueur_m)} m`, `${n2(lambourde.Prix_public_HT)} €/ml`, euro(coutLambourdes), `base ${n2(mlLambourdesBase)} ml · marge structure ${n2(margeLambourdesPct)} % · achetés ${n2(mlLambourdesAchetes)} ml`],
     ['Plots', `${n0(nbPlots)} u`, euro(plot.Prix_public_HT), euro(coutPlots), `${n0(plotsParLambourde)} plots / lambourde`],
+    ['Dallettes', `${n0(nbDallettes)} u`, euro(prixDallette), euro(coutDallettes), '1 dalette par plot'],
     ['Vis inox', `${n0(nbVis)} u`, euro(vis.Prix_public_HT), euro(coutVis), '2 vis par appui estimé'],
     ['Bande bitume', mlBandeBitume ? `${n2(mlBandeBitume)} ml` : 'Non', mlBandeBitume ? `${n2(bandeBitume.Prix_public_HT)} €/ml` : '-', euro(coutBandeBitume), 'sur lambourdes'],
     ['Géotextile', m2Geotextile ? `${n2(m2Geotextile)} m²` : 'Non', m2Geotextile ? `${n2(geotextile.Prix_public_HT)} €/m²` : '-', euro(coutGeotextile), 'sous terrasse']
