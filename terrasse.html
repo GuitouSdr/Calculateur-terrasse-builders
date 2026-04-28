@@ -5,1028 +5,122 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Calculateur Builders - Terrasse multi-zones</title>
 <style>
-:root {
-  --bg:#f4f6f7; --card:#ffffff; --text:#17212b; --muted:#6b7280;
-  --brand:#136f63; --brand-2:#0f5b52; --line:#d9e1e7; --soft:#fbfdff;
-}
-* { box-sizing:border-box; }
-body { font-family: Arial, sans-serif; margin:0; background:var(--bg); color:var(--text); }
-.wrapper { max-width:1360px; margin:0 auto; padding:24px; }
-h1 { margin:0 0 10px; font-size:28px; }
-h2 { margin:0 0 12px; font-size:20px; }
-h3 { margin:0 0 10px; font-size:16px; }
-p.small, .small { color:var(--muted); font-size:14px; margin:0; }
-.grid { display:grid; gap:18px; grid-template-columns: 470px 1fr; }
-.card {
-  background:var(--card); border:1px solid var(--line); border-radius:16px; padding:18px;
-  box-shadow:0 4px 14px rgba(0,0,0,0.05);
-}
-.form-grid { display:grid; grid-template-columns:1fr 1fr; gap:10px 12px; }
-label { font-size:14px; font-weight:700; display:block; margin-bottom:5px; }
-input, select {
-  width:100%; padding:10px 11px; border-radius:10px; border:1px solid #cbd5e1; background:#fff;
-}
-button {
-  padding:12px 14px; border:none; border-radius:12px; background:var(--brand); color:#fff;
-  font-weight:700; cursor:pointer; margin-top:8px;
-}
-button:hover { background:var(--brand-2); }
-button.secondary { background:#e5eef0; color:#0f172a; }
-button.secondary:hover { background:#d7e5e8; }
-.actions { display:flex; gap:10px; flex-wrap:wrap; }
-.result-grid { display:grid; gap:16px; grid-template-columns: 1.15fr 0.85fr; }
-.kpi-grid { display:grid; grid-template-columns: repeat(4, 1fr); gap:10px; margin-bottom:16px; }
-.kpi { background:#f8fafc; border:1px solid var(--line); border-radius:14px; padding:12px; }
-.kpi .label { font-size:12px; color:var(--muted); margin-bottom:4px; }
-.kpi .value { font-size:22px; font-weight:700; }
-table { width:100%; border-collapse:collapse; font-size:14px; }
-th, td { padding:9px 8px; border-bottom:1px solid var(--line); text-align:left; vertical-align:top; }
-th { font-size:12px; color:var(--muted); text-transform:uppercase; letter-spacing:.04em; }
-.total-row td { font-weight:700; font-size:16px; }
-.badge { display:inline-block; border-radius:999px; padding:5px 10px; font-size:13px; font-weight:700; }
-.badge.ok { background:#dcfce7; color:#166534; }
-.badge.warn { background:#fef3c7; color:#92400e; }
-.badge.bad { background:#fee2e2; color:#991b1b; }
-.note { font-size:13px; color:var(--muted); line-height:1.45; }
-canvas { width:100%; max-width:100%; border:1px solid var(--line); border-radius:12px; background:#fff; }
-ul.clean { margin:10px 0 0 18px; padding:0; }
-.section-block, .zone-card {
-  grid-column:1 / -1; background:var(--soft); border:1px solid var(--line); border-radius:12px; padding:12px;
-}
-.hidden { display:none; }
-.zone-head { display:flex; justify-content:space-between; gap:12px; align-items:center; margin-bottom:10px; }
-.zone-title { font-size:16px; font-weight:700; }
-.zone-summary-card { background:#fbfdff; border:1px solid var(--line); border-radius:12px; padding:12px; margin-bottom:10px; }
-.zone-summary-card:last-child { margin-bottom:0; }
-.muted-box { background:#fbfdff; border:1px solid var(--line); border-radius:12px; padding:12px; }
-hr.soft { border:none; border-top:1px solid var(--line); margin:14px 0; }
-@media (max-width: 1040px) {
-  .grid, .result-grid, .kpi-grid, .form-grid { grid-template-columns:1fr; }
-  .actions { flex-direction:column; }
-  button { width:100%; }
-}
+:root{--bg:#f4f6f7;--card:#fff;--text:#17212b;--muted:#6b7280;--brand:#136f63;--brand-2:#0f5b52;--line:#d9e1e7;--soft:#fbfdff}
+*{box-sizing:border-box}body{font-family:Arial,sans-serif;margin:0;background:var(--bg);color:var(--text)}.wrapper{max-width:1360px;margin:0 auto;padding:24px}h1{margin:0 0 10px;font-size:28px}h2{margin:0 0 12px;font-size:20px}h3{margin:0 0 10px;font-size:16px}p.small,.small{color:var(--muted);font-size:14px;margin:0}.grid{display:grid;gap:18px;grid-template-columns:470px 1fr}.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px;box-shadow:0 4px 14px rgba(0,0,0,.05)}.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px 12px}label{font-size:14px;font-weight:700;display:block;margin-bottom:5px}input,select,textarea{width:100%;padding:10px 11px;border-radius:10px;border:1px solid #cbd5e1;background:#fff}button{padding:12px 14px;border:none;border-radius:12px;background:var(--brand);color:#fff;font-weight:700;cursor:pointer;margin-top:8px}button:hover{background:var(--brand-2)}button.secondary{background:#e5eef0;color:#0f172a}button.secondary:hover{background:#d7e5e8}button.danger{background:#b91c1c}.actions{display:flex;gap:10px;flex-wrap:wrap}.result-grid{display:grid;gap:16px;grid-template-columns:1.15fr .85fr}.kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:16px}.kpi{background:#f8fafc;border:1px solid var(--line);border-radius:14px;padding:12px}.kpi .label{font-size:12px;color:var(--muted);margin-bottom:4px}.kpi .value{font-size:22px;font-weight:700}table{width:100%;border-collapse:collapse;font-size:14px}th,td{padding:9px 8px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}th{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.04em}.total-row td{font-weight:700;font-size:16px}.badge{display:inline-block;border-radius:999px;padding:5px 10px;font-size:13px;font-weight:700}.badge.ok{background:#dcfce7;color:#166534}.badge.warn{background:#fef3c7;color:#92400e}.badge.bad{background:#fee2e2;color:#991b1b}.note{font-size:13px;color:var(--muted);line-height:1.45}canvas{width:100%;max-width:100%;border:1px solid var(--line);border-radius:12px;background:#fff}ul.clean{margin:10px 0 0 18px;padding:0}.section-block,.zone-card{grid-column:1/-1;background:var(--soft);border:1px solid var(--line);border-radius:12px;padding:12px}.hidden{display:none}.zone-head{display:flex;justify-content:space-between;gap:12px;align-items:center;margin-bottom:10px}.zone-title{font-size:16px;font-weight:700}.zone-summary-card{background:#fbfdff;border:1px solid var(--line);border-radius:12px;padding:12px;margin-bottom:10px}.zone-summary-card:last-child{margin-bottom:0}.muted-box{background:#fbfdff;border:1px solid var(--line);border-radius:12px;padding:12px}hr.soft{border:none;border-top:1px solid var(--line);margin:14px 0}.ref-list{max-height:220px;overflow:auto;margin-top:10px}.ref-pill{display:flex;justify-content:space-between;gap:8px;align-items:center;padding:8px;border-bottom:1px solid var(--line)}.ref-pill:last-child{border-bottom:0}.ref-pill button{padding:7px 9px;margin:0;border-radius:9px;font-size:12px}
+@media(max-width:1040px){.grid,.result-grid,.kpi-grid,.form-grid{grid-template-columns:1fr}.actions{flex-direction:column}button{width:100%}}
 </style>
 </head>
 <body>
 <div class="wrapper">
-  <h1>🧱 Calculateur terrasse Builders</h1>
-  <p class="small">Version multi-zones : un seul calcul pour le tour de piscine, la terrasse maison, les retours et les petits modules devant baies vitrées.</p>
-
-  <div class="grid" style="margin-top:18px;">
-    <div class="card">
-      <h2>🔧 Données globales chantier</h2>
-      <div class="form-grid">
-        <div style="grid-column:1 / -1">
-          <label for="lame">Lame</label>
-          <select id="lame"></select>
-        </div>
-
-        <div>
-          <label for="jeuLame">Jeu entre lames (mm)</label>
-          <input id="jeuLame" type="number" min="0" step="1" value="5">
-        </div>
-        <div>
-          <label for="margeDecoupe">Marge mini saisie (%)</label>
-          <input id="margeDecoupe" type="number" min="0" step="1" value="5">
-        </div>
-
-        <div>
-          <label for="entraxe">Entraxe lambourdes (cm)</label>
-          <input id="entraxe" type="number" min="10" step="1" value="50">
-        </div>
-        <div>
-          <label for="section">Section lambourde</label>
-          <select id="section"></select>
-        </div>
-
-        <div>
-          <label for="entraxePlot">Entraxe plots (cm)</label>
-          <input id="entraxePlot" type="number" min="10" step="1" value="50">
-        </div>
-        <div>
-          <label for="plotRef">Plot</label>
-          <select id="plotRef"></select>
-        </div>
-
-        <div>
-          <label for="visRef">Vis inox</label>
-          <select id="visRef"></select>
-        </div>
-        <div>
-          <label for="bandeBitume">Bande bitume sur lambourdes</label>
-          <select id="bandeBitume">
-            <option value="oui" selected>Oui</option>
-            <option value="non">Non</option>
-          </select>
-        </div>
-
-        <div>
-          <label for="geotextile">Géotextile sous terrasse</label>
-          <select id="geotextile">
-            <option value="oui" selected>Oui</option>
-            <option value="non">Non</option>
-          </select>
-        </div>
-        <div>
-          <label for="mutualiser">Mutualiser un peu les chutes entre zones</label>
-          <select id="mutualiser">
-            <option value="non" selected>Non</option>
-            <option value="oui">Oui</option>
-          </select>
-        </div>
-      </div>
-
-      <hr class="soft">
-      <div class="zone-head">
-        <h2 style="margin:0;">📍 Zones du projet</h2>
-        <div class="actions" style="margin:0;">
-          <button type="button" class="secondary" onclick="ajouterZone()">+ Ajouter une zone</button>
-        </div>
-      </div>
-      <div id="zonesContainer"></div>
-
-      <div class="actions" style="margin-top:14px;">
-        <button type="button" onclick="calculTerrasseMulti()">Calculer le projet</button>
-      </div>
-
-      <div class="note" style="margin-top:12px;">
-        Tu peux mélanger plusieurs zones sur le même chantier. Exemple : tour de piscine + terrasse maison + module devant baie vitrée.
-      </div>
-    </div>
-
-    <div class="card">
-      <div class="result-grid">
-        <div>
-          <h2>📊 Résultat global</h2>
-          <div class="kpi-grid">
-            <div class="kpi">
-              <div class="label">Surface totale</div>
-              <div class="value" id="kpiSurface">-</div>
-            </div>
-            <div class="kpi">
-              <div class="label">Périmètre total</div>
-              <div class="value" id="kpiPerimetre">-</div>
-            </div>
-            <div class="kpi">
-              <div class="label">Total HT</div>
-              <div class="value" id="kpiTotal">-</div>
-            </div>
-            <div class="kpi">
-              <div class="label">Prix moyen au m² HT</div>
-              <div class="value" id="kpiM2">-</div>
-            </div>
-          </div>
-
-          <table id="tableResult">
-            <thead>
-              <tr><th>Poste</th><th>Quantité</th><th>PU HT</th><th>Total HT</th></tr>
-            </thead>
-            <tbody></tbody>
-          </table>
-
-          <div id="blocTechnique" style="margin-top:14px;"></div>
-        </div>
-
-        <div>
-          <h2>📐 Vue projet</h2>
-          <p class="small" style="margin-bottom:10px;">Croquis multi-zone avec repères visuels Z1, Z2, Z3… pour retrouver immédiatement chaque partie du chantier.</p>
-          <canvas id="canvasTerrasse" width="860" height="560"></canvas>
-          <div id="zoneLegend" class="muted-box" style="margin-top:10px;"></div>
-          <div id="resumePose" class="note" style="margin-top:10px;"></div>
-
-          <div class="zone-view-controls">
-            <div class="control">
-              <label for="zoneSelectDetail">Zone à afficher en détail</label>
-              <select id="zoneSelectDetail"></select>
-            </div>
-          </div>
-
-          <div class="detail-grid">
-            <div>
-              <h3>🪵 Vue détaillée de la zone</h3>
-              <p class="small" style="margin-bottom:8px;">Affichage technique de la zone choisie avec repère, sens des lames et lambourdes.</p>
-              <div class="canvas-toolbar">
-                <button type="button" class="secondary" onclick="detailZoomOut()">Zoom -</button>
-                <button type="button" class="secondary" onclick="detailZoomIn()">Zoom +</button>
-                <button type="button" class="secondary" onclick="detailZoomReset()">Reset zoom</button>
-              </div>
-              <canvas id="canvasZoneDetail" width="860" height="520"></canvas>
-              <div id="zoneDetailResume" class="muted-box" style="margin-top:10px;"></div>
-            </div>
-
-            <div>
-              <h3 style="margin-top:8px;">📋 Détail par zone</h3>
-              <div id="zoneDetails"></div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+<h1>🧱 Calculateur terrasse Builders</h1>
+<p class="small">Version multi-zones avec ajout de références sauvegardées dans le navigateur.</p>
+<div class="grid" style="margin-top:18px">
+<div class="card">
+<h2>🔧 Données globales chantier</h2>
+<div class="form-grid">
+<div style="grid-column:1/-1"><label for="lame">Lame</label><select id="lame"></select></div>
+<div><label for="jeuLame">Jeu entre lames (mm)</label><input id="jeuLame" type="number" min="0" step="1" value="5"></div>
+<div><label for="margeDecoupe">Marge mini saisie (%)</label><input id="margeDecoupe" type="number" min="0" step="1" value="5"></div>
+<div><label for="entraxe">Entraxe lambourdes (cm)</label><input id="entraxe" type="number" min="10" step="1" value="50"></div>
+<div><label for="section">Section lambourde</label><select id="section"></select></div>
+<div><label for="entraxePlot">Entraxe plots (cm)</label><input id="entraxePlot" type="number" min="10" step="1" value="50"></div>
+<div><label for="plotRef">Plot</label><select id="plotRef"></select></div>
+<div><label for="visRef">Vis inox</label><select id="visRef"></select></div>
+<div><label for="bandeBitume">Bande bitume sur lambourdes</label><select id="bandeBitume"><option value="oui" selected>Oui</option><option value="non">Non</option></select></div>
+<div><label for="geotextile">Géotextile sous terrasse</label><select id="geotextile"><option value="oui" selected>Oui</option><option value="non">Non</option></select></div>
+<div><label for="mutualiser">Mutualiser un peu les chutes entre zones</label><select id="mutualiser"><option value="non" selected>Non</option><option value="oui">Oui</option></select></div>
 </div>
-
+<div class="actions" style="margin-top:14px"><button type="button" class="secondary" onclick="toggleAjoutReference()">+ Ajouter une référence produit</button><button type="button" class="secondary" onclick="toggleGestionReferences()">Gérer les références perso</button></div>
+<div id="blocAjoutReference" class="section-block hidden" style="margin-top:12px">
+<h3>➕ Nouvelle référence</h3>
+<div class="form-grid">
+<div><label for="newFamille">Famille</label><select id="newFamille"><option value="Lame">Lame</option><option value="Lambourde">Lambourde</option><option value="Plot">Plot</option><option value="Vis">Vis</option><option value="Accessoire">Accessoire</option></select></div>
+<div><label for="newReference">Référence</label><input id="newReference" placeholder="Ex : CUMARU_21x145_3.05"></div>
+<div style="grid-column:1/-1"><label for="newDesignation">Désignation</label><input id="newDesignation" placeholder="Ex : Lame Cumaru 21x145"></div>
+<div><label for="newEpaisseur">Épaisseur mm</label><input id="newEpaisseur" type="number" step="0.01"></div>
+<div><label for="newLargeur">Largeur mm</label><input id="newLargeur" type="number" step="0.01"></div>
+<div><label for="newLongueur">Longueur m</label><input id="newLongueur" type="number" step="0.01"></div>
+<div><label for="newUnite">Unité</label><select id="newUnite"><option value="u">u</option><option value="ml">ml</option><option value="m2">m²</option></select></div>
+<div><label for="newPrix">Prix HT</label><input id="newPrix" type="number" step="0.01"></div>
+<div><label for="newFournisseur">Fournisseur</label><input id="newFournisseur" value="Vivre en Bois"></div>
+</div>
+<div class="actions"><button type="button" onclick="ajouterReferenceCatalogue()">Enregistrer</button><button type="button" class="secondary" onclick="resetAjoutReference()">Vider</button></div>
+<p class="note" style="margin-top:8px">Les références ajoutées sont sauvegardées dans ce navigateur avec localStorage.</p>
+</div>
+<div id="blocGestionReferences" class="section-block hidden" style="margin-top:12px"><h3>🗂️ Références personnelles</h3><div id="listeRefsPerso" class="ref-list"></div><div class="actions"><button type="button" class="secondary" onclick="exporterRefsPerso()">Exporter JSON</button><button type="button" class="secondary" onclick="document.getElementById('importRefsFile').click()">Importer JSON</button><input id="importRefsFile" type="file" accept="application/json" class="hidden" onchange="importerRefsPerso(event)"><button type="button" class="danger" onclick="supprimerToutesRefsPerso()">Tout supprimer</button></div></div>
+<hr class="soft">
+<div class="zone-head"><h2 style="margin:0">📍 Zones du projet</h2><div class="actions" style="margin:0"><button type="button" class="secondary" onclick="ajouterZone()">+ Ajouter une zone</button></div></div>
+<div id="zonesContainer"></div>
+<div class="actions" style="margin-top:14px"><button type="button" onclick="calculTerrasseMulti()">Calculer le projet</button></div>
+<div class="note" style="margin-top:12px">Tu peux mélanger plusieurs zones sur le même chantier. Exemple : tour de piscine + terrasse maison + module devant baie vitrée.</div>
+</div>
+<div class="card"><div class="result-grid"><div><h2>📊 Résultat global</h2><div class="kpi-grid"><div class="kpi"><div class="label">Surface totale</div><div class="value" id="kpiSurface">-</div></div><div class="kpi"><div class="label">Périmètre total</div><div class="value" id="kpiPerimetre">-</div></div><div class="kpi"><div class="label">Total HT</div><div class="value" id="kpiTotal">-</div></div><div class="kpi"><div class="label">Prix moyen au m² HT</div><div class="value" id="kpiM2">-</div></div></div><table id="tableResult"><thead><tr><th>Poste</th><th>Quantité</th><th>PU HT</th><th>Total HT</th></tr></thead><tbody></tbody></table><div id="blocTechnique" style="margin-top:14px"></div></div><div><h2>📐 Vue projet</h2><p class="small" style="margin-bottom:10px">Croquis multi-zone avec repères visuels Z1, Z2, Z3…</p><canvas id="canvasTerrasse" width="860" height="560"></canvas><div id="zoneLegend" class="muted-box" style="margin-top:10px"></div><div id="resumePose" class="note" style="margin-top:10px"></div><div class="zone-view-controls"><div class="control"><label for="zoneSelectDetail">Zone à afficher en détail</label><select id="zoneSelectDetail" onchange="dessinerZoneSelectionnee()"></select></div></div><div class="detail-grid"><div><h3>🪵 Vue détaillée de la zone</h3><p class="small" style="margin-bottom:8px">Affichage technique avec sens des lames et lambourdes.</p><div class="canvas-toolbar"><button type="button" class="secondary" onclick="detailZoomOut()">Zoom -</button><button type="button" class="secondary" onclick="detailZoomIn()">Zoom +</button><button type="button" class="secondary" onclick="detailZoomReset()">Reset zoom</button></div><canvas id="canvasZoneDetail" width="860" height="520"></canvas><div id="zoneDetailResume" class="muted-box" style="margin-top:10px"></div></div><div><h3 style="margin-top:8px">📋 Détail par zone</h3><div id="zoneDetails"></div></div></div></div></div></div>
+</div></div>
 <script>
-const catalogue = [
-  {"Famille": "Lame", "Reference": "CANCUN_28x120_3.9", "Designation": "Lame Cancun pin marron", "Epaisseur_mm": 28.0, "Largeur_mm": 120.0, "Longueur_m": 3.9, "Unite": "u", "Prix_public_HT": 11.6, "Prix_pro_HT": null, "Fournisseur": "Vivre en Bois"},
-  {"Famille": "Lame", "Reference": "CANCUN_28x120_4", "Designation": "Lame Cancun pin marron", "Epaisseur_mm": 28.0, "Largeur_mm": 120.0, "Longueur_m": 4.0, "Unite": "u", "Prix_public_HT": 11.9, "Prix_pro_HT": null, "Fournisseur": "Vivre en Bois"},
-  {"Famille": "Lame", "Reference": "SANTORIN_28x145_4", "Designation": "Lame Santorin pin marron", "Epaisseur_mm": 28.0, "Largeur_mm": 145.0, "Longueur_m": 4.0, "Unite": "u", "Prix_public_HT": 14.2, "Prix_pro_HT": null, "Fournisseur": "Vivre en Bois"},
-  {"Famille": "Lame", "Reference": "SANTORIN_28x145_3", "Designation": "Lame Santorin pin marron", "Epaisseur_mm": 28.0, "Largeur_mm": 145.0, "Longueur_m": 3.0, "Unite": "u", "Prix_public_HT": 13.5, "Prix_pro_HT": null, "Fournisseur": "Vivre en Bois"},
-  {"Famille": "Lame", "Reference": "ARUBA_21x120_4", "Designation": "Lame Aruba pin classe 4", "Epaisseur_mm": 21.0, "Largeur_mm": 120.0, "Longueur_m": 4.0, "Unite": "u", "Prix_public_HT": 9.8, "Prix_pro_HT": null, "Fournisseur": "Vivre en Bois"},
-  {"Famille": "Lame", "Reference": "DOUGLAS_28x145_4", "Designation": "Lame Douglas naturel", "Epaisseur_mm": 28.0, "Largeur_mm": 145.0, "Longueur_m": 4.0, "Unite": "u", "Prix_public_HT": 12.8, "Prix_pro_HT": null, "Fournisseur": "Vivre en Bois"},
-  {"Famille": "Lame", "Reference": "EXO_21x140_4", "Designation": "Lame exotique", "Epaisseur_mm": 21.0, "Largeur_mm": 140.0, "Longueur_m": 4.0, "Unite": "u", "Prix_public_HT": 24.0, "Prix_pro_HT": null, "Fournisseur": "Vivre en Bois"},
-
-  {"Famille": "Lame","Reference": "CANCUN_28x120_1.8","Designation": "Lame Cancun pin marron","Epaisseur_mm": 28,"Largeur_mm": 120,"Longueur_m": 1.8,"Unite": "u","Prix_public_HT": 8.90,"Prix_pro_HT": null,"Fournisseur": "Vivre en Bois"},
-  {"Famille": "Lame","Reference": "CANCUN_28x120_2.1","Designation": "Lame Cancun pin marron","Epaisseur_mm": 28,"Largeur_mm": 120,"Longueur_m": 2.1,"Unite": "u","Prix_public_HT": 9.20,"Prix_pro_HT": null,"Fournisseur": "Vivre en Bois"},
-  {"Famille": "Lame","Reference": "CANCUN_28x120_2.7","Designation": "Lame Cancun pin marron","Epaisseur_mm": 28,"Largeur_mm": 120,"Longueur_m": 2.7,"Unite": "u","Prix_public_HT": 10.20,"Prix_pro_HT": null,"Fournisseur": "Vivre en Bois"},
-  {"Famille": "Lame","Reference": "CANCUN_28x120_3.3","Designation": "Lame Cancun pin marron","Epaisseur_mm": 28,"Largeur_mm": 120,"Longueur_m": 3.3,"Unite": "u","Prix_public_HT": 11.00,"Prix_pro_HT": null,"Fournisseur": "Vivre en Bois"},
-  {"Famille": "Lame","Reference": "CANCUN_28x120_4.5","Designation": "Lame Cancun pin marron","Epaisseur_mm": 28,"Largeur_mm": 120,"Longueur_m": 4.5,"Unite": "u","Prix_public_HT": 12.90,"Prix_pro_HT": null,"Fournisseur": "Vivre en Bois"},
-
-  {"Famille": "Lame","Reference": "SANTORIN_28x145_1.8","Designation": "Lame Santorin pin marron","Epaisseur_mm": 28,"Largeur_mm": 145,"Longueur_m": 1.8,"Unite": "u","Prix_public_HT": 10.50,"Prix_pro_HT": null,"Fournisseur": "Vivre en Bois"},
-  {"Famille": "Lame","Reference": "SANTORIN_28x145_2.1","Designation": "Lame Santorin pin marron","Epaisseur_mm": 28,"Largeur_mm": 145,"Longueur_m": 2.1,"Unite": "u","Prix_public_HT": 10.90,"Prix_pro_HT": null,"Fournisseur": "Vivre en Bois"},
-  {"Famille": "Lame","Reference": "SANTORIN_28x145_2.7","Designation": "Lame Santorin pin marron","Epaisseur_mm": 28,"Largeur_mm": 145,"Longueur_m": 2.7,"Unite": "u","Prix_public_HT": 12.00,"Prix_pro_HT": null,"Fournisseur": "Vivre en Bois"},
-  {"Famille": "Lame","Reference": "SANTORIN_28x145_3.3","Designation": "Lame Santorin pin marron","Epaisseur_mm": 28,"Largeur_mm": 145,"Longueur_m": 3.3,"Unite": "u","Prix_public_HT": 13.20,"Prix_pro_HT": null,"Fournisseur": "Vivre en Bois"},
-  {"Famille": "Lame","Reference": "SANTORIN_28x145_4.5","Designation": "Lame Santorin pin marron","Epaisseur_mm": 28,"Largeur_mm": 145,"Longueur_m": 4.5,"Unite": "u","Prix_public_HT": 15.20,"Prix_pro_HT": null,"Fournisseur": "Vivre en Bois"},
-
-  {"Famille": "Lame","Reference": "DOUGLAS_28x145_1.8","Designation": "Lame Douglas naturel","Epaisseur_mm": 28,"Largeur_mm": 145,"Longueur_m": 1.8,"Unite": "u","Prix_public_HT": 9.80,"Prix_pro_HT": null,"Fournisseur": "Vivre en Bois"},
-  {"Famille": "Lame","Reference": "DOUGLAS_28x145_2.1","Designation": "Lame Douglas naturel","Epaisseur_mm": 28,"Largeur_mm": 145,"Longueur_m": 2.1,"Unite": "u","Prix_public_HT": 10.20,"Prix_pro_HT": null,"Fournisseur": "Vivre en Bois"},
-  {"Famille": "Lame","Reference": "DOUGLAS_28x145_2.7","Designation": "Lame Douglas naturel","Epaisseur_mm": 28,"Largeur_mm": 145,"Longueur_m": 2.7,"Unite": "u","Prix_public_HT": 11.20,"Prix_pro_HT": null,"Fournisseur": "Vivre en Bois"},
-  {"Famille": "Lame","Reference": "DOUGLAS_28x145_3.3","Designation": "Lame Douglas naturel","Epaisseur_mm": 28,"Largeur_mm": 145,"Longueur_m": 3.3,"Unite": "u","Prix_public_HT": 12.60,"Prix_pro_HT": null,"Fournisseur": "Vivre en Bois"},
-
-  {"Famille": "Lame","Reference": "PIN_CL4_21x120_1.8","Designation": "Lame pin classe 4","Epaisseur_mm": 21,"Largeur_mm": 120,"Longueur_m": 1.8,"Unite": "u","Prix_public_HT": 6.80,"Prix_pro_HT": null,"Fournisseur": "Vivre en Bois"},
-  {"Famille": "Lame","Reference": "PIN_CL4_21x120_2.1","Designation": "Lame pin classe 4","Epaisseur_mm": 21,"Largeur_mm": 120,"Longueur_m": 2.1,"Unite": "u","Prix_public_HT": 7.20,"Prix_pro_HT": null,"Fournisseur": "Vivre en Bois"},
-  {"Famille": "Lame","Reference": "PIN_CL4_21x120_3.6","Designation": "Lame pin classe 4","Epaisseur_mm": 21,"Largeur_mm": 120,"Longueur_m": 3.6,"Unite": "u","Prix_public_HT": 8.90,"Prix_pro_HT": null,"Fournisseur": "Vivre en Bois"},
-
-  {"Famille": "Lame","Reference": "EXO_21x140_1.8","Designation": "Lame exotique","Epaisseur_mm": 21,"Largeur_mm": 140,"Longueur_m": 1.8,"Unite": "u","Prix_public_HT": 17.00,"Prix_pro_HT": null,"Fournisseur": "Vivre en Bois"},
-  {"Famille": "Lame","Reference": "EXO_21x140_2.5","Designation": "Lame exotique","Epaisseur_mm": 21,"Largeur_mm": 140,"Longueur_m": 2.5,"Unite": "u","Prix_public_HT": 19.80,"Prix_pro_HT": null,"Fournisseur": "Vivre en Bois"},
-  {"Famille": "Lame","Reference": "EXO_21x140_3.6","Designation": "Lame exotique","Epaisseur_mm": 21,"Largeur_mm": 140,"Longueur_m": 3.6,"Unite": "u","Prix_public_HT": 23.50,"Prix_pro_HT": null,"Fournisseur": "Vivre en Bois"},
-
-  {"Famille": "Lambourde", "Reference": "LAMB_45x70_4", "Designation": "Lambourde 45x70 classe 4", "Epaisseur_mm": 45.0, "Largeur_mm": 70.0, "Longueur_m": 4.0, "Unite": "u", "Prix_public_HT": 8.2, "Prix_pro_HT": null, "Fournisseur": "Vivre en Bois"},
-  {"Famille": "Lambourde", "Reference": "LAMB_45x95_4", "Designation": "Lambourde 45x95 classe 4", "Epaisseur_mm": 45.0, "Largeur_mm": 95.0, "Longueur_m": 4.0, "Unite": "u", "Prix_public_HT": 10.5, "Prix_pro_HT": null, "Fournisseur": "Vivre en Bois"},
-  {"Famille": "Lambourde", "Reference": "LAMB_63x75_4", "Designation": "Lambourde 63x75 classe 4", "Epaisseur_mm": 63.0, "Largeur_mm": 75.0, "Longueur_m": 4.0, "Unite": "u", "Prix_public_HT": 11.2, "Prix_pro_HT": null, "Fournisseur": "Vivre en Bois"},
-  {"Famille": "Lambourde", "Reference": "LAMB_63x100_4", "Designation": "Lambourde 63x100 classe 4", "Epaisseur_mm": 63.0, "Largeur_mm": 100.0, "Longueur_m": 4.0, "Unite": "u", "Prix_public_HT": 13.8, "Prix_pro_HT": null, "Fournisseur": "Vivre en Bois"},
-  {"Famille": "Lambourde", "Reference": "LAMB_75x150_4", "Designation": "Lambourde 75x150 classe 4", "Epaisseur_mm": 75.0, "Largeur_mm": 150.0, "Longueur_m": 4.0, "Unite": "u", "Prix_public_HT": 19.5, "Prix_pro_HT": null, "Fournisseur": "Vivre en Bois"},
-
-  {"Famille": "Plot", "Reference": "PLOT_40_60", "Designation": "Plot réglable 40-60mm", "Epaisseur_mm": null, "Largeur_mm": null, "Longueur_m": null, "Unite": "u", "Prix_public_HT": 3.2, "Prix_pro_HT": null, "Fournisseur": "Vivre en Bois"},
-  {"Famille": "Plot", "Reference": "PLOT_60_90", "Designation": "Plot réglable 60-90mm", "Epaisseur_mm": null, "Largeur_mm": null, "Longueur_m": null, "Unite": "u", "Prix_public_HT": 3.8, "Prix_pro_HT": null, "Fournisseur": "Vivre en Bois"},
-  {"Famille": "Plot", "Reference": "PLOT_90_150", "Designation": "Plot réglable 90-150mm", "Epaisseur_mm": null, "Largeur_mm": null, "Longueur_m": null, "Unite": "u", "Prix_public_HT": 4.5, "Prix_pro_HT": null, "Fournisseur": "Vivre en Bois"},
-  {"Famille": "Vis", "Reference": "VIS_INOX_5x60", "Designation": "Vis inox 5x60", "Epaisseur_mm": null, "Largeur_mm": null, "Longueur_m": null, "Unite": "u", "Prix_public_HT": 0.08, "Prix_pro_HT": null, "Fournisseur": "Vivre en Bois"},
-  {"Famille": "Vis", "Reference": "VIS_INOX_5x70", "Designation": "Vis inox 5x70", "Epaisseur_mm": null, "Largeur_mm": null, "Longueur_m": null, "Unite": "u", "Prix_public_HT": 0.09, "Prix_pro_HT": null, "Fournisseur": "Vivre en Bois"},
-  {"Famille": "Vis", "Reference": "VIS_INOX_5x80", "Designation": "Vis inox 5x80", "Epaisseur_mm": null, "Largeur_mm": null, "Longueur_m": null, "Unite": "u", "Prix_public_HT": 0.1, "Prix_pro_HT": null, "Fournisseur": "Vivre en Bois"},
-  {"Famille": "Accessoire", "Reference": "BANDE_BITUME", "Designation": "Bande bitume lambourde", "Epaisseur_mm": null, "Largeur_mm": null, "Longueur_m": null, "Unite": "ml", "Prix_public_HT": 1.2, "Prix_pro_HT": null, "Fournisseur": "Vivre en Bois"},
-  {"Famille": "Accessoire", "Reference": "GEOTEXTILE", "Designation": "Géotextile", "Epaisseur_mm": null, "Largeur_mm": null, "Longueur_m": null, "Unite": "m2", "Prix_public_HT": 1.5, "Prix_pro_HT": null, "Fournisseur": "Vivre en Bois"}
+let catalogue=[
+{"Famille":"Lame","Reference":"CANCUN_28x120_3.9","Designation":"Lame Cancun pin marron","Epaisseur_mm":28,"Largeur_mm":120,"Longueur_m":3.9,"Unite":"u","Prix_public_HT":11.6,"Prix_pro_HT":null,"Fournisseur":"Vivre en Bois"},
+{"Famille":"Lame","Reference":"CANCUN_28x120_4","Designation":"Lame Cancun pin marron","Epaisseur_mm":28,"Largeur_mm":120,"Longueur_m":4,"Unite":"u","Prix_public_HT":11.9,"Prix_pro_HT":null,"Fournisseur":"Vivre en Bois"},
+{"Famille":"Lame","Reference":"SANTORIN_28x145_4","Designation":"Lame Santorin pin marron","Epaisseur_mm":28,"Largeur_mm":145,"Longueur_m":4,"Unite":"u","Prix_public_HT":14.2,"Prix_pro_HT":null,"Fournisseur":"Vivre en Bois"},
+{"Famille":"Lame","Reference":"SANTORIN_28x145_3","Designation":"Lame Santorin pin marron","Epaisseur_mm":28,"Largeur_mm":145,"Longueur_m":3,"Unite":"u","Prix_public_HT":13.5,"Prix_pro_HT":null,"Fournisseur":"Vivre en Bois"},
+{"Famille":"Lame","Reference":"ARUBA_21x120_4","Designation":"Lame Aruba pin classe 4","Epaisseur_mm":21,"Largeur_mm":120,"Longueur_m":4,"Unite":"u","Prix_public_HT":9.8,"Prix_pro_HT":null,"Fournisseur":"Vivre en Bois"},
+{"Famille":"Lame","Reference":"DOUGLAS_28x145_4","Designation":"Lame Douglas naturel","Epaisseur_mm":28,"Largeur_mm":145,"Longueur_m":4,"Unite":"u","Prix_public_HT":12.8,"Prix_pro_HT":null,"Fournisseur":"Vivre en Bois"},
+{"Famille":"Lame","Reference":"EXO_21x140_4","Designation":"Lame exotique","Epaisseur_mm":21,"Largeur_mm":140,"Longueur_m":4,"Unite":"u","Prix_public_HT":24,"Prix_pro_HT":null,"Fournisseur":"Vivre en Bois"},
+{"Famille":"Lame","Reference":"CANCUN_28x120_1.8","Designation":"Lame Cancun pin marron","Epaisseur_mm":28,"Largeur_mm":120,"Longueur_m":1.8,"Unite":"u","Prix_public_HT":8.9,"Prix_pro_HT":null,"Fournisseur":"Vivre en Bois"},
+{"Famille":"Lame","Reference":"CANCUN_28x120_2.1","Designation":"Lame Cancun pin marron","Epaisseur_mm":28,"Largeur_mm":120,"Longueur_m":2.1,"Unite":"u","Prix_public_HT":9.2,"Prix_pro_HT":null,"Fournisseur":"Vivre en Bois"},
+{"Famille":"Lame","Reference":"CANCUN_28x120_2.7","Designation":"Lame Cancun pin marron","Epaisseur_mm":28,"Largeur_mm":120,"Longueur_m":2.7,"Unite":"u","Prix_public_HT":10.2,"Prix_pro_HT":null,"Fournisseur":"Vivre en Bois"},
+{"Famille":"Lame","Reference":"CANCUN_28x120_3.3","Designation":"Lame Cancun pin marron","Epaisseur_mm":28,"Largeur_mm":120,"Longueur_m":3.3,"Unite":"u","Prix_public_HT":11,"Prix_pro_HT":null,"Fournisseur":"Vivre en Bois"},
+{"Famille":"Lame","Reference":"CANCUN_28x120_4.5","Designation":"Lame Cancun pin marron","Epaisseur_mm":28,"Largeur_mm":120,"Longueur_m":4.5,"Unite":"u","Prix_public_HT":12.9,"Prix_pro_HT":null,"Fournisseur":"Vivre en Bois"},
+{"Famille":"Lame","Reference":"SANTORIN_28x145_1.8","Designation":"Lame Santorin pin marron","Epaisseur_mm":28,"Largeur_mm":145,"Longueur_m":1.8,"Unite":"u","Prix_public_HT":10.5,"Prix_pro_HT":null,"Fournisseur":"Vivre en Bois"},
+{"Famille":"Lame","Reference":"SANTORIN_28x145_2.1","Designation":"Lame Santorin pin marron","Epaisseur_mm":28,"Largeur_mm":145,"Longueur_m":2.1,"Unite":"u","Prix_public_HT":10.9,"Prix_pro_HT":null,"Fournisseur":"Vivre en Bois"},
+{"Famille":"Lame","Reference":"SANTORIN_28x145_2.7","Designation":"Lame Santorin pin marron","Epaisseur_mm":28,"Largeur_mm":145,"Longueur_m":2.7,"Unite":"u","Prix_public_HT":12,"Prix_pro_HT":null,"Fournisseur":"Vivre en Bois"},
+{"Famille":"Lame","Reference":"SANTORIN_28x145_3.3","Designation":"Lame Santorin pin marron","Epaisseur_mm":28,"Largeur_mm":145,"Longueur_m":3.3,"Unite":"u","Prix_public_HT":13.2,"Prix_pro_HT":null,"Fournisseur":"Vivre en Bois"},
+{"Famille":"Lame","Reference":"SANTORIN_28x145_4.5","Designation":"Lame Santorin pin marron","Epaisseur_mm":28,"Largeur_mm":145,"Longueur_m":4.5,"Unite":"u","Prix_public_HT":15.2,"Prix_pro_HT":null,"Fournisseur":"Vivre en Bois"},
+{"Famille":"Lame","Reference":"DOUGLAS_28x145_1.8","Designation":"Lame Douglas naturel","Epaisseur_mm":28,"Largeur_mm":145,"Longueur_m":1.8,"Unite":"u","Prix_public_HT":9.8,"Prix_pro_HT":null,"Fournisseur":"Vivre en Bois"},
+{"Famille":"Lame","Reference":"DOUGLAS_28x145_2.1","Designation":"Lame Douglas naturel","Epaisseur_mm":28,"Largeur_mm":145,"Longueur_m":2.1,"Unite":"u","Prix_public_HT":10.2,"Prix_pro_HT":null,"Fournisseur":"Vivre en Bois"},
+{"Famille":"Lame","Reference":"DOUGLAS_28x145_2.7","Designation":"Lame Douglas naturel","Epaisseur_mm":28,"Largeur_mm":145,"Longueur_m":2.7,"Unite":"u","Prix_public_HT":11.2,"Prix_pro_HT":null,"Fournisseur":"Vivre en Bois"},
+{"Famille":"Lame","Reference":"DOUGLAS_28x145_3.3","Designation":"Lame Douglas naturel","Epaisseur_mm":28,"Largeur_mm":145,"Longueur_m":3.3,"Unite":"u","Prix_public_HT":12.6,"Prix_pro_HT":null,"Fournisseur":"Vivre en Bois"},
+{"Famille":"Lame","Reference":"PIN_CL4_21x120_1.8","Designation":"Lame pin classe 4","Epaisseur_mm":21,"Largeur_mm":120,"Longueur_m":1.8,"Unite":"u","Prix_public_HT":6.8,"Prix_pro_HT":null,"Fournisseur":"Vivre en Bois"},
+{"Famille":"Lame","Reference":"PIN_CL4_21x120_2.1","Designation":"Lame pin classe 4","Epaisseur_mm":21,"Largeur_mm":120,"Longueur_m":2.1,"Unite":"u","Prix_public_HT":7.2,"Prix_pro_HT":null,"Fournisseur":"Vivre en Bois"},
+{"Famille":"Lame","Reference":"PIN_CL4_21x120_3.6","Designation":"Lame pin classe 4","Epaisseur_mm":21,"Largeur_mm":120,"Longueur_m":3.6,"Unite":"u","Prix_public_HT":8.9,"Prix_pro_HT":null,"Fournisseur":"Vivre en Bois"},
+{"Famille":"Lame","Reference":"EXO_21x140_1.8","Designation":"Lame exotique","Epaisseur_mm":21,"Largeur_mm":140,"Longueur_m":1.8,"Unite":"u","Prix_public_HT":17,"Prix_pro_HT":null,"Fournisseur":"Vivre en Bois"},
+{"Famille":"Lame","Reference":"EXO_21x140_2.5","Designation":"Lame exotique","Epaisseur_mm":21,"Largeur_mm":140,"Longueur_m":2.5,"Unite":"u","Prix_public_HT":19.8,"Prix_pro_HT":null,"Fournisseur":"Vivre en Bois"},
+{"Famille":"Lame","Reference":"EXO_21x140_3.6","Designation":"Lame exotique","Epaisseur_mm":21,"Largeur_mm":140,"Longueur_m":3.6,"Unite":"u","Prix_public_HT":23.5,"Prix_pro_HT":null,"Fournisseur":"Vivre en Bois"},
+{"Famille":"Lambourde","Reference":"LAMB_45x70_4","Designation":"Lambourde 45x70 classe 4","Epaisseur_mm":45,"Largeur_mm":70,"Longueur_m":4,"Unite":"u","Prix_public_HT":8.2,"Prix_pro_HT":null,"Fournisseur":"Vivre en Bois"},
+{"Famille":"Lambourde","Reference":"LAMB_45x95_4","Designation":"Lambourde 45x95 classe 4","Epaisseur_mm":45,"Largeur_mm":95,"Longueur_m":4,"Unite":"u","Prix_public_HT":10.5,"Prix_pro_HT":null,"Fournisseur":"Vivre en Bois"},
+{"Famille":"Lambourde","Reference":"LAMB_63x75_4","Designation":"Lambourde 63x75 classe 4","Epaisseur_mm":63,"Largeur_mm":75,"Longueur_m":4,"Unite":"u","Prix_public_HT":11.2,"Prix_pro_HT":null,"Fournisseur":"Vivre en Bois"},
+{"Famille":"Lambourde","Reference":"LAMB_63x100_4","Designation":"Lambourde 63x100 classe 4","Epaisseur_mm":63,"Largeur_mm":100,"Longueur_m":4,"Unite":"u","Prix_public_HT":13.8,"Prix_pro_HT":null,"Fournisseur":"Vivre en Bois"},
+{"Famille":"Lambourde","Reference":"LAMB_75x150_4","Designation":"Lambourde 75x150 classe 4","Epaisseur_mm":75,"Largeur_mm":150,"Longueur_m":4,"Unite":"u","Prix_public_HT":19.5,"Prix_pro_HT":null,"Fournisseur":"Vivre en Bois"},
+{"Famille":"Plot","Reference":"PLOT_40_60","Designation":"Plot réglable 40-60mm","Epaisseur_mm":null,"Largeur_mm":null,"Longueur_m":null,"Unite":"u","Prix_public_HT":3.2,"Prix_pro_HT":null,"Fournisseur":"Vivre en Bois"},
+{"Famille":"Plot","Reference":"PLOT_60_90","Designation":"Plot réglable 60-90mm","Epaisseur_mm":null,"Largeur_mm":null,"Longueur_m":null,"Unite":"u","Prix_public_HT":3.8,"Prix_pro_HT":null,"Fournisseur":"Vivre en Bois"},
+{"Famille":"Plot","Reference":"PLOT_90_150","Designation":"Plot réglable 90-150mm","Epaisseur_mm":null,"Largeur_mm":null,"Longueur_m":null,"Unite":"u","Prix_public_HT":4.5,"Prix_pro_HT":null,"Fournisseur":"Vivre en Bois"},
+{"Famille":"Vis","Reference":"VIS_INOX_5x60","Designation":"Vis inox 5x60","Epaisseur_mm":null,"Largeur_mm":null,"Longueur_m":null,"Unite":"u","Prix_public_HT":.08,"Prix_pro_HT":null,"Fournisseur":"Vivre en Bois"},
+{"Famille":"Vis","Reference":"VIS_INOX_5x70","Designation":"Vis inox 5x70","Epaisseur_mm":null,"Largeur_mm":null,"Longueur_m":null,"Unite":"u","Prix_public_HT":.09,"Prix_pro_HT":null,"Fournisseur":"Vivre en Bois"},
+{"Famille":"Vis","Reference":"VIS_INOX_5x80","Designation":"Vis inox 5x80","Epaisseur_mm":null,"Largeur_mm":null,"Longueur_m":null,"Unite":"u","Prix_public_HT":.1,"Prix_pro_HT":null,"Fournisseur":"Vivre en Bois"},
+{"Famille":"Accessoire","Reference":"BANDE_BITUME","Designation":"Bande bitume lambourde","Epaisseur_mm":null,"Largeur_mm":null,"Longueur_m":null,"Unite":"ml","Prix_public_HT":1.2,"Prix_pro_HT":null,"Fournisseur":"Vivre en Bois"},
+{"Famille":"Accessoire","Reference":"GEOTEXTILE","Designation":"Géotextile","Epaisseur_mm":null,"Largeur_mm":null,"Longueur_m":null,"Unite":"m2","Prix_public_HT":1.5,"Prix_pro_HT":null,"Fournisseur":"Vivre en Bois"}
 ];
-
-let dernierCalculZones = [];
-let detailZoomLevel = 1;
-
-const sections = { "45x70": 0.40, "45x95": 0.50, "63x75": 0.50, "63x100": 0.65, "75x150": 0.80 };
-let zoneCount = 0;
-
-function euro(v) { return new Intl.NumberFormat('fr-FR', { style:'currency', currency:'EUR' }).format(v || 0); }
-function n2(v) { return new Intl.NumberFormat('fr-FR', { minimumFractionDigits:2, maximumFractionDigits:2 }).format(v || 0); }
-function n0(v) { return new Intl.NumberFormat('fr-FR', { maximumFractionDigits:0 }).format(v || 0); }
-function getByReference(ref) { return catalogue.find(x => x.Reference === ref); }
-function getByFamily(famille) { return catalogue.filter(x => x.Famille.toLowerCase() === famille.toLowerCase()); }
-
-function prixUnitaireAchat(article) {
-  if (!article) return 0;
-  return Number(article.Prix_public_HT || 0);
-}
-function prixParMl(article) {
-  if (!article) return 0;
-  const prix = prixUnitaireAchat(article);
-  if ((article.Unite || '').toLowerCase() === 'ml') return prix;
-  if (article.Longueur_m && Number(article.Longueur_m) > 0) return prix / Number(article.Longueur_m);
-  return prix;
-}
-function coutSelonUnite(article, quantitePieces, quantiteMl) {
-  if (!article) return 0;
-  const unite = (article.Unite || '').toLowerCase();
-  const prix = prixUnitaireAchat(article);
-  if (unite === 'ml') return prix * (Number(quantiteMl) || 0);
-  if (unite === 'm2') return prix * (Number(quantiteMl) || 0);
-  return prix * (Number(quantitePieces) || 0);
-}
-
-function populateSelect(selectId, items, formatter, valueField='Reference') {
-  const sel = document.getElementById(selectId);
-  sel.innerHTML = items.map(item => `<option value="${item[valueField]}">${formatter(item)}</option>`).join('');
-}
-
-function initForm() {
-  populateSelect('lame', getByFamily('Lame'), item =>
-    `${item.Reference} — ${item.Designation} — ${n2(item.Largeur_mm)} mm — ${n2(item.Longueur_m)} m — ${n2(item.Prix_public_HT)} €/u`
-  );
-  const sectionsItems = ["45x70","45x95","63x75","63x100","75x150"].map(section => ({
-    Reference: section,
-    label: `${section} — portée simplifiée ${n2(sections[section])} m`
-  }));
-  populateSelect('section', sectionsItems, item => item.label, 'Reference');
-  document.getElementById('section').value = '45x95';
-  populateSelect('plotRef', getByFamily('Plot'), item => `${item.Reference} — ${item.Designation} — ${n2(item.Prix_public_HT)} €/u`);
-  populateSelect('visRef', getByFamily('Vis'), item => `${item.Reference} — ${item.Designation} — ${n2(item.Prix_public_HT)} €/u`);
-
-  ['lame','entraxePlot'].forEach(id => document.getElementById(id).addEventListener('change', autoDimensionnerGlobal));
-
-  ajouterZone();
-  autoDimensionnerGlobal();
-}
-
-function getEntaxeLambourdeMax(lame) {
-  if (!lame) return 0.4;
-  const e = Number(lame.Epaisseur_mm || 0);
-  const l = Number(lame.Largeur_mm || 0);
-  if (e <= 21 && l >= 140) return 0.40;
-  if (e <= 21) return 0.40;
-  if (e <= 23) return 0.45;
-  if (e <= 27) return 0.45;
-  return 0.50;
-}
-function getLambourdeMargin(forme) {
-  if (forme === 'L') return 10;
-  if (forme === 'rectangle_vide') return 12;
-  if (forme === 'cercle' || forme === 'demi_cercle') return 15;
-  return 5;
-}
-function getSectionMini(entraxePlotM) {
-  const ordered = Object.entries(sections).sort((a,b)=>a[1]-b[1]);
-  const found = ordered.find(([section, portee]) => entraxePlotM <= portee);
-  return found ? found[0] : ordered[ordered.length - 1][0];
-}
-function autoDimensionnerGlobal() {
-  const lame = getByReference(document.getElementById('lame').value);
-  const entraxePlotCm = parseFloat(document.getElementById('entraxePlot').value) || 50;
-  document.getElementById('entraxe').value = Math.round(getEntaxeLambourdeMax(lame) * 100);
-  document.getElementById('section').value = getSectionMini(entraxePlotCm / 100);
-}
-
-function zoneTemplate(id) {
-  return `
-  <div class="zone-card" id="zone-${id}">
-    <div class="zone-head">
-      <div class="zone-title">Zone ${id}</div>
-      <button type="button" class="secondary" onclick="supprimerZone(${id})">Supprimer</button>
-    </div>
-    <div class="form-grid">
-      <div style="grid-column:1 / -1">
-        <label for="zoneNom-${id}">Nom de zone</label>
-        <input id="zoneNom-${id}" type="text" value="Zone ${id}">
-      </div>
-      <div style="grid-column:1 / -1">
-        <label for="forme-${id}">Forme</label>
-        <select id="forme-${id}" onchange="updateZoneFields(${id})">
-          <option value="rectangle">Rectangle</option>
-          <option value="L">Forme en L</option>
-          <option value="rectangle_vide">Rectangle avec vide central / piscine</option>
-          <option value="cercle">Cercle</option>
-          <option value="demi_cercle">Demi-cercle</option>
-        </select>
-      </div>
-
-      <div class="section-block">
-        <h3>Géométrie principale</h3>
-        <div class="form-grid">
-          <div id="blocLongueur-${id}">
-            <label for="longueur-${id}">Longueur hors tout (m)</label>
-            <input id="longueur-${id}" type="number" min="0" step="0.01" value="4">
-          </div>
-          <div id="blocLargeur-${id}">
-            <label for="largeur-${id}">Largeur hors tout (m)</label>
-            <input id="largeur-${id}" type="number" min="0" step="0.01" value="3">
-          </div>
-          <div id="blocDiametre-${id}" class="hidden">
-            <label for="diametre-${id}">Diamètre (m)</label>
-            <input id="diametre-${id}" type="number" min="0" step="0.01" value="4">
-          </div>
-        </div>
-      </div>
-
-      <div id="blocL-${id}" class="section-block hidden">
-        <h3>Découpe de l'angle (forme en L)</h3>
-        <div class="form-grid">
-          <div>
-            <label for="decoupeLongueur-${id}">Longueur découpe (m)</label>
-            <input id="decoupeLongueur-${id}" type="number" min="0" step="0.01" value="1.5">
-          </div>
-          <div>
-            <label for="decoupeLargeur-${id}">Largeur découpe (m)</label>
-            <input id="decoupeLargeur-${id}" type="number" min="0" step="0.01" value="1.5">
-          </div>
-        </div>
-      </div>
-
-      <div id="blocVide-${id}" class="section-block hidden">
-        <h3>Vide intérieur / piscine</h3>
-        <div class="form-grid">
-          <div>
-            <label for="videLongueur-${id}">Longueur vide (m)</label>
-            <input id="videLongueur-${id}" type="number" min="0" step="0.01" value="2">
-          </div>
-          <div>
-            <label for="videLargeur-${id}">Largeur vide (m)</label>
-            <input id="videLargeur-${id}" type="number" min="0" step="0.01" value="1.5">
-          </div>
-        </div>
-      </div>
-
-      <div style="grid-column:1 / -1">
-        <label for="sensPose-${id}">Sens des lames pour cette zone</label>
-        <select id="sensPose-${id}">
-          <option value="longueur">Lames dans la longueur</option>
-          <option value="largeur">Lames dans la largeur</option>
-          <option value="auto" selected>Auto (le moins cher)</option>
-        </select>
-      </div>
-    </div>
-  </div>`;
-}
-
-function ajouterZone() {
-  zoneCount += 1;
-  document.getElementById('zonesContainer').insertAdjacentHTML('beforeend', zoneTemplate(zoneCount));
-  updateZoneFields(zoneCount);
-}
-function supprimerZone(id) {
-  const zones = document.querySelectorAll('.zone-card');
-  if (zones.length <= 1) {
-    alert('Il faut garder au moins une zone.');
-    return;
-  }
-  const el = document.getElementById(`zone-${id}`);
-  if (el) el.remove();
-}
-
-function updateZoneFields(id) {
-  const forme = document.getElementById(`forme-${id}`).value;
-  const isCircle = forme === 'cercle' || forme === 'demi_cercle';
-  document.getElementById(`blocDiametre-${id}`).classList.toggle('hidden', !isCircle);
-  document.getElementById(`blocLongueur-${id}`).classList.toggle('hidden', isCircle);
-  document.getElementById(`blocLargeur-${id}`).classList.toggle('hidden', isCircle);
-  document.getElementById(`blocL-${id}`).classList.toggle('hidden', forme !== 'L');
-  document.getElementById(`blocVide-${id}`).classList.toggle('hidden', forme !== 'rectangle_vide');
-}
-
-function getGeometryFromZone(id) {
-  const forme = document.getElementById(`forme-${id}`).value;
-  const longueur = parseFloat(document.getElementById(`longueur-${id}`).value) || 0;
-  const largeur = parseFloat(document.getElementById(`largeur-${id}`).value) || 0;
-  const diametre = parseFloat(document.getElementById(`diametre-${id}`).value) || 0;
-  const decoupeLongueur = parseFloat(document.getElementById(`decoupeLongueur-${id}`).value) || 0;
-  const decoupeLargeur = parseFloat(document.getElementById(`decoupeLargeur-${id}`).value) || 0;
-  const videLongueur = parseFloat(document.getElementById(`videLongueur-${id}`).value) || 0;
-  const videLargeur = parseFloat(document.getElementById(`videLargeur-${id}`).value) || 0;
-
-  if (forme === 'rectangle') {
-    return { forme, label:'Rectangle', outerLength: longueur, outerWidth: largeur, surface: longueur * largeur, perimeter: 2 * (longueur + largeur), recommendedMargin: 5, complexityLabel:'Simple', holeArea: 0, pathType:'rectangle' };
-  }
-  if (forme === 'L') {
-    const cutL = Math.min(decoupeLongueur, longueur);
-    const cutW = Math.min(decoupeLargeur, largeur);
-    return { forme, label:'Forme en L', outerLength: longueur, outerWidth: largeur, surface: Math.max(0, longueur * largeur - cutL * cutW), perimeter: Math.max(0, 2*(longueur+largeur)), recommendedMargin: 10, complexityLabel:'Moyenne', holeArea: cutL * cutW, cutL, cutW, pathType:'L' };
-  }
-  if (forme === 'rectangle_vide') {
-    const holeL = Math.min(videLongueur, longueur);
-    const holeW = Math.min(videLargeur, largeur);
-    return { forme, label:'Rectangle avec vide central', outerLength: longueur, outerWidth: largeur, surface: Math.max(0, longueur * largeur - holeL * holeW), perimeter: Math.max(0, 2*(longueur+largeur) + 2*(holeL+holeW)), recommendedMargin: 12, complexityLabel:'Complexe', holeArea: holeL * holeW, holeL, holeW, pathType:'rectangle_hole' };
-  }
-  if (forme === 'cercle') {
-    const r = diametre / 2;
-    return { forme, label:'Cercle', outerLength: diametre, outerWidth: diametre, surface: Math.PI * r * r, perimeter: Math.PI * diametre, recommendedMargin: 15, complexityLabel:'Complexe', holeArea:0, diameter:diametre, pathType:'circle' };
-  }
-  if (forme === 'demi_cercle') {
-    const r = diametre / 2;
-    return { forme, label:'Demi-cercle', outerLength: diametre, outerWidth: r, surface: 0.5 * Math.PI * r * r, perimeter: Math.PI * r + diametre, recommendedMargin: 14, complexityLabel:'Complexe', holeArea:0, diameter:diametre, pathType:'semi_circle' };
-  }
-  return null;
-}
-function geometryValid(g) {
-  if (!g) return false;
-  if (g.forme === 'rectangle') return g.outerLength > 0 && g.outerWidth > 0;
-  if (g.forme === 'L') return g.outerLength > 0 && g.outerWidth > 0 && g.surface > 0;
-  if (g.forme === 'rectangle_vide') return g.outerLength > 0 && g.outerWidth > 0 && g.surface > 0;
-  if (g.forme === 'cercle' || g.forme === 'demi_cercle') return g.diameter > 0;
-  return false;
-}
-
-function calculateRectangleScenario(params) {
-  const {orientation, outerLength: longueur, outerWidth: largeur, entraxeLambCm, entraxePlotCm, jeuLameMm, margePct, lame, plot, vis, section, bandeBitumeActive, geotextileActive, geometry} = params;
-  const lambourde = getByReference('LAMB_' + section + '_4');
-  const bandeBitume = getByReference('BANDE_BITUME');
-  const geotextile = getByReference('GEOTEXTILE');
-  const surface = geometry.surface;
-  const perimeter = geometry.perimeter;
-  const entraxeLamb = entraxeLambCm / 100;
-  const entraxePlot = entraxePlotCm / 100;
-
-  const dimPose = orientation === 'longueur' ? {longueurLame: longueur, largeurCouverture: largeur} : {longueurLame: largeur, largeurCouverture: longueur};
-  const largeurUtile = (lame.Largeur_mm + jeuLameMm) / 1000;
-  const nbRangees = Math.ceil((dimPose.largeurCouverture + (jeuLameMm / 1000)) / largeurUtile);
-  const piecesParRangee = Math.ceil(dimPose.longueurLame / lame.Longueur_m);
-  let nbPiecesLames = Math.ceil(nbRangees * piecesParRangee * (1 + margePct / 100));
-  const mlLamesAchetes = nbPiecesLames * lame.Longueur_m;
-  const mlLamesUtiles = nbRangees * dimPose.longueurLame;
-  const chuteLamesMl = Math.max(0, mlLamesAchetes - mlLamesUtiles);
-  const prixUnitaireLame = lame.Prix_public_HT;
-  const prixMlLame = lame.Longueur_m ? prixUnitaireLame / lame.Longueur_m : 0;
-  const coutLames = nbPiecesLames * prixUnitaireLame;
-
-  const margeLambourdesPct = Math.max(5, getLambourdeMargin(geometry.forme));
-  const nbLambourdes = Math.floor(dimPose.largeurCouverture / entraxeLamb) + 1;
-  const mlLambourdesBase = nbLambourdes * dimPose.longueurLame;
-  const mlLambourdes = mlLambourdesBase * (1 + margeLambourdesPct / 100);
-  const nbPiecesLambourdes = Math.ceil(mlLambourdes / lambourde.Longueur_m);
-  const mlLambourdesAchetes = nbPiecesLambourdes * lambourde.Longueur_m;
-  const coutLambourdes = coutSelonUnite(lambourde, nbPiecesLambourdes, mlLambourdesAchetes);
-
-  const plotsParLambourde = Math.floor(dimPose.longueurLame / entraxePlot) + 1;
-  const nbPlots = nbLambourdes * plotsParLambourde;
-  const coutPlots = nbPlots * plot.Prix_public_HT;
-
-  const nbVis = nbRangees * nbLambourdes * 2;
-  const coutVis = nbVis * vis.Prix_public_HT;
-
-  const mlBandeBitume = bandeBitumeActive ? mlLambourdesAchetes : 0;
-  const coutBandeBitume = mlBandeBitume * (bandeBitume ? bandeBitume.Prix_public_HT : 0);
-
-  const m2Geotextile = geotextileActive ? surface : 0;
-  const coutGeotextile = m2Geotextile * (geotextile ? geotextile.Prix_public_HT : 0);
-
-  const prixDallette = 2;
-  const nbDallettes = nbPlots;
-  const coutDallettes = nbDallettes * prixDallette;
-
-  const totalHT = coutLames + coutLambourdes + coutPlots + coutVis + coutBandeBitume + coutGeotextile + coutDallettes;
-  return {orientation, dimPose, surface, perimeter, entraxeLamb, entraxePlot, nbRangees, nbPiecesLames, mlLamesAchetes, mlLamesUtiles, chuteLamesMl, prixUnitaireLame, prixMlLame, coutLames, nbLambourdes, mlLambourdesBase, mlLambourdes, nbPiecesLambourdes, mlLambourdesAchetes, coutLambourdes, plotsParLambourde, nbPlots, coutPlots, nbVis, coutVis, mlBandeBitume, coutBandeBitume, m2Geotextile, coutGeotextile, nbDallettes, prixDallette, coutDallettes, totalHT, prixM2: totalHT / surface, lambourde, bandeBitume, geotextile, lame, plot, vis, section, marginApplied:margePct, margeLambourdesPct };
-}
-
-function calculateComplexScenario(params) {
-  const {orientation, entraxeLambCm, entraxePlotCm, jeuLameMm, margePct, lame, plot, vis, section, bandeBitumeActive, geotextileActive, geometry} = params;
-  const lambourde = getByReference('LAMB_' + section + '_4');
-  const bandeBitume = getByReference('BANDE_BITUME');
-  const geotextile = getByReference('GEOTEXTILE');
-  const surface = geometry.surface;
-  const perimeter = geometry.perimeter;
-  const entraxeLamb = entraxeLambCm / 100;
-  const entraxePlot = entraxePlotCm / 100;
-  const largeurUtile = (lame.Largeur_mm + jeuLameMm) / 1000;
-  const marginFactor = 1 + margePct / 100;
-  const complexityBoost = geometry.forme === 'L' ? 1.04 : geometry.forme === 'rectangle_vide' ? 1.08 : 1.10;
-
-  const mlLamesUtiles = surface / (lame.Largeur_mm / 1000);
-  const nbPiecesBase = Math.ceil((surface / (lame.Longueur_m * largeurUtile)));
-  const nbPiecesLames = Math.ceil(nbPiecesBase * marginFactor * complexityBoost);
-  const mlLamesAchetes = nbPiecesLames * lame.Longueur_m;
-  const chuteLamesMl = Math.max(0, mlLamesAchetes - mlLamesUtiles);
-  const prixUnitaireLame = lame.Prix_public_HT;
-  const prixMlLame = lame.Longueur_m ? prixUnitaireLame / lame.Longueur_m : 0;
-  const coutLames = nbPiecesLames * prixUnitaireLame;
-
-  const frameExtra = geometry.forme === 'rectangle_vide' ? 2 * (geometry.holeL + geometry.holeW) : 0;
-  const shapeStructureFactor = geometry.forme === 'L' ? 1.06 : geometry.forme === 'rectangle_vide' ? 1.12 : 1.10;
-  const margeLambourdesPct = getLambourdeMargin(geometry.forme);
-  const mlLambourdesBase = (surface / Math.max(entraxeLamb, 0.01)) * shapeStructureFactor + frameExtra;
-  const mlLambourdes = mlLambourdesBase * (1 + margeLambourdesPct / 100);
-  const nbLambourdes = Math.max(1, Math.round(mlLambourdesBase / Math.max(geometry.outerLength || geometry.outerWidth || 1, 1)));
-  const nbPiecesLambourdes = Math.ceil(mlLambourdes / lambourde.Longueur_m);
-  const mlLambourdesAchetes = nbPiecesLambourdes * lambourde.Longueur_m;
-  const coutLambourdes = coutSelonUnite(lambourde, nbPiecesLambourdes, mlLambourdesAchetes);
-
-  const nbPlots = Math.ceil(mlLambourdes / Math.max(entraxePlot, 0.01));
-  const plotsParLambourde = Math.max(1, Math.round(nbPlots / Math.max(nbLambourdes, 1)));
-  const coutPlots = nbPlots * plot.Prix_public_HT;
-
-  const nbVis = Math.ceil(surface / Math.max(largeurUtile * entraxeLamb, 0.01) * 2);
-  const coutVis = nbVis * vis.Prix_public_HT;
-
-  const mlBandeBitume = bandeBitumeActive ? mlLambourdesAchetes : 0;
-  const coutBandeBitume = mlBandeBitume * (bandeBitume ? bandeBitume.Prix_public_HT : 0);
-
-  const m2Geotextile = geotextileActive ? surface : 0;
-  const coutGeotextile = m2Geotextile * (geotextile ? geotextile.Prix_public_HT : 0);
-
-  const prixDallette = 2;
-  const nbDallettes = nbPlots;
-  const coutDallettes = nbDallettes * prixDallette;
-
-  const totalHT = coutLames + coutLambourdes + coutPlots + coutVis + coutBandeBitume + coutGeotextile + coutDallettes;
-  const longueurTrav = orientation === 'longueur' ? geometry.outerLength : geometry.outerWidth;
-  const largeurCov = orientation === 'longueur' ? geometry.outerWidth : geometry.outerLength;
-
-  return {orientation, dimPose:{longueurLame: longueurTrav, largeurCouverture: largeurCov}, surface, perimeter, entraxeLamb, entraxePlot, nbRangees: Math.ceil(largeurCov / largeurUtile), nbPiecesLames, mlLamesAchetes, mlLamesUtiles, chuteLamesMl, prixUnitaireLame, prixMlLame, coutLames, nbLambourdes, mlLambourdesBase, mlLambourdes, nbPiecesLambourdes, mlLambourdesAchetes, coutLambourdes, plotsParLambourde, nbPlots, coutPlots, nbVis, coutVis, mlBandeBitume, coutBandeBitume, m2Geotextile, coutGeotextile, nbDallettes, prixDallette, coutDallettes, totalHT, prixM2: totalHT / surface, lambourde, bandeBitume, geotextile, lame, plot, vis, section, marginApplied:margePct * complexityBoost, margeLambourdesPct };
-}
-function calculScenario(params) {
-  return params.geometry.forme === 'rectangle' ? calculateRectangleScenario(params) : calculateComplexScenario(params);
-}
-
-function calculerZone(id, globals) {
-  const geometry = getGeometryFromZone(id);
-  if (!geometryValid(geometry)) throw new Error(`Zone ${id} : dimensions invalides.`);
-  const nom = document.getElementById(`zoneNom-${id}`).value.trim() || `Zone ${id}`;
-  const sensPose = document.getElementById(`sensPose-${id}`).value;
-  const margePct = Math.max(globals.margeSaisie, geometry.recommendedMargin);
-  const baseParams = {
-    outerLength: geometry.outerLength, outerWidth: geometry.outerWidth,
-    entraxeLambCm: globals.entraxeLambCm, entraxePlotCm: globals.entraxePlotCm,
-    jeuLameMm: globals.jeuLameMm, margePct, lame: globals.lame, plot: globals.plot, vis: globals.vis,
-    section: globals.section, bandeBitumeActive: globals.bandeBitumeActive, geotextileActive: globals.geotextileActive, geometry
-  };
-  const scenarios = ['longueur','largeur'].map(orientation => calculScenario({ ...baseParams, orientation }));
-  const choisi = sensPose === 'auto' ? scenarios.sort((a,b)=>a.totalHT-b.totalHT)[0] : scenarios.find(s => s.orientation === sensPose);
-  return { id, nom, geometry, sensPose, ...choisi };
-}
-
-function calculTerrasseMulti() {
-  try {
-    const globals = {
-      entraxeLambCm: parseFloat(document.getElementById('entraxe').value) || 50,
-      entraxePlotCm: parseFloat(document.getElementById('entraxePlot').value) || 50,
-      jeuLameMm: parseFloat(document.getElementById('jeuLame').value) || 5,
-      margeSaisie: parseFloat(document.getElementById('margeDecoupe').value) || 0,
-      lame: getByReference(document.getElementById('lame').value),
-      plot: getByReference(document.getElementById('plotRef').value),
-      vis: getByReference(document.getElementById('visRef').value),
-      section: document.getElementById('section').value,
-      bandeBitumeActive: document.getElementById('bandeBitume').value === 'oui',
-      geotextileActive: document.getElementById('geotextile').value === 'oui',
-      mutualiser: document.getElementById('mutualiser').value === 'oui'
-    };
-
-    const zoneIds = Array.from(document.querySelectorAll('.zone-card')).map(el => Number(el.id.split('-')[1]));
-    const zones = zoneIds.map(id => calculerZone(id, globals));
-
-    const totalSurface = zones.reduce((s,z)=>s+z.surface,0);
-    const totalPerimetre = zones.reduce((s,z)=>s+z.perimeter,0);
-    const totalLamesBrut = zones.reduce((s,z)=>s+z.coutLames,0);
-    const totalLambourdes = zones.reduce((s,z)=>s+z.coutLambourdes,0);
-    const totalPlots = zones.reduce((s,z)=>s+z.coutPlots,0);
-    const totalVis = zones.reduce((s,z)=>s+z.coutVis,0);
-    const totalBitume = zones.reduce((s,z)=>s+z.coutBandeBitume,0);
-    const totalGeotextile = zones.reduce((s,z)=>s+z.coutGeotextile,0);
-    const totalDallettes = zones.reduce((s,z)=>s+z.coutDallettes,0);
-
-    let remiseChutes = 0;
-    if (globals.mutualiser) {
-      remiseChutes = Math.min(totalLamesBrut * 0.04, zones.reduce((s,z)=>s + (z.chuteLamesMl * z.prixMlLame), 0) * 0.45);
-    }
-    const totalLames = totalLamesBrut - remiseChutes;
-    const totalHT = totalLames + totalLambourdes + totalPlots + totalVis + totalBitume + totalGeotextile + totalDallettes;
-    const prixM2 = totalSurface > 0 ? totalHT / totalSurface : 0;
-
-    document.getElementById('kpiSurface').textContent = n2(totalSurface) + ' m²';
-    document.getElementById('kpiPerimetre').textContent = n2(totalPerimetre) + ' m';
-    document.getElementById('kpiTotal').textContent = euro(totalHT);
-    document.getElementById('kpiM2').textContent = euro(prixM2);
-
-    const qLames = zones.reduce((s,z)=>s+z.nbPiecesLames,0);
-    const qLamb = zones.reduce((s,z)=>s+z.nbPiecesLambourdes,0);
-    const qPlots = zones.reduce((s,z)=>s+z.nbPlots,0);
-    const qVis = zones.reduce((s,z)=>s+z.nbVis,0);
-    const qDallettes = zones.reduce((s,z)=>s+z.nbDallettes,0);
-    const mlBitume = zones.reduce((s,z)=>s+z.mlBandeBitume,0);
-    const qGeotextile = zones.reduce((s,z)=>s+z.m2Geotextile,0);
-
-    const rows = [
-      ['Lames', `${n0(qLames)} pièces`, `${n2(globals.lame.Prix_public_HT)} €/u`, euro(totalLames), `${globals.lame.Reference} — remise chutes mutualisées : ${euro(remiseChutes)}`],
-      ['Lambourdes', `${n0(qLamb)} pièces de 4 m`, `${n2(prixUnitaireAchat(getByReference('LAMB_' + globals.section + '_4')))} €/u`, euro(totalLambourdes), `Section ${globals.section} · soit ${n2(prixParMl(getByReference('LAMB_' + globals.section + '_4')))} €/ml`],
-      ['Plots', `${n0(qPlots)} u`, euro(globals.plot.Prix_public_HT), euro(totalPlots), `${globals.plot.Reference}`],
-      ['Dallettes', `${n0(qDallettes)} u`, euro(2), euro(totalDallettes), '1 dalette par plot'],
-      ['Vis inox', `${n0(qVis)} u`, euro(globals.vis.Prix_public_HT), euro(totalVis), `${globals.vis.Reference}`],
-      ['Bande bitume', mlBitume ? `${n2(mlBitume)} ml` : 'Non', mlBitume ? `${n2(getByReference('BANDE_BITUME').Prix_public_HT)} €/ml` : '-', euro(totalBitume), 'sur lambourdes'],
-      ['Géotextile', qGeotextile ? `${n2(qGeotextile)} m²` : 'Non', qGeotextile ? `${n2(getByReference('GEOTEXTILE').Prix_public_HT)} €/m²` : '-', euro(totalGeotextile), 'sous terrasse']
-    ];
-    const tbody = document.querySelector('#tableResult tbody');
-    tbody.innerHTML = rows.map(r => `
-      <tr>
-        <td><strong>${r[0]}</strong><br><span class="small">${r[4]}</span></td>
-        <td>${r[1]}</td>
-        <td>${r[2]}</td>
-        <td>${r[3]}</td>
-      </tr>`).join('') + `
-      <tr class="total-row"><td>Total matériaux HT</td><td></td><td></td><td>${euro(totalHT)}</td></tr>`;
-
-    const lame = globals.lame;
-    const entraxeLamb = globals.entraxeLambCm / 100;
-    const entraxePlot = globals.entraxePlotCm / 100;
-    const porteeMax = sections[globals.section] || 0;
-    const entraxeLambMaxReco = getEntaxeLambourdeMax(lame);
-    const sectionMiniReco = getSectionMini(entraxePlot);
-    let badgeClass = 'ok', badgeText = 'OK';
-    if (entraxePlot > porteeMax && entraxePlot <= porteeMax * 1.2) { badgeClass = 'warn'; badgeText = 'Limite'; }
-    else if (entraxePlot > porteeMax * 1.2) { badgeClass = 'bad'; badgeText = 'Non conforme'; }
-    let badgeLamesClass = 'ok', badgeLamesText = 'OK';
-    if (entraxeLamb > entraxeLambMaxReco && entraxeLamb <= entraxeLambMaxReco * 1.15) { badgeLamesClass = 'warn'; badgeLamesText = 'Limite'; }
-    else if (entraxeLamb > entraxeLambMaxReco * 1.15) { badgeLamesClass = 'bad'; badgeLamesText = 'Non conforme'; }
-
-    document.getElementById('blocTechnique').innerHTML = `
-      <div class="muted-box">
-        <strong>Contrôle technique simplifié global</strong><br><br>
-        Lame : <strong>${lame.Reference}</strong> (${n0(lame.Epaisseur_mm)}x${n0(lame.Largeur_mm)} mm)<br>
-        Entraxe lambourdes saisi : <strong>${n2(entraxeLamb)} m</strong> — recommandé max : <strong>${n2(entraxeLambMaxReco)} m</strong>
-        <span class="badge ${badgeLamesClass}">${badgeLamesText}</span><br>
-        Section lambourde : <strong>${globals.section}</strong> — section mini recommandée : <strong>${sectionMiniReco}</strong><br>
-        Portée admissible simplifiée : <strong>${n2(porteeMax)} m</strong><br>
-        Entraxe plots saisi : <strong>${n2(entraxePlot)} m</strong>
-        <span class="badge ${badgeClass}">${badgeText}</span><br><br>
-        <ul class="clean">
-          <li>Nombre de zones : <strong>${zones.length}</strong></li>
-          <li>Mutualisation des chutes : <strong>${globals.mutualiser ? 'Oui' : 'Non'}</strong></li>
-          <li>Remise chutes appliquée sur lames : <strong>${euro(remiseChutes)}</strong></li>
-          <li>Surface totale : <strong>${n2(totalSurface)} m²</strong></li>
-          <li>Périmètre total : <strong>${n2(totalPerimetre)} m</strong></li>
-        </ul>
-      </div>`;
-
-    const zoneDetails = document.getElementById('zoneDetails');
-    zoneDetails.innerHTML = zones.map(z => `
-      <div class="zone-summary-card">
-        <strong>${z.nom}</strong><br>
-        ${z.geometry.label} — ${n2(z.surface)} m² — ${euro(z.totalHT)} HT<br>
-        <span class="small">
-          Pose lames : ${z.orientation === 'longueur' ? 'longueur' : 'largeur'} ·
-          ${n0(z.nbPiecesLames)} lames · ${n0(z.nbPlots)} plots · ${n0(z.nbDallettes)} dallettes
-        </span>
-      </div>`).join('');
-
-    dernierCalculZones = zones;
-    alimenterSelectZones(zones);
-    dessinerProjetZones(zones);
-    dessinerZoneSelectionnee();
-    document.getElementById('zoneLegend').innerHTML = zones.map((z, index) => `
-      <div style="display:flex; align-items:flex-start; gap:10px; margin-bottom:8px;">
-        <span style="display:inline-flex; align-items:center; justify-content:center; width:28px; height:28px; border-radius:999px; background:${getZoneColor(index).fill}; border:2px solid ${getZoneColor(index).stroke}; font-weight:700; font-size:12px;">Z${index + 1}</span>
-        <div><strong>${z.nom}</strong><br><span class="small">${z.geometry.label} · ${n2(z.surface)} m² · ${euro(z.totalHT)} HT</span></div>
-      </div>
-    `).join('');
-    document.getElementById('resumePose').innerHTML = `
-      Projet affiché : <strong>${zones.length}</strong> zone(s) repérées sur le croquis. Surface totale : <strong>${n2(totalSurface)} m²</strong>.
-    `;
-  } catch (err) {
-    alert(err.message || 'Erreur de calcul.');
-  }
-}
-
-function drawPath(ctx, geometry, x0, y0, scale) {
-  if (geometry.pathType === 'rectangle') { ctx.beginPath(); ctx.rect(x0, y0, geometry.outerLength * scale, geometry.outerWidth * scale); return; }
-  if (geometry.pathType === 'L') {
-    const W = geometry.outerLength * scale, H = geometry.outerWidth * scale, cutW = geometry.cutL * scale, cutH = geometry.cutW * scale;
-    ctx.beginPath(); ctx.moveTo(x0, y0); ctx.lineTo(x0 + W, y0); ctx.lineTo(x0 + W, y0 + H - cutH); ctx.lineTo(x0 + W - cutW, y0 + H - cutH); ctx.lineTo(x0 + W - cutW, y0 + H); ctx.lineTo(x0, y0 + H); ctx.closePath(); return;
-  }
-  if (geometry.pathType === 'rectangle_hole') { ctx.beginPath(); ctx.rect(x0, y0, geometry.outerLength * scale, geometry.outerWidth * scale); return; }
-  if (geometry.pathType === 'circle') { ctx.beginPath(); ctx.arc(x0 + (geometry.outerLength * scale)/2, y0 + (geometry.outerWidth * scale)/2, (geometry.diameter * scale)/2, 0, Math.PI * 2); return; }
-  if (geometry.pathType === 'semi_circle') { ctx.beginPath(); ctx.arc(x0 + (geometry.outerLength * scale)/2, y0 + geometry.outerWidth * scale, (geometry.diameter * scale)/2, Math.PI, 2 * Math.PI); ctx.closePath(); return; }
-}
-function getHoleRect(geometry, x0, y0, scale) {
-  if (geometry.pathType !== 'rectangle_hole') return null;
-  const holeW = geometry.holeL * scale, holeH = geometry.holeW * scale, outerW = geometry.outerLength * scale, outerH = geometry.outerWidth * scale;
-  return { x: x0 + (outerW - holeW) / 2, y: y0 + (outerH - holeH) / 2, w: holeW, h: holeH };
-}
-function drawGeometryWithDimensions(ctx, canvas, geometry, x0, y0, echelle, drawHole=true) {
-  drawPath(ctx, geometry, x0, y0, echelle);
-  ctx.strokeStyle = '#1f2937'; ctx.lineWidth = 3; ctx.stroke();
-  const holeRect = getHoleRect(geometry, x0, y0, echelle);
-  if (drawHole && holeRect) {
-    ctx.fillStyle = '#dbeafe'; ctx.fillRect(holeRect.x, holeRect.y, holeRect.w, holeRect.h);
-    ctx.strokeStyle = '#1e3a8a'; ctx.lineWidth = 3; ctx.strokeRect(holeRect.x, holeRect.y, holeRect.w, holeRect.h);
-    ctx.fillStyle = '#1e3a8a'; ctx.font = '13px Arial'; ctx.fillText('Piscine / vide', holeRect.x + 8, holeRect.y + 18);
-  }
-  const w = geometry.outerLength * echelle, h = geometry.outerWidth * echelle;
-  ctx.fillStyle = '#111827'; ctx.font = '14px Arial';
-  ctx.fillText((geometry.outerLength).toFixed(2).replace('.', ',') + ' m', x0 + w / 2 - 25, y0 + h + 28);
-  ctx.save(); ctx.translate(x0 - 36, y0 + h / 2); ctx.rotate(-Math.PI / 2);
-  ctx.fillText((geometry.outerWidth).toFixed(2).replace('.', ',') + ' m', 0, 0); ctx.restore();
-}
-
-function getZoneColor(index) {
-  const colors = [
-    { fill:'rgba(19,111,99,0.18)', stroke:'#136f63' },
-    { fill:'rgba(37,99,235,0.18)', stroke:'#2563eb' },
-    { fill:'rgba(234,88,12,0.18)', stroke:'#ea580c' },
-    { fill:'rgba(147,51,234,0.18)', stroke:'#9333ea' },
-    { fill:'rgba(220,38,38,0.18)', stroke:'#dc2626' },
-    { fill:'rgba(8,145,178,0.18)', stroke:'#0891b2' }
-  ];
-  return colors[index % colors.length];
-}
-function drawZoneShape(ctx, geometry, x0, y0, scale, fill, stroke) {
-  ctx.save();
-  drawPath(ctx, geometry, x0, y0, scale);
-  ctx.fillStyle = fill;
-  ctx.fill('evenodd');
-  ctx.lineWidth = 3;
-  ctx.strokeStyle = stroke;
-  ctx.stroke();
-  const holeRect = getHoleRect(geometry, x0, y0, scale);
-  if (holeRect) {
-    ctx.fillStyle = 'rgba(255,255,255,0.95)';
-    ctx.fillRect(holeRect.x, holeRect.y, holeRect.w, holeRect.h);
-    ctx.lineWidth = 2;
-    ctx.strokeStyle = stroke;
-    ctx.strokeRect(holeRect.x, holeRect.y, holeRect.w, holeRect.h);
-  }
-  ctx.restore();
-}
-function getGeometryCenter(geometry, x0, y0, scale) {
-  if (geometry.pathType === 'circle') {
-    return { x: x0 + (geometry.outerLength * scale) / 2, y: y0 + (geometry.outerWidth * scale) / 2 };
-  }
-  if (geometry.pathType === 'semi_circle') {
-    return { x: x0 + (geometry.outerLength * scale) / 2, y: y0 + (geometry.outerWidth * scale) * 0.65 };
-  }
-  return { x: x0 + (geometry.outerLength * scale) / 2, y: y0 + (geometry.outerWidth * scale) / 2 };
-}
-function drawZoneLabel(ctx, label, geometry, x0, y0, scale, stroke) {
-  const c = getGeometryCenter(geometry, x0, y0, scale);
-  ctx.save();
-  ctx.beginPath();
-  ctx.arc(c.x, c.y, 24, 0, Math.PI * 2);
-  ctx.fillStyle = 'rgba(255,255,255,0.96)';
-  ctx.fill();
-  ctx.lineWidth = 2;
-  ctx.strokeStyle = stroke;
-  ctx.stroke();
-  ctx.fillStyle = '#111827';
-  ctx.font = 'bold 16px Arial';
-  const w = ctx.measureText(label).width;
-  ctx.fillText(label, c.x - w / 2, c.y + 6);
-  ctx.restore();
-}
-function dessinerProjetZones(zones) {
-  const canvas = document.getElementById('canvasTerrasse');
-  const ctx = canvas.getContext('2d');
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-  if (!zones || !zones.length) return;
-
-  const cols = zones.length <= 2 ? zones.length : 2;
-  const rows = Math.ceil(zones.length / cols);
-  const outerPad = 28;
-  const gutter = 18;
-  const cellW = (canvas.width - outerPad * 2 - gutter * (cols - 1)) / cols;
-  const cellH = (canvas.height - outerPad * 2 - gutter * (rows - 1)) / rows;
-
-  ctx.fillStyle = '#f8fafc';
-  ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-  zones.forEach((zone, index) => {
-    const col = index % cols;
-    const row = Math.floor(index / cols);
-    const cellX = outerPad + col * (cellW + gutter);
-    const cellY = outerPad + row * (cellH + gutter);
-
-    ctx.save();
-    ctx.fillStyle = '#ffffff';
-    ctx.strokeStyle = '#d9e1e7';
-    ctx.lineWidth = 1.5;
-    ctx.beginPath();
-    ctx.roundRect(cellX, cellY, cellW, cellH, 14);
-    ctx.fill();
-    ctx.stroke();
-    ctx.restore();
-
-    const title = `Z${index + 1} — ${zone.nom}`;
-    ctx.fillStyle = '#17212b';
-    ctx.font = 'bold 14px Arial';
-    ctx.fillText(title.length > 30 ? title.slice(0, 29) + '…' : title, cellX + 12, cellY + 22);
-
-    const subtitle = `${zone.geometry.label} · ${n2(zone.surface)} m²`;
-    ctx.fillStyle = '#6b7280';
-    ctx.font = '12px Arial';
-    ctx.fillText(subtitle, cellX + 12, cellY + 40);
-
-    const drawPadX = 18;
-    const drawPadTop = 54;
-    const drawPadBottom = 20;
-    const availW = cellW - drawPadX * 2;
-    const availH = cellH - drawPadTop - drawPadBottom;
-    const g = zone.geometry;
-    const scale = Math.min(availW / Math.max(g.outerLength, 0.1), availH / Math.max(g.outerWidth, 0.1));
-    const shapeW = g.outerLength * scale;
-    const shapeH = g.outerWidth * scale;
-    const x0 = cellX + (cellW - shapeW) / 2;
-    const y0 = cellY + drawPadTop + (availH - shapeH) / 2;
-    const color = getZoneColor(index);
-
-    drawZoneShape(ctx, g, x0, y0, scale, color.fill, color.stroke);
-    drawZoneLabel(ctx, `Z${index + 1}`, g, x0, y0, scale, color.stroke);
-  });
-}
-
-
-function alimenterSelectZones(zones) {
-  const sel = document.getElementById('zoneSelectDetail');
-  const current = sel.value;
-  sel.innerHTML = zones.map((z, index) => `<option value="${index}">Z${index + 1} — ${z.nom}</option>`).join('');
-  if (current && Number(current) < zones.length) sel.value = current;
-  else sel.value = '0';
-}
-
-function detailZoomIn() {
-  detailZoomLevel = Math.min(3, detailZoomLevel * 1.2);
-  dessinerZoneSelectionnee();
-}
-function detailZoomOut() {
-  detailZoomLevel = Math.max(0.6, detailZoomLevel / 1.2);
-  dessinerZoneSelectionnee();
-}
-function detailZoomReset() {
-  detailZoomLevel = 1;
-  dessinerZoneSelectionnee();
-}
-
-function dessinerZoneSelectionnee() {
-  const canvas = document.getElementById('canvasZoneDetail');
-  const ctx = canvas.getContext('2d');
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-  if (!dernierCalculZones.length) return;
-  const sel = document.getElementById('zoneSelectDetail');
-  const zoneIndex = Math.min(Number(sel.value || 0), dernierCalculZones.length - 1);
-  const zone = dernierCalculZones[zoneIndex];
-  if (!zone) return;
-
-  const g = zone.geometry;
-  const color = getZoneColor(zoneIndex);
-  const paddingX = 70;
-  const paddingTop = 70;
-  const paddingBottom = 70;
-  const availW = canvas.width - paddingX * 2;
-  const availH = canvas.height - paddingTop - paddingBottom;
-  const baseScale = Math.min(availW / Math.max(g.outerLength, 0.1), availH / Math.max(g.outerWidth, 0.1));
-  const scale = baseScale * detailZoomLevel;
-  const shapeW = g.outerLength * scale;
-  const shapeH = g.outerWidth * scale;
-  const x0 = (canvas.width - shapeW) / 2;
-  const y0 = paddingTop + (availH - shapeH) / 2;
-
-  ctx.fillStyle = '#f8fafc';
-  ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-  ctx.fillStyle = '#17212b';
-  ctx.font = 'bold 18px Arial';
-  ctx.fillText(`Z${zoneIndex + 1} — ${zone.nom}`, 24, 30);
-  ctx.fillStyle = '#6b7280';
-  ctx.font = '13px Arial';
-  ctx.fillText(`${g.label} · ${n2(zone.surface)} m² · pose des lames : ${zone.orientation === 'longueur' ? 'longueur' : 'largeur'}`, 24, 52);
-
-  drawZoneShape(ctx, g, x0, y0, scale, color.fill, color.stroke);
-
-  // lames
-  ctx.save();
-  drawPath(ctx, g, x0, y0, scale);
-  ctx.clip();
-  const pasLame = Math.max(((zone.lame.Largeur_mm / 1000) + (zone.jeuLameMm / 1000)) * scale, 6);
-  ctx.strokeStyle = '#c08a57';
-  ctx.lineWidth = 1;
-  if (zone.orientation === 'longueur') {
-    for (let y = y0; y <= y0 + shapeH + 0.1; y += pasLame) {
-      ctx.beginPath(); ctx.moveTo(x0 - 12, y); ctx.lineTo(x0 + shapeW + 12, y); ctx.stroke();
-    }
-  } else {
-    for (let x = x0; x <= x0 + shapeW + 0.1; x += pasLame) {
-      ctx.beginPath(); ctx.moveTo(x, y0 - 12); ctx.lineTo(x, y0 + shapeH + 12); ctx.stroke();
-    }
-  }
-
-  // lambourdes
-  const pasLamb = Math.max(zone.entraxeLamb * scale, 12);
-  ctx.strokeStyle = '#475569';
-  ctx.lineWidth = 2;
-  if (zone.orientation === 'longueur') {
-    for (let x = x0; x <= x0 + shapeW + 0.1; x += pasLamb) {
-      ctx.beginPath(); ctx.moveTo(x, y0 - 8); ctx.lineTo(x, y0 + shapeH + 8); ctx.stroke();
-    }
-  } else {
-    for (let y = y0; y <= y0 + shapeH + 0.1; y += pasLamb) {
-      ctx.beginPath(); ctx.moveTo(x0 - 8, y); ctx.lineTo(x0 + shapeW + 8, y); ctx.stroke();
-    }
-  }
-  ctx.restore();
-
-  drawGeometryWithDimensions(ctx, canvas, g, x0, y0, scale, true);
-  drawZoneLabel(ctx, `Z${zoneIndex + 1}`, g, x0, y0, scale, color.stroke);
-
-  // arrows / legend
-  ctx.fillStyle = '#111827';
-  ctx.font = '12px Arial';
-  const legendY = canvas.height - 36;
-  ctx.fillStyle = '#c08a57';
-  ctx.fillRect(24, legendY - 10, 26, 3);
-  ctx.fillStyle = '#111827';
-  ctx.fillText('Sens des lames', 58, legendY);
-  ctx.fillStyle = '#475569';
-  ctx.fillRect(180, legendY - 10, 26, 3);
-  ctx.fillText('Lambourdes', 214, legendY);
-
-  document.getElementById('zoneDetailResume').innerHTML = `
-    <strong>${zone.nom}</strong><br>
-    ${g.label} · <strong>${n2(zone.surface)} m²</strong> · <strong>${euro(zone.totalHT)} HT</strong><br>
-    Lames dans la <strong>${zone.orientation === 'longueur' ? 'longueur' : 'largeur'}</strong> ·
-    ${n0(zone.nbPiecesLames)} lames · ${n0(zone.nbLambourdes)} lambourdes estimées ·
-    ${n0(zone.nbPlots)} plots · ${n0(zone.nbDallettes)} dallettes
-  `;
-}
-initForm();
-calculTerrasseMulti();
+let dernierCalculZones=[];let detailZoomLevel=1;const sections={"45x70":.40,"45x95":.50,"63x75":.50,"63x100":.65,"75x150":.80};let zoneCount=0;
+function euro(v){return new Intl.NumberFormat('fr-FR',{style:'currency',currency:'EUR'}).format(v||0)}function n2(v){return new Intl.NumberFormat('fr-FR',{minimumFractionDigits:2,maximumFractionDigits:2}).format(v||0)}function n0(v){return new Intl.NumberFormat('fr-FR',{maximumFractionDigits:0}).format(v||0)}function getByReference(ref){return catalogue.find(x=>x.Reference===ref)}function getByFamily(f){return catalogue.filter(x=>(x.Famille||'').toLowerCase()===f.toLowerCase())}function prixUnitaireAchat(a){return a?Number(a.Prix_public_HT||0):0}function prixParMl(a){if(!a)return 0;const p=prixUnitaireAchat(a);if((a.Unite||'').toLowerCase()==='ml')return p;if(a.Longueur_m&&Number(a.Longueur_m)>0)return p/Number(a.Longueur_m);return p}function coutSelonUnite(a,qPieces,qMl){if(!a)return 0;const u=(a.Unite||'').toLowerCase(),p=prixUnitaireAchat(a);if(u==='ml'||u==='m2')return p*(Number(qMl)||0);return p*(Number(qPieces)||0)}
+function populateSelect(id,items,fmt,valueField='Reference'){const sel=document.getElementById(id);sel.innerHTML=items.map(item=>`<option value="${item[valueField]}">${fmt(item)}</option>`).join('')}
+function toggleAjoutReference(){document.getElementById('blocAjoutReference').classList.toggle('hidden')}function toggleGestionReferences(){document.getElementById('blocGestionReferences').classList.toggle('hidden');afficherRefsPerso()}function resetAjoutReference(){['newReference','newDesignation','newEpaisseur','newLargeur','newLongueur','newPrix'].forEach(id=>document.getElementById(id).value='');document.getElementById('newFournisseur').value='Vivre en Bois';document.getElementById('newUnite').value='u';document.getElementById('newFamille').value='Lame'}
+function chargerCataloguePerso(){try{const refs=JSON.parse(localStorage.getItem('cataloguePersoTerrasseBuilders')||'[]');refs.forEach(r=>{if(r&&r.Reference&&!catalogue.some(x=>x.Reference===r.Reference))catalogue.push(r)})}catch(e){console.warn(e)}}function sauvegarderCataloguePerso(){localStorage.setItem('cataloguePersoTerrasseBuilders',JSON.stringify(catalogue.filter(x=>x.Perso===true)))}
+function formatSelectLame(i){return `${i.Reference} — ${i.Designation} — ${n2(i.Largeur_mm)} mm — ${n2(i.Longueur_m)} m — ${n2(i.Prix_public_HT)} €/u${i.Perso?' — perso':''}`}function formatSimple(i){return `${i.Reference} — ${i.Designation} — ${n2(i.Prix_public_HT)} €/${i.Unite||'u'}${i.Perso?' — perso':''}`}
+function rechargerSelectsCatalogue(){const vals={lame:document.getElementById('lame')?.value,plotRef:document.getElementById('plotRef')?.value,visRef:document.getElementById('visRef')?.value,section:document.getElementById('section')?.value};populateSelect('lame',getByFamily('Lame'),formatSelectLame);populateSelect('plotRef',getByFamily('Plot'),formatSimple);populateSelect('visRef',getByFamily('Vis'),formatSimple);['lame','plotRef','visRef'].forEach(id=>{if(vals[id]&&catalogue.some(x=>x.Reference===vals[id]))document.getElementById(id).value=vals[id]});if(vals.section)document.getElementById('section').value=vals.section;afficherRefsPerso()}
+function ajouterReferenceCatalogue(){const famille=document.getElementById('newFamille').value,reference=document.getElementById('newReference').value.trim(),designation=document.getElementById('newDesignation').value.trim(),epaisseur=parseFloat(document.getElementById('newEpaisseur').value)||null,largeur=parseFloat(document.getElementById('newLargeur').value)||null,longueur=parseFloat(document.getElementById('newLongueur').value)||null,unite=document.getElementById('newUnite').value,prix=parseFloat(document.getElementById('newPrix').value)||0,fournisseur=document.getElementById('newFournisseur').value.trim()||'';if(!reference||!designation||prix<=0){alert('Il faut au minimum une référence, une désignation et un prix HT.');return}if(catalogue.some(x=>x.Reference===reference)){alert('Cette référence existe déjà.');return}if((famille==='Lame'||famille==='Lambourde')&&(!longueur||longueur<=0)){alert('Pour une lame ou une lambourde, indique une longueur en m.');return}if(famille==='Lame'&&(!largeur||largeur<=0)){alert('Pour une lame, indique une largeur en mm.');return}catalogue.push({Perso:true,Famille:famille,Reference:reference,Designation:designation,Epaisseur_mm:epaisseur,Largeur_mm:largeur,Longueur_m:longueur,Unite:unite,Prix_public_HT:prix,Prix_pro_HT:null,Fournisseur:fournisseur});sauvegarderCataloguePerso();rechargerSelectsCatalogue();document.getElementById(famille==='Lame'?'lame':famille==='Plot'?'plotRef':famille==='Vis'?'visRef':'lame').value=reference;autoDimensionnerGlobal();resetAjoutReference();alert('Référence ajoutée et sauvegardée.')} 
+function afficherRefsPerso(){const el=document.getElementById('listeRefsPerso');if(!el)return;const refs=catalogue.filter(x=>x.Perso===true);el.innerHTML=refs.length?refs.map(r=>`<div class="ref-pill"><div><strong>${r.Reference}</strong><br><span class="small">${r.Famille} · ${r.Designation} · ${n2(r.Prix_public_HT)} €/${r.Unite||'u'}</span></div><button type="button" class="danger" onclick="supprimerRefPerso('${r.Reference.replace(/'/g,"\\'")}')">Supprimer</button></div>`).join(''):'<p class="small">Aucune référence perso pour le moment.</p>'}function supprimerRefPerso(ref){if(!confirm('Supprimer cette référence perso ?'))return;catalogue=catalogue.filter(x=>x.Reference!==ref||x.Perso!==true);sauvegarderCataloguePerso();rechargerSelectsCatalogue();calculTerrasseMulti()}function supprimerToutesRefsPerso(){if(!confirm('Supprimer toutes les références perso ?'))return;catalogue=catalogue.filter(x=>x.Perso!==true);sauvegarderCataloguePerso();rechargerSelectsCatalogue();calculTerrasseMulti()}function exporterRefsPerso(){const blob=new Blob([JSON.stringify(catalogue.filter(x=>x.Perso===true),null,2)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='references_perso_terrasse_builders.json';a.click();URL.revokeObjectURL(a.href)}function importerRefsPerso(e){const file=e.target.files[0];if(!file)return;const reader=new FileReader();reader.onload=()=>{try{const refs=JSON.parse(reader.result);if(!Array.isArray(refs))throw new Error('Format invalide');refs.forEach(r=>{if(r.Reference&&!catalogue.some(x=>x.Reference===r.Reference))catalogue.push({...r,Perso:true})});sauvegarderCataloguePerso();rechargerSelectsCatalogue();alert('Import terminé.')}catch(err){alert('Fichier JSON invalide.')}};reader.readAsText(file);e.target.value=''}
+function initForm(){chargerCataloguePerso();populateSelect('lame',getByFamily('Lame'),formatSelectLame);const sectionsItems=["45x70","45x95","63x75","63x100","75x150"].map(s=>({Reference:s,label:`${s} — portée simplifiée ${n2(sections[s])} m`}));populateSelect('section',sectionsItems,i=>i.label,'Reference');document.getElementById('section').value='45x95';populateSelect('plotRef',getByFamily('Plot'),formatSimple);populateSelect('visRef',getByFamily('Vis'),formatSimple);['lame','entraxePlot'].forEach(id=>document.getElementById(id).addEventListener('change',autoDimensionnerGlobal));ajouterZone();autoDimensionnerGlobal()}
+function getEntaxeLambourdeMax(lame){if(!lame)return .4;const e=Number(lame.Epaisseur_mm||0),l=Number(lame.Largeur_mm||0);if(e<=21&&l>=140)return .40;if(e<=21)return .40;if(e<=23)return .45;if(e<=27)return .45;return .50}function getLambourdeMargin(f){if(f==='L')return 10;if(f==='rectangle_vide')return 12;if(f==='cercle'||f==='demi_cercle')return 15;return 5}function getSectionMini(entraxePlotM){const o=Object.entries(sections).sort((a,b)=>a[1]-b[1]);const found=o.find(([s,p])=>entraxePlotM<=p);return found?found[0]:o[o.length-1][0]}function autoDimensionnerGlobal(){const lame=getByReference(document.getElementById('lame').value),cm=parseFloat(document.getElementById('entraxePlot').value)||50;document.getElementById('entraxe').value=Math.round(getEntaxeLambourdeMax(lame)*100);document.getElementById('section').value=getSectionMini(cm/100)}
+function zoneTemplate(id){return `<div class="zone-card" id="zone-${id}"><div class="zone-head"><div class="zone-title">Zone ${id}</div><button type="button" class="secondary" onclick="supprimerZone(${id})">Supprimer</button></div><div class="form-grid"><div style="grid-column:1/-1"><label for="zoneNom-${id}">Nom de zone</label><input id="zoneNom-${id}" type="text" value="Zone ${id}"></div><div style="grid-column:1/-1"><label for="forme-${id}">Forme</label><select id="forme-${id}" onchange="updateZoneFields(${id})"><option value="rectangle">Rectangle</option><option value="L">Forme en L</option><option value="rectangle_vide">Rectangle avec vide central / piscine</option><option value="cercle">Cercle</option><option value="demi_cercle">Demi-cercle</option></select></div><div class="section-block"><h3>Géométrie principale</h3><div class="form-grid"><div id="blocLongueur-${id}"><label for="longueur-${id}">Longueur hors tout (m)</label><input id="longueur-${id}" type="number" min="0" step="0.01" value="4"></div><div id="blocLargeur-${id}"><label for="largeur-${id}">Largeur hors tout (m)</label><input id="largeur-${id}" type="number" min="0" step="0.01" value="3"></div><div id="blocDiametre-${id}" class="hidden"><label for="diametre-${id}">Diamètre (m)</label><input id="diametre-${id}" type="number" min="0" step="0.01" value="4"></div></div></div><div id="blocL-${id}" class="section-block hidden"><h3>Découpe de l'angle (forme en L)</h3><div class="form-grid"><div><label for="decoupeLongueur-${id}">Longueur découpe (m)</label><input id="decoupeLongueur-${id}" type="number" min="0" step="0.01" value="1.5"></div><div><label for="decoupeLargeur-${id}">Largeur découpe (m)</label><input id="decoupeLargeur-${id}" type="number" min="0" step="0.01" value="1.5"></div></div></div><div id="blocVide-${id}" class="section-block hidden"><h3>Vide intérieur / piscine</h3><div class="form-grid"><div><label for="videLongueur-${id}">Longueur vide (m)</label><input id="videLongueur-${id}" type="number" min="0" step="0.01" value="2"></div><div><label for="videLargeur-${id}">Largeur vide (m)</label><input id="videLargeur-${id}" type="number" min="0" step="0.01" value="1.5"></div></div></div><div style="grid-column:1/-1"><label for="sensPose-${id}">Sens des lames pour cette zone</label><select id="sensPose-${id}"><option value="longueur">Lames dans la longueur</option><option value="largeur">Lames dans la largeur</option><option value="auto" selected>Auto (le moins cher)</option></select></div></div></div>`}function ajouterZone(){zoneCount++;document.getElementById('zonesContainer').insertAdjacentHTML('beforeend',zoneTemplate(zoneCount));updateZoneFields(zoneCount)}function supprimerZone(id){const zones=document.querySelectorAll('.zone-card');if(zones.length<=1){alert('Il faut garder au moins une zone.');return}document.getElementById(`zone-${id}`)?.remove()}
+function updateZoneFields(id){const f=document.getElementById(`forme-${id}`).value,isCircle=f==='cercle'||f==='demi_cercle';document.getElementById(`blocDiametre-${id}`).classList.toggle('hidden',!isCircle);document.getElementById(`blocLongueur-${id}`).classList.toggle('hidden',isCircle);document.getElementById(`blocLargeur-${id}`).classList.toggle('hidden',isCircle);document.getElementById(`blocL-${id}`).classList.toggle('hidden',f!=='L');document.getElementById(`blocVide-${id}`).classList.toggle('hidden',f!=='rectangle_vide')}
+function getGeometryFromZone(id){const f=document.getElementById(`forme-${id}`).value,L=parseFloat(document.getElementById(`longueur-${id}`).value)||0,W=parseFloat(document.getElementById(`largeur-${id}`).value)||0,D=parseFloat(document.getElementById(`diametre-${id}`).value)||0,cutL=parseFloat(document.getElementById(`decoupeLongueur-${id}`).value)||0,cutW=parseFloat(document.getElementById(`decoupeLargeur-${id}`).value)||0,holeL0=parseFloat(document.getElementById(`videLongueur-${id}`).value)||0,holeW0=parseFloat(document.getElementById(`videLargeur-${id}`).value)||0;if(f==='rectangle')return{forme:f,label:'Rectangle',outerLength:L,outerWidth:W,surface:L*W,perimeter:2*(L+W),recommendedMargin:5,complexityLabel:'Simple',holeArea:0,pathType:'rectangle'};if(f==='L'){const a=Math.min(cutL,L),b=Math.min(cutW,W);return{forme:f,label:'Forme en L',outerLength:L,outerWidth:W,surface:Math.max(0,L*W-a*b),perimeter:Math.max(0,2*(L+W)),recommendedMargin:10,complexityLabel:'Moyenne',holeArea:a*b,cutL:a,cutW:b,pathType:'L'}}if(f==='rectangle_vide'){const a=Math.min(holeL0,L),b=Math.min(holeW0,W);return{forme:f,label:'Rectangle avec vide central',outerLength:L,outerWidth:W,surface:Math.max(0,L*W-a*b),perimeter:Math.max(0,2*(L+W)+2*(a+b)),recommendedMargin:12,complexityLabel:'Complexe',holeArea:a*b,holeL:a,holeW:b,pathType:'rectangle_hole'}}if(f==='cercle'){const r=D/2;return{forme:f,label:'Cercle',outerLength:D,outerWidth:D,surface:Math.PI*r*r,perimeter:Math.PI*D,recommendedMargin:15,complexityLabel:'Complexe',holeArea:0,diameter:D,pathType:'circle'}}if(f==='demi_cercle'){const r=D/2;return{forme:f,label:'Demi-cercle',outerLength:D,outerWidth:r,surface:.5*Math.PI*r*r,perimeter:Math.PI*r+D,recommendedMargin:14,complexityLabel:'Complexe',holeArea:0,diameter:D,pathType:'semi_circle'}}return null}function geometryValid(g){if(!g)return false;if(g.forme==='rectangle')return g.outerLength>0&&g.outerWidth>0;if(g.forme==='L'||g.forme==='rectangle_vide')return g.outerLength>0&&g.outerWidth>0&&g.surface>0;if(g.forme==='cercle'||g.forme==='demi_cercle')return g.diameter>0;return false}
+function calculateRectangleScenario(p){const{orientation,outerLength:L,outerWidth:W,entraxeLambCm,entraxePlotCm,jeuLameMm,margePct,lame,plot,vis,section,bandeBitumeActive,geotextileActive,geometry}=p,lambourde=getByReference('LAMB_'+section+'_4'),bandeBitume=getByReference('BANDE_BITUME'),geotextile=getByReference('GEOTEXTILE'),surface=geometry.surface,perimeter=geometry.perimeter,entraxeLamb=entraxeLambCm/100,entraxePlot=entraxePlotCm/100,dimPose=orientation==='longueur'?{longueurLame:L,largeurCouverture:W}:{longueurLame:W,largeurCouverture:L},largeurUtile=(lame.Largeur_mm+jeuLameMm)/1000,nbRangees=Math.ceil((dimPose.largeurCouverture+(jeuLameMm/1000))/largeurUtile),piecesParRangee=Math.ceil(dimPose.longueurLame/lame.Longueur_m),nbPiecesLames=Math.ceil(nbRangees*piecesParRangee*(1+margePct/100)),mlLamesAchetes=nbPiecesLames*lame.Longueur_m,mlLamesUtiles=nbRangees*dimPose.longueurLame,chuteLamesMl=Math.max(0,mlLamesAchetes-mlLamesUtiles),prixUnitaireLame=lame.Prix_public_HT,prixMlLame=lame.Longueur_m?prixUnitaireLame/lame.Longueur_m:0,coutLames=nbPiecesLames*prixUnitaireLame,margeLambourdesPct=Math.max(5,getLambourdeMargin(geometry.forme)),nbLambourdes=Math.floor(dimPose.largeurCouverture/entraxeLamb)+1,mlLambourdesBase=nbLambourdes*dimPose.longueurLame,mlLambourdes=mlLambourdesBase*(1+margeLambourdesPct/100),nbPiecesLambourdes=Math.ceil(mlLambourdes/lambourde.Longueur_m),mlLambourdesAchetes=nbPiecesLambourdes*lambourde.Longueur_m,coutLambourdes=coutSelonUnite(lambourde,nbPiecesLambourdes,mlLambourdesAchetes),plotsParLambourde=Math.floor(dimPose.longueurLame/entraxePlot)+1,nbPlots=nbLambourdes*plotsParLambourde,coutPlots=nbPlots*plot.Prix_public_HT,nbVis=nbRangees*nbLambourdes*2,coutVis=nbVis*vis.Prix_public_HT,mlBandeBitume=bandeBitumeActive?mlLambourdesAchetes:0,coutBandeBitume=mlBandeBitume*(bandeBitume?bandeBitume.Prix_public_HT:0),m2Geotextile=geotextileActive?surface:0,coutGeotextile=m2Geotextile*(geotextile?geotextile.Prix_public_HT:0),prixDallette=2,nbDallettes=nbPlots,coutDallettes=nbDallettes*prixDallette,totalHT=coutLames+coutLambourdes+coutPlots+coutVis+coutBandeBitume+coutGeotextile+coutDallettes;return{orientation,dimPose,surface,perimeter,entraxeLamb,entraxePlot,jeuLameMm,nbRangees,nbPiecesLames,mlLamesAchetes,mlLamesUtiles,chuteLamesMl,prixUnitaireLame,prixMlLame,coutLames,nbLambourdes,mlLambourdesBase,mlLambourdes,nbPiecesLambourdes,mlLambourdesAchetes,coutLambourdes,plotsParLambourde,nbPlots,coutPlots,nbVis,coutVis,mlBandeBitume,coutBandeBitume,m2Geotextile,coutGeotextile,nbDallettes,prixDallette,coutDallettes,totalHT,prixM2:totalHT/surface,lambourde,bandeBitume,geotextile,lame,plot,vis,section,marginApplied:margePct,margeLambourdesPct}}
+function calculateComplexScenario(p){const{orientation,entraxeLambCm,entraxePlotCm,jeuLameMm,margePct,lame,plot,vis,section,bandeBitumeActive,geotextileActive,geometry}=p,lambourde=getByReference('LAMB_'+section+'_4'),bandeBitume=getByReference('BANDE_BITUME'),geotextile=getByReference('GEOTEXTILE'),surface=geometry.surface,perimeter=geometry.perimeter,entraxeLamb=entraxeLambCm/100,entraxePlot=entraxePlotCm/100,largeurUtile=(lame.Largeur_mm+jeuLameMm)/1000,marginFactor=1+margePct/100,complexityBoost=geometry.forme==='L'?1.04:geometry.forme==='rectangle_vide'?1.08:1.10,mlLamesUtiles=surface/(lame.Largeur_mm/1000),nbPiecesBase=Math.ceil(surface/(lame.Longueur_m*largeurUtile)),nbPiecesLames=Math.ceil(nbPiecesBase*marginFactor*complexityBoost),mlLamesAchetes=nbPiecesLames*lame.Longueur_m,chuteLamesMl=Math.max(0,mlLamesAchetes-mlLamesUtiles),prixUnitaireLame=lame.Prix_public_HT,prixMlLame=lame.Longueur_m?prixUnitaireLame/lame.Longueur_m:0,coutLames=nbPiecesLames*prixUnitaireLame,frameExtra=geometry.forme==='rectangle_vide'?2*(geometry.holeL+geometry.holeW):0,shapeStructureFactor=geometry.forme==='L'?1.06:geometry.forme==='rectangle_vide'?1.12:1.10,margeLambourdesPct=getLambourdeMargin(geometry.forme),mlLambourdesBase=(surface/Math.max(entraxeLamb,.01))*shapeStructureFactor+frameExtra,mlLambourdes=mlLambourdesBase*(1+margeLambourdesPct/100),nbLambourdes=Math.max(1,Math.round(mlLambourdesBase/Math.max(geometry.outerLength||geometry.outerWidth||1,1))),nbPiecesLambourdes=Math.ceil(mlLambourdes/lambourde.Longueur_m),mlLambourdesAchetes=nbPiecesLambourdes*lambourde.Longueur_m,coutLambourdes=coutSelonUnite(lambourde,nbPiecesLambourdes,mlLambourdesAchetes),nbPlots=Math.ceil(mlLambourdes/Math.max(entraxePlot,.01)),plotsParLambourde=Math.max(1,Math.round(nbPlots/Math.max(nbLambourdes,1))),coutPlots=nbPlots*plot.Prix_public_HT,nbVis=Math.ceil(surface/Math.max(largeurUtile*entraxeLamb,.01)*2),coutVis=nbVis*vis.Prix_public_HT,mlBandeBitume=bandeBitumeActive?mlLambourdesAchetes:0,coutBandeBitume=mlBandeBitume*(bandeBitume?bandeBitume.Prix_public_HT:0),m2Geotextile=geotextileActive?surface:0,coutGeotextile=m2Geotextile*(geotextile?geotextile.Prix_public_HT:0),prixDallette=2,nbDallettes=nbPlots,coutDallettes=nbDallettes*prixDallette,totalHT=coutLames+coutLambourdes+coutPlots+coutVis+coutBandeBitume+coutGeotextile+coutDallettes,longueurTrav=orientation==='longueur'?geometry.outerLength:geometry.outerWidth,largeurCov=orientation==='longueur'?geometry.outerWidth:geometry.outerLength;return{orientation,dimPose:{longueurLame:longueurTrav,largeurCouverture:largeurCov},surface,perimeter,entraxeLamb,entraxePlot,jeuLameMm,nbRangees:Math.ceil(largeurCov/largeurUtile),nbPiecesLames,mlLamesAchetes,mlLamesUtiles,chuteLamesMl,prixUnitaireLame,prixMlLame,coutLames,nbLambourdes,mlLambourdesBase,mlLambourdes,nbPiecesLambourdes,mlLambourdesAchetes,coutLambourdes,plotsParLambourde,nbPlots,coutPlots,nbVis,coutVis,mlBandeBitume,coutBandeBitume,m2Geotextile,coutGeotextile,nbDallettes,prixDallette,coutDallettes,totalHT,prixM2:totalHT/surface,lambourde,bandeBitume,geotextile,lame,plot,vis,section,marginApplied:margePct*complexityBoost,margeLambourdesPct}}
+function calculScenario(params){return params.geometry.forme==='rectangle'?calculateRectangleScenario(params):calculateComplexScenario(params)}function calculerZone(id,globals){const geometry=getGeometryFromZone(id);if(!geometryValid(geometry))throw new Error(`Zone ${id} : dimensions invalides.`);const nom=document.getElementById(`zoneNom-${id}`).value.trim()||`Zone ${id}`,sensPose=document.getElementById(`sensPose-${id}`).value,margePct=Math.max(globals.margeSaisie,geometry.recommendedMargin),baseParams={outerLength:geometry.outerLength,outerWidth:geometry.outerWidth,entraxeLambCm:globals.entraxeLambCm,entraxePlotCm:globals.entraxePlotCm,jeuLameMm:globals.jeuLameMm,margePct,lame:globals.lame,plot:globals.plot,vis:globals.vis,section:globals.section,bandeBitumeActive:globals.bandeBitumeActive,geotextileActive:globals.geotextileActive,geometry},scenarios=['longueur','largeur'].map(orientation=>calculScenario({...baseParams,orientation})),choisi=sensPose==='auto'?scenarios.sort((a,b)=>a.totalHT-b.totalHT)[0]:scenarios.find(s=>s.orientation===sensPose);return{id,nom,geometry,sensPose,...choisi}}
+function calculTerrasseMulti(){try{const globals={entraxeLambCm:parseFloat(document.getElementById('entraxe').value)||50,entraxePlotCm:parseFloat(document.getElementById('entraxePlot').value)||50,jeuLameMm:parseFloat(document.getElementById('jeuLame').value)||5,margeSaisie:parseFloat(document.getElementById('margeDecoupe').value)||0,lame:getByReference(document.getElementById('lame').value),plot:getByReference(document.getElementById('plotRef').value),vis:getByReference(document.getElementById('visRef').value),section:document.getElementById('section').value,bandeBitumeActive:document.getElementById('bandeBitume').value==='oui',geotextileActive:document.getElementById('geotextile').value==='oui',mutualiser:document.getElementById('mutualiser').value==='oui'};const zoneIds=Array.from(document.querySelectorAll('.zone-card')).map(el=>Number(el.id.split('-')[1])),zones=zoneIds.map(id=>calculerZone(id,globals)),totalSurface=zones.reduce((s,z)=>s+z.surface,0),totalPerimetre=zones.reduce((s,z)=>s+z.perimeter,0),totalLamesBrut=zones.reduce((s,z)=>s+z.coutLames,0),totalLambourdes=zones.reduce((s,z)=>s+z.coutLambourdes,0),totalPlots=zones.reduce((s,z)=>s+z.coutPlots,0),totalVis=zones.reduce((s,z)=>s+z.coutVis,0),totalBitume=zones.reduce((s,z)=>s+z.coutBandeBitume,0),totalGeotextile=zones.reduce((s,z)=>s+z.coutGeotextile,0),totalDallettes=zones.reduce((s,z)=>s+z.coutDallettes,0);let remiseChutes=0;if(globals.mutualiser)remiseChutes=Math.min(totalLamesBrut*.04,zones.reduce((s,z)=>s+(z.chuteLamesMl*z.prixMlLame),0)*.45);const totalLames=totalLamesBrut-remiseChutes,totalHT=totalLames+totalLambourdes+totalPlots+totalVis+totalBitume+totalGeotextile+totalDallettes,prixM2=totalSurface>0?totalHT/totalSurface:0;document.getElementById('kpiSurface').textContent=n2(totalSurface)+' m²';document.getElementById('kpiPerimetre').textContent=n2(totalPerimetre)+' m';document.getElementById('kpiTotal').textContent=euro(totalHT);document.getElementById('kpiM2').textContent=euro(prixM2);const qLames=zones.reduce((s,z)=>s+z.nbPiecesLames,0),qLamb=zones.reduce((s,z)=>s+z.nbPiecesLambourdes,0),qPlots=zones.reduce((s,z)=>s+z.nbPlots,0),qVis=zones.reduce((s,z)=>s+z.nbVis,0),qDallettes=zones.reduce((s,z)=>s+z.nbDallettes,0),mlBitume=zones.reduce((s,z)=>s+z.mlBandeBitume,0),qGeotextile=zones.reduce((s,z)=>s+z.m2Geotextile,0);const lambRef=getByReference('LAMB_'+globals.section+'_4');const rows=[['Lames',`${n0(qLames)} pièces`,`${n2(globals.lame.Prix_public_HT)} €/u`,euro(totalLames),`${globals.lame.Reference} — remise chutes mutualisées : ${euro(remiseChutes)}`],['Lambourdes',`${n0(qLamb)} pièces de 4 m`,`${n2(prixUnitaireAchat(lambRef))} €/u`,euro(totalLambourdes),`Section ${globals.section} · soit ${n2(prixParMl(lambRef))} €/ml`],['Plots',`${n0(qPlots)} u`,euro(globals.plot.Prix_public_HT),euro(totalPlots),globals.plot.Reference],['Dallettes',`${n0(qDallettes)} u`,euro(2),euro(totalDallettes),'1 dalette par plot'],['Vis inox',`${n0(qVis)} u`,euro(globals.vis.Prix_public_HT),euro(totalVis),globals.vis.Reference],['Bande bitume',mlBitume?`${n2(mlBitume)} ml`:'Non',mlBitume?`${n2(getByReference('BANDE_BITUME').Prix_public_HT)} €/ml`:'-',euro(totalBitume),'sur lambourdes'],['Géotextile',qGeotextile?`${n2(qGeotextile)} m²`:'Non',qGeotextile?`${n2(getByReference('GEOTEXTILE').Prix_public_HT)} €/m²`:'-',euro(totalGeotextile),'sous terrasse']];document.querySelector('#tableResult tbody').innerHTML=rows.map(r=>`<tr><td><strong>${r[0]}</strong><br><span class="small">${r[4]}</span></td><td>${r[1]}</td><td>${r[2]}</td><td>${r[3]}</td></tr>`).join('')+`<tr class="total-row"><td>Total matériaux HT</td><td></td><td></td><td>${euro(totalHT)}</td></tr>`;const lame=globals.lame,entraxeLamb=globals.entraxeLambCm/100,entraxePlot=globals.entraxePlotCm/100,porteeMax=sections[globals.section]||0,entraxeLambMaxReco=getEntaxeLambourdeMax(lame),sectionMiniReco=getSectionMini(entraxePlot);let badgeClass='ok',badgeText='OK';if(entraxePlot>porteeMax&&entraxePlot<=porteeMax*1.2){badgeClass='warn';badgeText='Limite'}else if(entraxePlot>porteeMax*1.2){badgeClass='bad';badgeText='Non conforme'}let badgeLamesClass='ok',badgeLamesText='OK';if(entraxeLamb>entraxeLambMaxReco&&entraxeLamb<=entraxeLambMaxReco*1.15){badgeLamesClass='warn';badgeLamesText='Limite'}else if(entraxeLamb>entraxeLambMaxReco*1.15){badgeLamesClass='bad';badgeLamesText='Non conforme'}document.getElementById('blocTechnique').innerHTML=`<div class="muted-box"><strong>Contrôle technique simplifié global</strong><br><br>Lame : <strong>${lame.Reference}</strong> (${n0(lame.Epaisseur_mm)}x${n0(lame.Largeur_mm)} mm)<br>Entraxe lambourdes saisi : <strong>${n2(entraxeLamb)} m</strong> — recommandé max : <strong>${n2(entraxeLambMaxReco)} m</strong> <span class="badge ${badgeLamesClass}">${badgeLamesText}</span><br>Section lambourde : <strong>${globals.section}</strong> — section mini recommandée : <strong>${sectionMiniReco}</strong><br>Portée admissible simplifiée : <strong>${n2(porteeMax)} m</strong><br>Entraxe plots saisi : <strong>${n2(entraxePlot)} m</strong> <span class="badge ${badgeClass}">${badgeText}</span><br><br><ul class="clean"><li>Nombre de zones : <strong>${zones.length}</strong></li><li>Mutualisation des chutes : <strong>${globals.mutualiser?'Oui':'Non'}</strong></li><li>Remise chutes appliquée sur lames : <strong>${euro(remiseChutes)}</strong></li><li>Surface totale : <strong>${n2(totalSurface)} m²</strong></li><li>Périmètre total : <strong>${n2(totalPerimetre)} m</strong></li></ul></div>`;document.getElementById('zoneDetails').innerHTML=zones.map(z=>`<div class="zone-summary-card"><strong>${z.nom}</strong><br>${z.geometry.label} — ${n2(z.surface)} m² — ${euro(z.totalHT)} HT<br><span class="small">Pose lames : ${z.orientation==='longueur'?'longueur':'largeur'} · ${n0(z.nbPiecesLames)} lames · ${n0(z.nbPlots)} plots · ${n0(z.nbDallettes)} dallettes</span></div>`).join('');dernierCalculZones=zones;alimenterSelectZones(zones);dessinerProjetZones(zones);dessinerZoneSelectionnee();document.getElementById('zoneLegend').innerHTML=zones.map((z,i)=>`<div style="display:flex;align-items:flex-start;gap:10px;margin-bottom:8px"><span style="display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:999px;background:${getZoneColor(i).fill};border:2px solid ${getZoneColor(i).stroke};font-weight:700;font-size:12px">Z${i+1}</span><div><strong>${z.nom}</strong><br><span class="small">${z.geometry.label} · ${n2(z.surface)} m² · ${euro(z.totalHT)} HT</span></div></div>`).join('');document.getElementById('resumePose').innerHTML=`Projet affiché : <strong>${zones.length}</strong> zone(s). Surface totale : <strong>${n2(totalSurface)} m²</strong>.`}catch(err){alert(err.message||'Erreur de calcul.');console.error(err)}}
+function drawPath(ctx,g,x0,y0,scale){if(g.pathType==='rectangle'){ctx.beginPath();ctx.rect(x0,y0,g.outerLength*scale,g.outerWidth*scale);return}if(g.pathType==='L'){const W=g.outerLength*scale,H=g.outerWidth*scale,cutW=g.cutL*scale,cutH=g.cutW*scale;ctx.beginPath();ctx.moveTo(x0,y0);ctx.lineTo(x0+W,y0);ctx.lineTo(x0+W,y0+H-cutH);ctx.lineTo(x0+W-cutW,y0+H-cutH);ctx.lineTo(x0+W-cutW,y0+H);ctx.lineTo(x0,y0+H);ctx.closePath();return}if(g.pathType==='rectangle_hole'){ctx.beginPath();ctx.rect(x0,y0,g.outerLength*scale,g.outerWidth*scale);return}if(g.pathType==='circle'){ctx.beginPath();ctx.arc(x0+(g.outerLength*scale)/2,y0+(g.outerWidth*scale)/2,(g.diameter*scale)/2,0,Math.PI*2);return}if(g.pathType==='semi_circle'){ctx.beginPath();ctx.arc(x0+(g.outerLength*scale)/2,y0+g.outerWidth*scale,(g.diameter*scale)/2,Math.PI,2*Math.PI);ctx.closePath();return}}function getHoleRect(g,x0,y0,scale){if(g.pathType!=='rectangle_hole')return null;const holeW=g.holeL*scale,holeH=g.holeW*scale,outerW=g.outerLength*scale,outerH=g.outerWidth*scale;return{x:x0+(outerW-holeW)/2,y:y0+(outerH-holeH)/2,w:holeW,h:holeH}}function drawGeometryWithDimensions(ctx,canvas,g,x0,y0,echelle,drawHole=true){drawPath(ctx,g,x0,y0,echelle);ctx.strokeStyle='#1f2937';ctx.lineWidth=3;ctx.stroke();const h=getHoleRect(g,x0,y0,echelle);if(drawHole&&h){ctx.fillStyle='#dbeafe';ctx.fillRect(h.x,h.y,h.w,h.h);ctx.strokeStyle='#1e3a8a';ctx.lineWidth=3;ctx.strokeRect(h.x,h.y,h.w,h.h);ctx.fillStyle='#1e3a8a';ctx.font='13px Arial';ctx.fillText('Piscine / vide',h.x+8,h.y+18)}const w=g.outerLength*echelle,hh=g.outerWidth*echelle;ctx.fillStyle='#111827';ctx.font='14px Arial';ctx.fillText(g.outerLength.toFixed(2).replace('.',',')+' m',x0+w/2-25,y0+hh+28);ctx.save();ctx.translate(x0-36,y0+hh/2);ctx.rotate(-Math.PI/2);ctx.fillText(g.outerWidth.toFixed(2).replace('.',',')+' m',0,0);ctx.restore()}function getZoneColor(i){const c=[{fill:'rgba(19,111,99,.18)',stroke:'#136f63'},{fill:'rgba(37,99,235,.18)',stroke:'#2563eb'},{fill:'rgba(234,88,12,.18)',stroke:'#ea580c'},{fill:'rgba(147,51,234,.18)',stroke:'#9333ea'},{fill:'rgba(220,38,38,.18)',stroke:'#dc2626'},{fill:'rgba(8,145,178,.18)',stroke:'#0891b2'}];return c[i%c.length]}function drawZoneShape(ctx,g,x0,y0,scale,fill,stroke){ctx.save();drawPath(ctx,g,x0,y0,scale);ctx.fillStyle=fill;ctx.fill('evenodd');ctx.lineWidth=3;ctx.strokeStyle=stroke;ctx.stroke();const h=getHoleRect(g,x0,y0,scale);if(h){ctx.fillStyle='rgba(255,255,255,.95)';ctx.fillRect(h.x,h.y,h.w,h.h);ctx.lineWidth=2;ctx.strokeStyle=stroke;ctx.strokeRect(h.x,h.y,h.w,h.h)}ctx.restore()}function getGeometryCenter(g,x0,y0,scale){if(g.pathType==='circle')return{x:x0+(g.outerLength*scale)/2,y:y0+(g.outerWidth*scale)/2};if(g.pathType==='semi_circle')return{x:x0+(g.outerLength*scale)/2,y:y0+(g.outerWidth*scale)*.65};return{x:x0+(g.outerLength*scale)/2,y:y0+(g.outerWidth*scale)/2}}function drawZoneLabel(ctx,label,g,x0,y0,scale,stroke){const c=getGeometryCenter(g,x0,y0,scale);ctx.save();ctx.beginPath();ctx.arc(c.x,c.y,24,0,Math.PI*2);ctx.fillStyle='rgba(255,255,255,.96)';ctx.fill();ctx.lineWidth=2;ctx.strokeStyle=stroke;ctx.stroke();ctx.fillStyle='#111827';ctx.font='bold 16px Arial';const w=ctx.measureText(label).width;ctx.fillText(label,c.x-w/2,c.y+6);ctx.restore()}
+function dessinerProjetZones(zones){const canvas=document.getElementById('canvasTerrasse'),ctx=canvas.getContext('2d');ctx.clearRect(0,0,canvas.width,canvas.height);if(!zones||!zones.length)return;const cols=zones.length<=2?zones.length:2,rows=Math.ceil(zones.length/cols),outerPad=28,gutter=18,cellW=(canvas.width-outerPad*2-gutter*(cols-1))/cols,cellH=(canvas.height-outerPad*2-gutter*(rows-1))/rows;ctx.fillStyle='#f8fafc';ctx.fillRect(0,0,canvas.width,canvas.height);zones.forEach((zone,i)=>{const col=i%cols,row=Math.floor(i/cols),cellX=outerPad+col*(cellW+gutter),cellY=outerPad+row*(cellH+gutter);ctx.save();ctx.fillStyle='#fff';ctx.strokeStyle='#d9e1e7';ctx.lineWidth=1.5;ctx.beginPath();ctx.roundRect(cellX,cellY,cellW,cellH,14);ctx.fill();ctx.stroke();ctx.restore();const title=`Z${i+1} — ${zone.nom}`;ctx.fillStyle='#17212b';ctx.font='bold 14px Arial';ctx.fillText(title.length>30?title.slice(0,29)+'…':title,cellX+12,cellY+22);ctx.fillStyle='#6b7280';ctx.font='12px Arial';ctx.fillText(`${zone.geometry.label} · ${n2(zone.surface)} m²`,cellX+12,cellY+40);const drawPadX=18,drawPadTop=54,drawPadBottom=20,availW=cellW-drawPadX*2,availH=cellH-drawPadTop-drawPadBottom,g=zone.geometry,scale=Math.min(availW/Math.max(g.outerLength,.1),availH/Math.max(g.outerWidth,.1)),shapeW=g.outerLength*scale,shapeH=g.outerWidth*scale,x0=cellX+(cellW-shapeW)/2,y0=cellY+drawPadTop+(availH-shapeH)/2,color=getZoneColor(i);drawZoneShape(ctx,g,x0,y0,scale,color.fill,color.stroke);drawZoneLabel(ctx,`Z${i+1}`,g,x0,y0,scale,color.stroke)})}function alimenterSelectZones(zones){const sel=document.getElementById('zoneSelectDetail'),current=sel.value;sel.innerHTML=zones.map((z,i)=>`<option value="${i}">Z${i+1} — ${z.nom}</option>`).join('');if(current&&Number(current)<zones.length)sel.value=current;else sel.value='0'}function detailZoomIn(){detailZoomLevel=Math.min(3,detailZoomLevel*1.2);dessinerZoneSelectionnee()}function detailZoomOut(){detailZoomLevel=Math.max(.6,detailZoomLevel/1.2);dessinerZoneSelectionnee()}function detailZoomReset(){detailZoomLevel=1;dessinerZoneSelectionnee()}
+function dessinerZoneSelectionnee(){const canvas=document.getElementById('canvasZoneDetail'),ctx=canvas.getContext('2d');ctx.clearRect(0,0,canvas.width,canvas.height);if(!dernierCalculZones.length)return;const sel=document.getElementById('zoneSelectDetail'),zoneIndex=Math.min(Number(sel.value||0),dernierCalculZones.length-1),zone=dernierCalculZones[zoneIndex];if(!zone)return;const g=zone.geometry,color=getZoneColor(zoneIndex),paddingX=70,paddingTop=70,paddingBottom=70,availW=canvas.width-paddingX*2,availH=canvas.height-paddingTop-paddingBottom,baseScale=Math.min(availW/Math.max(g.outerLength,.1),availH/Math.max(g.outerWidth,.1)),scale=baseScale*detailZoomLevel,shapeW=g.outerLength*scale,shapeH=g.outerWidth*scale,x0=(canvas.width-shapeW)/2,y0=paddingTop+(availH-shapeH)/2;ctx.fillStyle='#f8fafc';ctx.fillRect(0,0,canvas.width,canvas.height);ctx.fillStyle='#17212b';ctx.font='bold 18px Arial';ctx.fillText(`Z${zoneIndex+1} — ${zone.nom}`,24,30);ctx.fillStyle='#6b7280';ctx.font='13px Arial';ctx.fillText(`${g.label} · ${n2(zone.surface)} m² · pose des lames : ${zone.orientation==='longueur'?'longueur':'largeur'}`,24,52);drawZoneShape(ctx,g,x0,y0,scale,color.fill,color.stroke);ctx.save();drawPath(ctx,g,x0,y0,scale);ctx.clip();const pasLame=Math.max(((zone.lame.Largeur_mm/1000)+(zone.jeuLameMm/1000))*scale,6);ctx.strokeStyle='#c08a57';ctx.lineWidth=1;if(zone.orientation==='longueur'){for(let y=y0;y<=y0+shapeH+.1;y+=pasLame){ctx.beginPath();ctx.moveTo(x0-12,y);ctx.lineTo(x0+shapeW+12,y);ctx.stroke()}}else{for(let x=x0;x<=x0+shapeW+.1;x+=pasLame){ctx.beginPath();ctx.moveTo(x,y0-12);ctx.lineTo(x,y0+shapeH+12);ctx.stroke()}}const pasLamb=Math.max(zone.entraxeLamb*scale,12);ctx.strokeStyle='#475569';ctx.lineWidth=2;if(zone.orientation==='longueur'){for(let x=x0;x<=x0+shapeW+.1;x+=pasLamb){ctx.beginPath();ctx.moveTo(x,y0-8);ctx.lineTo(x,y0+shapeH+8);ctx.stroke()}}else{for(let y=y0;y<=y0+shapeH+.1;y+=pasLamb){ctx.beginPath();ctx.moveTo(x0-8,y);ctx.lineTo(x0+shapeW+8,y);ctx.stroke()}}ctx.restore();drawGeometryWithDimensions(ctx,canvas,g,x0,y0,scale,true);drawZoneLabel(ctx,`Z${zoneIndex+1}`,g,x0,y0,scale,color.stroke);ctx.font='12px Arial';const legendY=canvas.height-36;ctx.fillStyle='#c08a57';ctx.fillRect(24,legendY-10,26,3);ctx.fillStyle='#111827';ctx.fillText('Sens des lames',58,legendY);ctx.fillStyle='#475569';ctx.fillRect(180,legendY-10,26,3);ctx.fillText('Lambourdes',214,legendY);document.getElementById('zoneDetailResume').innerHTML=`<strong>${zone.nom}</strong><br>${g.label} · <strong>${n2(zone.surface)} m²</strong> · <strong>${euro(zone.totalHT)} HT</strong><br>Lames dans la <strong>${zone.orientation==='longueur'?'longueur':'largeur'}</strong> · ${n0(zone.nbPiecesLames)} lames · ${n0(zone.nbLambourdes)} lambourdes estimées · ${n0(zone.nbPlots)} plots · ${n0(zone.nbDallettes)} dallettes`}
+initForm();calculTerrasseMulti();
 </script>
 </body>
 </html>
