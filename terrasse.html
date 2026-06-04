@@ -3,19 +3,76 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Calculateur Builders - Terrasse multi-zones</title>
+<title>Calculateur Builders - Terrasse V10 mobile</title>
 <style>
-:root{--bg:#f4f6f7;--card:#fff;--text:#17212b;--muted:#6b7280;--brand:#136f63;--brand-2:#0f5b52;--line:#d9e1e7;--soft:#fbfdff}
-*{box-sizing:border-box}body{font-family:Arial,sans-serif;margin:0;background:var(--bg);color:var(--text)}.wrapper{max-width:1360px;margin:0 auto;padding:24px}h1{margin:0 0 10px;font-size:28px}h2{margin:0 0 12px;font-size:20px}h3{margin:0 0 10px;font-size:16px}p.small,.small{color:var(--muted);font-size:14px;margin:0}.grid{display:grid;gap:18px;grid-template-columns:470px 1fr}.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px;box-shadow:0 4px 14px rgba(0,0,0,.05)}.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px 12px}label{font-size:14px;font-weight:700;display:block;margin-bottom:5px}input,select,textarea{width:100%;padding:10px 11px;border-radius:10px;border:1px solid #cbd5e1;background:#fff}button{padding:12px 14px;border:none;border-radius:12px;background:var(--brand);color:#fff;font-weight:700;cursor:pointer;margin-top:8px}button:hover{background:var(--brand-2)}button.secondary{background:#e5eef0;color:#0f172a}button.secondary:hover{background:#d7e5e8}button.danger{background:#b91c1c}.actions{display:flex;gap:10px;flex-wrap:wrap}.result-grid{display:grid;gap:16px;grid-template-columns:1.15fr .85fr}.kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:16px}.kpi{background:#f8fafc;border:1px solid var(--line);border-radius:14px;padding:12px}.kpi .label{font-size:12px;color:var(--muted);margin-bottom:4px}.kpi .value{font-size:22px;font-weight:700}table{width:100%;border-collapse:collapse;font-size:14px}th,td{padding:9px 8px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}th{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.04em}.total-row td{font-weight:700;font-size:16px}.badge{display:inline-block;border-radius:999px;padding:5px 10px;font-size:13px;font-weight:700}.badge.ok{background:#dcfce7;color:#166534}.badge.warn{background:#fef3c7;color:#92400e}.badge.bad{background:#fee2e2;color:#991b1b}.note{font-size:13px;color:var(--muted);line-height:1.45}canvas{width:100%;max-width:100%;border:1px solid var(--line);border-radius:12px;background:#fff}ul.clean{margin:10px 0 0 18px;padding:0}.section-block,.zone-card{grid-column:1/-1;background:var(--soft);border:1px solid var(--line);border-radius:12px;padding:12px}.hidden{display:none}.zone-head{display:flex;justify-content:space-between;gap:12px;align-items:center;margin-bottom:10px}.zone-title{font-size:16px;font-weight:700}.zone-summary-card{background:#fbfdff;border:1px solid var(--line);border-radius:12px;padding:12px;margin-bottom:10px}.zone-summary-card:last-child{margin-bottom:0}.muted-box{background:#fbfdff;border:1px solid var(--line);border-radius:12px;padding:12px}hr.soft{border:none;border-top:1px solid var(--line);margin:14px 0}.ref-list{max-height:220px;overflow:auto;margin-top:10px}.ref-pill{display:flex;justify-content:space-between;gap:8px;align-items:center;padding:8px;border-bottom:1px solid var(--line)}.ref-pill:last-child{border-bottom:0}.ref-pill button{padding:7px 9px;margin:0;border-radius:9px;font-size:12px}
-@media(max-width:1040px){.grid,.result-grid,.kpi-grid,.form-grid{grid-template-columns:1fr}.actions{flex-direction:column}button{width:100%}}
+:root{--bg:#f4f6f7;--card:#fff;--text:#17212b;--muted:#6b7280;--brand:#50B692;--brand-2:#136f63;--dark:#0f172a;--line:#d9e1e7;--soft:#fbfdff;--danger:#b91c1c}
+*{box-sizing:border-box}body{font-family:Arial,sans-serif;margin:0;background:var(--bg);color:var(--text)}.wrapper{max-width:1480px;margin:0 auto;padding:24px}h1{margin:0 0 10px;font-size:28px}h2{margin:0 0 12px;font-size:20px}h3{margin:0 0 10px;font-size:16px}p.small,.small{color:var(--muted);font-size:14px;margin:0}.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px;box-shadow:0 4px 14px rgba(0,0,0,.05)}.page-grid{display:grid;grid-template-columns:520px 1fr;gap:18px}.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px 12px}label{font-size:14px;font-weight:700;display:block;margin-bottom:5px}input,select,textarea{width:100%;padding:10px 11px;border-radius:10px;border:1px solid #cbd5e1;background:#fff}button{padding:12px 14px;border:none;border-radius:12px;background:var(--brand-2);color:#fff;font-weight:700;cursor:pointer;margin-top:8px}button:hover{filter:brightness(.95)}button.secondary{background:#e5eef0;color:#0f172a}button.danger{background:var(--danger)}.actions{display:flex;gap:10px;flex-wrap:wrap}.tabs{display:flex;gap:8px;flex-wrap:wrap;margin:18px 0}.tab-btn{background:#e5eef0;color:#0f172a;border:1px solid var(--line);margin:0}.tab-btn.active{background:var(--brand-2);color:white}.tab-panel{display:none}.tab-panel.active{display:block}.kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:16px}.kpi{background:#f8fafc;border:1px solid var(--line);border-radius:14px;padding:12px}.kpi .label{font-size:12px;color:var(--muted);margin-bottom:4px}.kpi .value{font-size:22px;font-weight:700}table{width:100%;border-collapse:collapse;font-size:14px}th,td{padding:9px 8px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}th{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.04em}.total-row td{font-weight:700;font-size:16px}.badge{display:inline-block;border-radius:999px;padding:5px 10px;font-size:13px;font-weight:700}.badge.ok{background:#dcfce7;color:#166534}.badge.warn{background:#fef3c7;color:#92400e}.badge.bad{background:#fee2e2;color:#991b1b}.note{font-size:13px;color:var(--muted);line-height:1.45}canvas{width:100%;max-width:100%;border:1px solid var(--line);border-radius:12px;background:#fff}
+#canvasZoneDetail{cursor:grab;touch-action:none}
+#canvasZoneDetail.dragging{cursor:grabbing}.visual-canvas{min-height:440px}.visual-main{display:grid;grid-template-columns:1.1fr .9fr;gap:18px}.visual-full{min-height:620px}ul.clean{margin:10px 0 0 18px;padding:0}.section-block,.zone-card{grid-column:1/-1;background:var(--soft);border:1px solid var(--line);border-radius:12px;padding:12px}.hidden{display:none}.zone-head{display:flex;justify-content:space-between;gap:12px;align-items:center;margin-bottom:10px}.zone-title{font-size:16px;font-weight:700}.zone-summary-card{background:#fbfdff;border:1px solid var(--line);border-radius:12px;padding:12px;margin-bottom:10px}.zone-summary-card:last-child{margin-bottom:0}.muted-box{background:#fbfdff;border:1px solid var(--line);border-radius:12px;padding:12px}hr.soft{border:none;border-top:1px solid var(--line);margin:14px 0}.ref-list{max-height:220px;overflow:auto;margin-top:10px}.ref-pill{display:flex;justify-content:space-between;gap:8px;align-items:center;padding:8px;border-bottom:1px solid var(--line)}.ref-pill:last-child{border-bottom:0}.ref-pill button{padding:7px 9px;margin:0;border-radius:9px;font-size:12px}.topbar{display:flex;justify-content:space-between;gap:14px;align-items:flex-start}.hint{background:#ecfdf5;border:1px solid #bbf7d0;border-radius:14px;padding:12px;color:#14532d}.canvas-toolbar{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0 10px}.canvas-toolbar button{margin:0;padding:10px 12px}.toggle-line{display:flex;gap:8px;align-items:center}.toggle-line input{width:auto}.modal-visuel{position:fixed;inset:0;background:rgba(15,23,42,.72);display:none;z-index:50;padding:24px}.modal-visuel.open{display:flex}.modal-inner{background:#fff;border-radius:18px;padding:18px;max-width:1200px;width:100%;margin:auto;box-shadow:0 18px 60px rgba(0,0,0,.35)}.modal-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}.modal-inner canvas{max-height:78vh;object-fit:contain}.cost-layout{display:grid;grid-template-columns:1.3fr .7fr;gap:18px}.verify-layout{display:grid;grid-template-columns:1fr 420px;gap:18px}.placeholder-box{border:1px dashed #cbd5e1;border-radius:14px;padding:14px;background:#fff;color:var(--muted)}.verify-cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.verify-card{border:1px solid var(--line);border-radius:14px;padding:14px;background:#fbfdff}.verify-card h3{display:flex;align-items:center;gap:8px;margin-bottom:8px}.verify-card .big{font-size:24px;font-weight:800;margin:4px 0}.verify-list{margin:8px 0 0 18px;padding:0;color:#334155;line-height:1.45}.verify-list li{margin:4px 0}.verify-note{font-size:13px;color:#64748b;line-height:1.45}.verify-alert{border-left:5px solid var(--brand-2);background:#f8fafc;border-radius:12px;padding:12px;margin-top:10px}.verify-alert.warn{border-left-color:#d97706;background:#fffbeb}.verify-alert.bad{border-left-color:#dc2626;background:#fef2f2}.verify-alert.ok{border-left-color:#16a34a;background:#f0fdf4}.charge-box{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.mini-table{font-size:13px}.mini-table td,.mini-table th{padding:7px 6px}.source-box{font-size:12px;color:#64748b;background:#f8fafc;border:1px solid var(--line);border-radius:12px;padding:10px;margin-top:12px}
+
+.mobile-actions{display:none}.mobile-hint{display:none}
+@media(max-width:720px){
+  body{font-size:16px;padding-bottom:86px}
+  .wrapper{padding:12px;max-width:100%}
+  h1{font-size:22px;line-height:1.15;margin-bottom:6px}
+  h2{font-size:18px;line-height:1.2}
+  h3{font-size:16px}
+  .topbar{display:block}.hint{margin-top:10px;font-size:13px;padding:10px}
+  .card{padding:12px;border-radius:14px;box-shadow:0 2px 10px rgba(0,0,0,.04);margin-bottom:12px}
+  .section-block,.zone-card,.muted-box,.placeholder-box{padding:10px;border-radius:12px}
+  .tabs{position:sticky;top:0;z-index:30;background:rgba(244,246,247,.96);backdrop-filter:blur(8px);margin:10px -12px 12px;padding:8px 12px;display:grid;grid-template-columns:1fr 1fr;gap:8px;border-bottom:1px solid var(--line)}
+  .tab-btn{width:100%;padding:11px 8px;font-size:13px;border-radius:12px;min-height:44px}
+  label{font-size:13px}input,select,textarea{font-size:16px;min-height:48px;padding:12px 11px;border-radius:12px}
+  button{font-size:15px;min-height:48px;border-radius:13px}.actions{gap:8px}
+  .kpi-grid{grid-template-columns:1fr 1fr!important;gap:8px}.kpi{padding:10px}.kpi .value{font-size:18px}.kpi .label{font-size:11px}
+  table{display:block;width:100%;overflow-x:auto;white-space:nowrap;-webkit-overflow-scrolling:touch;font-size:13px}th,td{padding:8px 7px}
+  .ref-list{max-height:360px}.ref-pill{display:block}.ref-pill .actions{margin-top:8px}.ref-pill button{width:100%;margin-top:6px;min-height:40px}
+  .zone-head{align-items:flex-start}.zone-head .actions{width:auto}.zone-title{font-size:15px}
+  .visual-canvas{min-height:320px}.visual-full{min-height:420px}.canvas-toolbar{display:grid;grid-template-columns:1fr 1fr;gap:8px}.canvas-toolbar button{width:100%;padding:10px 8px;font-size:13px}
+  .modal-visuel{padding:8px}.modal-inner{padding:10px;border-radius:14px}.modal-head{gap:8px}.modal-inner canvas{max-height:72vh}
+  .mobile-actions{display:grid;grid-template-columns:1.2fr 1fr 1fr;gap:8px;position:fixed;left:0;right:0;bottom:0;z-index:80;background:rgba(255,255,255,.96);border-top:1px solid var(--line);padding:10px 12px;box-shadow:0 -8px 24px rgba(15,23,42,.12)}
+  .mobile-actions button{margin:0;min-height:46px;font-size:13px;padding:9px 7px}.mobile-actions .primary{background:var(--brand-2);color:#fff}.mobile-actions .secondary{background:#e5eef0;color:#0f172a}
+  .mobile-hint{display:block;background:#fff7ed;border:1px solid #fed7aa;color:#9a3412;border-radius:12px;padding:10px;font-size:13px;margin:8px 0 12px}
+}
+@media(max-width:380px){.kpi-grid{grid-template-columns:1fr!important}.tabs{grid-template-columns:1fr}.mobile-actions{grid-template-columns:1fr 1fr}.mobile-actions button:first-child{grid-column:1/-1}}
+
+@media(max-width:1100px){.page-grid,.visual-main,.cost-layout,.verify-layout,.verify-cards,.charge-box,.kpi-grid,.form-grid{grid-template-columns:1fr}.actions{flex-direction:column}button{width:100%}.topbar{display:block}.visual-full{min-height:420px}}
 </style>
 </head>
 <body>
 <div class="wrapper">
-<h1>🧱 Calculateur terrasse Builders</h1>
-<p class="small">Version multi-zones avec ajout de références sauvegardées dans le navigateur.</p>
-<div class="grid" style="margin-top:18px">
-<div class="card">
+  <div class="topbar">
+    <div>
+      <h1>🧱 Calculateur terrasse Builders</h1>
+      <p class="small">V10 mobile : informations chantier, coûts, main-d’œuvre, TVA/TTC, vérifications techniques et visuels utilisables sur téléphone.</p>
+    </div>
+    <div class="hint"><strong>SA BUILDERS</strong><br>Renseigne le chantier, calcule, puis passe dans les onglets pour contrôler et présenter.</div>
+  </div>
+
+  <div class="tabs" role="tablist">
+    <button type="button" class="tab-btn active" data-tab="pageInfos" onclick="ouvrirOnglet('pageInfos')">1. Infos chantier</button>
+    <button type="button" class="tab-btn" data-tab="pageCouts" onclick="ouvrirOnglet('pageCouts')">2. Coûts</button>
+    <button type="button" class="tab-btn" data-tab="pageVerifs" onclick="ouvrirOnglet('pageVerifs')">3. Vérifications</button>
+    <button type="button" class="tab-btn" data-tab="pageVisuels" onclick="ouvrirOnglet('pageVisuels')">4. Visuels</button>
+  </div>
+  <div class="mobile-hint">Mode téléphone : remplis le chantier, utilise le bouton Calculer en bas, puis vérifie directement Coûts ou Visuels.</div>
+
+  <section id="pageInfos" class="tab-panel active">
+    <div class="page-grid">
+      <div class="card">
+<div class="section-block" style="margin-bottom:14px">
+  <h2>💾 Gestion du chantier</h2>
+  <div class="form-grid">
+    <div style="grid-column:1/-1"><label for="chantierNom">Nom du chantier</label><input id="chantierNom" type="text" placeholder="Ex : Terrasse piscine M. Dupont"></div>
+    <div><label for="listeChantiers">Chantiers sauvegardés</label><select id="listeChantiers"><option value="">Aucun chantier sauvegardé</option></select></div>
+    <div class="actions" style="align-items:end">
+      <button type="button" onclick="sauvegarderChantier()">Sauvegarder</button>
+      <button type="button" class="secondary" onclick="chargerChantierSelectionne()">Charger</button>
+      <button type="button" class="danger" onclick="supprimerChantierSelectionne()">Supprimer</button>
+    </div>
+  </div>
+  <p class="note" style="margin-top:8px">Les chantiers sont sauvegardés dans ce navigateur avec localStorage. Pour les transférer plus tard sur un autre PC, on pourra ajouter un export/import JSON.</p>
+</div>
 <h2>🔧 Données globales chantier</h2>
 <div class="form-grid">
 <div style="grid-column:1/-1"><label for="lame">Lame</label><select id="lame"></select></div>
@@ -32,7 +89,7 @@
 </div>
 <div class="actions" style="margin-top:14px"><button type="button" class="secondary" onclick="toggleAjoutReference()">+ Ajouter une référence produit</button><button type="button" class="secondary" onclick="toggleGestionReferences()">Gérer les références perso</button></div>
 <div id="blocAjoutReference" class="section-block hidden" style="margin-top:12px">
-<h3>➕ Nouvelle référence</h3>
+<h3 id="refFormTitle">➕ Nouvelle référence</h3>
 <div class="form-grid">
 <div><label for="newFamille">Famille</label><select id="newFamille"><option value="Lame">Lame</option><option value="Lambourde">Lambourde</option><option value="Plot">Plot</option><option value="Vis">Vis</option><option value="Accessoire">Accessoire</option></select></div>
 <div><label for="newReference">Référence</label><input id="newReference" placeholder="Ex : CUMARU_21x145_3.05"></div>
@@ -44,18 +101,178 @@
 <div><label for="newPrix">Prix HT</label><input id="newPrix" type="number" step="0.01"></div>
 <div><label for="newFournisseur">Fournisseur</label><input id="newFournisseur" value="Vivre en Bois"></div>
 </div>
-<div class="actions"><button type="button" onclick="ajouterReferenceCatalogue()">Enregistrer</button><button type="button" class="secondary" onclick="resetAjoutReference()">Vider</button></div>
-<p class="note" style="margin-top:8px">Les références ajoutées sont sauvegardées dans ce navigateur avec localStorage.</p>
+<div class="actions"><button id="btnSaveReference" type="button" onclick="ajouterReferenceCatalogue()">Enregistrer</button><button id="btnResetReference" type="button" class="secondary" onclick="resetAjoutReference()">Vider / annuler</button></div>
+<p class="note" style="margin-top:8px">Les références ajoutées ou modifiées sont sauvegardées dans ce navigateur avec localStorage. Les références du catalogue de base peuvent être modifiées : elles deviennent alors une version perso.</p>
 </div>
-<div id="blocGestionReferences" class="section-block hidden" style="margin-top:12px"><h3>🗂️ Références personnelles</h3><div id="listeRefsPerso" class="ref-list"></div><div class="actions"><button type="button" class="secondary" onclick="exporterRefsPerso()">Exporter JSON</button><button type="button" class="secondary" onclick="document.getElementById('importRefsFile').click()">Importer JSON</button><input id="importRefsFile" type="file" accept="application/json" class="hidden" onchange="importerRefsPerso(event)"><button type="button" class="danger" onclick="supprimerToutesRefsPerso()">Tout supprimer</button></div></div>
-<hr class="soft">
+<div id="blocGestionReferences" class="section-block hidden" style="margin-top:12px"><h3>🗂️ Catalogue & références personnelles</h3><div id="listeRefsPerso" class="ref-list"></div><div class="actions"><button type="button" class="secondary" onclick="exporterRefsPerso()">Exporter JSON</button><button type="button" class="secondary" onclick="document.getElementById('importRefsFile').click()">Importer JSON</button><input id="importRefsFile" type="file" accept="application/json" class="hidden" onchange="importerRefsPerso(event)"><button type="button" class="danger" onclick="supprimerToutesRefsPerso()">Supprimer refs perso</button></div></div>
+</div>
+      <div class="card">
 <div class="zone-head"><h2 style="margin:0">📍 Zones du projet</h2><div class="actions" style="margin:0"><button type="button" class="secondary" onclick="ajouterZone()">+ Ajouter une zone</button></div></div>
 <div id="zonesContainer"></div>
-<div class="actions" style="margin-top:14px"><button type="button" onclick="calculTerrasseMulti()">Calculer le projet</button></div>
+<div class="actions" style="margin-top:14px"><button type="button" onclick="calculTerrasseMulti();ouvrirOnglet('pageCouts')">Calculer le projet</button></div>
 <div class="note" style="margin-top:12px">Tu peux mélanger plusieurs zones sur le même chantier. Exemple : tour de piscine + terrasse maison + module devant baie vitrée.</div>
 </div>
-<div class="card"><div class="result-grid"><div><h2>📊 Résultat global</h2><div class="kpi-grid"><div class="kpi"><div class="label">Surface totale</div><div class="value" id="kpiSurface">-</div></div><div class="kpi"><div class="label">Périmètre total</div><div class="value" id="kpiPerimetre">-</div></div><div class="kpi"><div class="label">Total HT</div><div class="value" id="kpiTotal">-</div></div><div class="kpi"><div class="label">Prix moyen au m² HT</div><div class="value" id="kpiM2">-</div></div></div><table id="tableResult"><thead><tr><th>Poste</th><th>Quantité</th><th>PU HT</th><th>Total HT</th></tr></thead><tbody></tbody></table><div id="blocTechnique" style="margin-top:14px"></div></div><div><h2>📐 Vue projet</h2><p class="small" style="margin-bottom:10px">Croquis multi-zone avec repères visuels Z1, Z2, Z3…</p><canvas id="canvasTerrasse" width="860" height="560"></canvas><div id="zoneLegend" class="muted-box" style="margin-top:10px"></div><div id="resumePose" class="note" style="margin-top:10px"></div><div class="zone-view-controls"><div class="control"><label for="zoneSelectDetail">Zone à afficher en détail</label><select id="zoneSelectDetail" onchange="dessinerZoneSelectionnee()"></select></div></div><div class="detail-grid"><div><h3>🪵 Vue détaillée de la zone</h3><p class="small" style="margin-bottom:8px">Affichage technique avec sens des lames et lambourdes.</p><div class="canvas-toolbar"><button type="button" class="secondary" onclick="detailZoomOut()">Zoom -</button><button type="button" class="secondary" onclick="detailZoomIn()">Zoom +</button><button type="button" class="secondary" onclick="detailZoomReset()">Reset zoom</button></div><canvas id="canvasZoneDetail" width="860" height="520"></canvas><div id="zoneDetailResume" class="muted-box" style="margin-top:10px"></div></div><div><h3 style="margin-top:8px">📋 Détail par zone</h3><div id="zoneDetails"></div></div></div></div></div></div>
-</div></div>
+    </div>
+  </section>
+
+  <section id="pageCouts" class="tab-panel">
+    <div class="cost-layout">
+      <div class="card">
+        <h2>💶 Coûts matériaux & main-d’œuvre</h2>
+        <div class="kpi-grid">
+          <div class="kpi"><div class="label">Surface totale</div><div class="value" id="kpiSurface">-</div></div>
+          <div class="kpi"><div class="label">Total chantier HT</div><div class="value" id="kpiTotal">-</div></div>
+          <div class="kpi"><div class="label">TVA</div><div class="value" id="kpiTVA">-</div></div>
+          <div class="kpi"><div class="label">Total TTC client</div><div class="value" id="kpiTTC">-</div></div>
+        </div>
+        <table id="tableResult"><thead><tr><th>Poste</th><th>Quantité</th><th>PU HT</th><th>Total HT</th></tr></thead><tbody></tbody></table>
+        <div class="section-block" style="margin-top:14px">
+          <h3>👷 Main-d’œuvre</h3>
+          <div class="form-grid">
+            <div>
+              <label for="mainOeuvreActive">Ajouter la main-d’œuvre au chiffrage</label>
+              <select id="mainOeuvreActive" onchange="calculTerrasseMulti()">
+                <option value="non" selected>Non — matériaux seulement</option>
+                <option value="oui">Oui — prix manuel au m²</option>
+              </select>
+            </div>
+            <div>
+              <label for="prixMainOeuvreM2">Prix de pose HT / m²</label>
+              <input id="prixMainOeuvreM2" type="number" min="0" step="1" value="65" onchange="calculTerrasseMulti()" oninput="calculTerrasseMulti()">
+            </div>
+          </div>
+          <div id="resumeMainOeuvre" class="muted-box" style="margin-top:10px">Main-d’œuvre non ajoutée au chiffrage.</div>
+          <p class="note" style="margin-top:8px">Le prix au m² reste volontairement manuel : chaque chantier est différent selon l’accès, les coupes, la hauteur, la préparation du support et les finitions.</p>
+        </div>
+        <div class="section-block" style="margin-top:14px">
+          <h3>🧾 TVA & total client</h3>
+          <div class="form-grid">
+            <div>
+              <label for="tauxTVA">Taux de TVA</label>
+              <select id="tauxTVA" onchange="calculTerrasseMulti()">
+                <option value="20" selected>20 % — taux normal</option>
+                <option value="10">10 % — rénovation sous conditions</option>
+                <option value="5.5">5,5 % — cas très spécifique</option>
+                <option value="0">0 % — hors TVA / brouillon</option>
+              </select>
+            </div>
+            <div>
+              <label for="tauxTVAManuel">Taux manuel (%)</label>
+              <input id="tauxTVAManuel" type="number" min="0" step="0.1" placeholder="Optionnel" onchange="calculTerrasseMulti()" oninput="calculTerrasseMulti()">
+            </div>
+          </div>
+          <div id="resumeTVA" class="muted-box" style="margin-top:10px">TVA calculée après le chiffrage.</div>
+          <p class="note" style="margin-top:8px">Le taux reste modifiable : selon le chantier, le client et la nature des travaux, la TVA peut changer. À valider comptablement avant devis final.</p>
+        </div>
+      </div>
+      <div class="card">
+        <h2>📋 Détail par zone</h2>
+        <div id="zoneDetails"></div>
+        <div class="placeholder-box" style="margin-top:12px"><strong>À venir</strong><br>Prochaine étape possible : marge, déplacement, acompte et export devis client.</div>
+      </div>
+    </div>
+  </section>
+
+  <section id="pageVerifs" class="tab-panel">
+    <div class="verify-layout">
+      <div class="card">
+        <h2>✅ Vérifications techniques</h2>
+        <div id="blocTechnique"></div>
+      </div>
+      <div class="card">
+        <h2>📚 Notes DTU / charges</h2>
+        <div class="form-grid">
+          <div>
+            <label for="usageTerrasse">Usage prévu</label>
+            <select id="usageTerrasse" onchange="calculTerrasseMulti()">
+              <option value="privatif" selected>Privatif / résidentiel léger</option>
+              <option value="frequent">Fréquent / HPA / accès public léger</option>
+              <option value="renforce">Renforcé / terrasse très sollicitée</option>
+            </select>
+          </div>
+          <div>
+            <label for="hauteurSousTerrasse">Hauteur libre sous lames (cm)</label>
+            <input id="hauteurSousTerrasse" type="number" min="0" step="1" value="8" onchange="calculTerrasseMulti()">
+          </div>
+          <div>
+            <label for="ventilationTerrasse">Ventilation sous terrasse</label>
+            <select id="ventilationTerrasse" onchange="calculTerrasseMulti()">
+              <option value="bonne">Bonne / côtés ouverts</option>
+              <option value="moyenne" selected>Moyenne</option>
+              <option value="faible">Faible / terrasse ras du sol</option>
+            </select>
+          </div>
+          <div>
+            <label for="penteTerrasse">Pente support / écoulement (%)</label>
+            <input id="penteTerrasse" type="number" min="0" step="0.1" value="1" onchange="calculTerrasseMulti()">
+          </div>
+          <div>
+            <label for="classeEmploi">Classe d’emploi visée</label>
+            <select id="classeEmploi" onchange="calculTerrasseMulti()">
+              <option value="3">Classe 3 / hors contact sol</option>
+              <option value="4" selected>Classe 4 / extérieur exposé</option>
+              <option value="5">Classe 5 / ambiance très sévère</option>
+            </select>
+          </div>
+          <div>
+            <label for="typeSupport">Support</label>
+            <select id="typeSupport" onchange="calculTerrasseMulti()">
+              <option value="plots" selected>Plots / appuis ponctuels</option>
+              <option value="dalle">Dalle béton / support continu</option>
+              <option value="terre">Sol naturel / à préparer</option>
+            </select>
+          </div>
+        </div>
+        <div class="source-box">
+          Notes indicatives basées sur le NF DTU 51.4 et les guides professionnels de conception des terrasses bois. Ce module ne remplace pas une note de calcul structurelle, un avis fabricant ou un contrôle bureau d’étude.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="pageVisuels" class="tab-panel">
+    <div class="visual-main">
+      <div class="card">
+        <h2>📐 Vue projet</h2>
+        <p class="small">Croquis multi-zone avec repères visuels Z1, Z2, Z3…</p>
+        <div class="canvas-toolbar">
+          <button type="button" class="secondary" onclick="projetZoomOut()">Zoom -</button>
+          <button type="button" class="secondary" onclick="projetZoomIn()">Zoom +</button>
+          <button type="button" class="secondary" onclick="projetZoomReset()">Reset</button>
+          <button type="button" class="secondary" onclick="agrandirCanvas('canvasTerrasse')">Agrandir</button>
+        </div>
+        <canvas id="canvasTerrasse" class="visual-canvas" width="1100" height="700"></canvas>
+        <div id="zoneLegend" class="muted-box" style="margin-top:10px"></div>
+        <div id="resumePose" class="note" style="margin-top:10px"></div>
+      </div>
+      <div class="card">
+        <h2>🪵 Vue détaillée de la zone</h2>
+        <div class="form-grid">
+          <div><label for="zoneSelectDetail">Zone à afficher en détail</label><select id="zoneSelectDetail" onchange="dessinerZoneSelectionnee()"></select></div>
+          <div class="toggle-line" style="padding-top:28px"><input id="toggleCotes" type="checkbox" checked onchange="toggleCotes()"><label for="toggleCotes" style="margin:0">Afficher les cotes</label></div>
+        </div>
+        <p class="note" style="margin-top:8px">Sur téléphone ou PC : zoom avec les boutons ou la molette, puis déplacement par glisser sur le plan. Les cotes affichent les dimensions et l’entraxe des solives/lambourdes.</p>
+        <div class="canvas-toolbar">
+          <button type="button" class="secondary" onclick="detailZoomOut()">Zoom -</button>
+          <button type="button" class="secondary" onclick="detailZoomIn()">Zoom +</button>
+          <button type="button" class="secondary" onclick="detailZoomReset()">Reset zoom</button>
+          <button type="button" class="secondary" onclick="agrandirCanvas('canvasZoneDetail')">Agrandir</button>
+        </div>
+        <canvas id="canvasZoneDetail" class="visual-canvas visual-full" width="1100" height="760"></canvas>
+        <div id="zoneDetailResume" class="muted-box" style="margin-top:10px"></div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<div class="mobile-actions"><button type="button" class="primary" onclick="calculTerrasseMulti();ouvrirOnglet('pageCouts')">Calculer</button><button type="button" class="secondary" onclick="ouvrirOnglet('pageCouts')">Coûts</button><button type="button" class="secondary" onclick="ouvrirOnglet('pageVisuels')">Visuels</button></div>
+
+<div id="modalVisuel" class="modal-visuel" onclick="fermerAgrandissement()">
+  <div class="modal-inner" onclick="event.stopPropagation()">
+    <div class="modal-head"><h2 style="margin:0">Visuel agrandi</h2><button type="button" class="secondary" onclick="fermerAgrandissement()">Fermer</button></div>
+    <canvas id="canvasAgrandissement" width="1100" height="760"></canvas>
+  </div>
+</div>
 <script>
 let catalogue=[
 {"Famille":"Lame","Reference":"CANCUN_28x120_3.9","Designation":"Lame Cancun pin marron","Epaisseur_mm":28,"Largeur_mm":120,"Longueur_m":3.9,"Unite":"u","Prix_public_HT":11.6,"Prix_pro_HT":null,"Fournisseur":"Vivre en Bois"},
@@ -99,16 +316,102 @@ let catalogue=[
 {"Famille":"Accessoire","Reference":"BANDE_BITUME","Designation":"Bande bitume lambourde","Epaisseur_mm":null,"Largeur_mm":null,"Longueur_m":null,"Unite":"ml","Prix_public_HT":1.2,"Prix_pro_HT":null,"Fournisseur":"Vivre en Bois"},
 {"Famille":"Accessoire","Reference":"GEOTEXTILE","Designation":"Géotextile","Epaisseur_mm":null,"Largeur_mm":null,"Longueur_m":null,"Unite":"m2","Prix_public_HT":1.5,"Prix_pro_HT":null,"Fournisseur":"Vivre en Bois"}
 ];
-let dernierCalculZones=[];let detailZoomLevel=1;const sections={"45x70":.40,"45x95":.50,"63x75":.50,"63x100":.65,"75x150":.80};let zoneCount=0;
+catalogue.forEach(x=>{if(!x.Perso)x.BaseCatalogue=true});const catalogueInitial=JSON.parse(JSON.stringify(catalogue));let dernierCalculZones=[];let detailZoomLevel=1;let detailPanX=0;let detailPanY=0;let detailIsDragging=false;let detailLastPointer=null;let detailSelectedZoneIndex=null;let projetZoomLevel=1;let afficherCotes=true;let referenceEnCoursEdition=null;const STORAGE_CHANTIERS_KEY="terrasseBuildersChantiersV1";const sections={"45x70":.40,"45x95":.50,"63x75":.50,"63x100":.65,"75x150":.80};let zoneCount=0;
 function euro(v){return new Intl.NumberFormat('fr-FR',{style:'currency',currency:'EUR'}).format(v||0)}function n2(v){return new Intl.NumberFormat('fr-FR',{minimumFractionDigits:2,maximumFractionDigits:2}).format(v||0)}function n0(v){return new Intl.NumberFormat('fr-FR',{maximumFractionDigits:0}).format(v||0)}function getByReference(ref){return catalogue.find(x=>x.Reference===ref)}function getByFamily(f){return catalogue.filter(x=>(x.Famille||'').toLowerCase()===f.toLowerCase())}function prixUnitaireAchat(a){return a?Number(a.Prix_public_HT||0):0}function prixParMl(a){if(!a)return 0;const p=prixUnitaireAchat(a);if((a.Unite||'').toLowerCase()==='ml')return p;if(a.Longueur_m&&Number(a.Longueur_m)>0)return p/Number(a.Longueur_m);return p}function coutSelonUnite(a,qPieces,qMl){if(!a)return 0;const u=(a.Unite||'').toLowerCase(),p=prixUnitaireAchat(a);if(u==='ml'||u==='m2')return p*(Number(qMl)||0);return p*(Number(qPieces)||0)}
 function populateSelect(id,items,fmt,valueField='Reference'){const sel=document.getElementById(id);sel.innerHTML=items.map(item=>`<option value="${item[valueField]}">${fmt(item)}</option>`).join('')}
-function toggleAjoutReference(){document.getElementById('blocAjoutReference').classList.toggle('hidden')}function toggleGestionReferences(){document.getElementById('blocGestionReferences').classList.toggle('hidden');afficherRefsPerso()}function resetAjoutReference(){['newReference','newDesignation','newEpaisseur','newLargeur','newLongueur','newPrix'].forEach(id=>document.getElementById(id).value='');document.getElementById('newFournisseur').value='Vivre en Bois';document.getElementById('newUnite').value='u';document.getElementById('newFamille').value='Lame'}
-function chargerCataloguePerso(){try{const refs=JSON.parse(localStorage.getItem('cataloguePersoTerrasseBuilders')||'[]');refs.forEach(r=>{if(r&&r.Reference&&!catalogue.some(x=>x.Reference===r.Reference))catalogue.push(r)})}catch(e){console.warn(e)}}function sauvegarderCataloguePerso(){localStorage.setItem('cataloguePersoTerrasseBuilders',JSON.stringify(catalogue.filter(x=>x.Perso===true)))}
+function toggleAjoutReference(){document.getElementById('blocAjoutReference').classList.toggle('hidden')}function toggleGestionReferences(){document.getElementById('blocGestionReferences').classList.toggle('hidden');afficherRefsPerso()}function resetAjoutReference(){referenceEnCoursEdition=null;['newReference','newDesignation','newEpaisseur','newLargeur','newLongueur','newPrix'].forEach(id=>document.getElementById(id).value='');document.getElementById('newFournisseur').value='Vivre en Bois';document.getElementById('newUnite').value='u';document.getElementById('newFamille').value='Lame';document.getElementById('newReference').disabled=false;document.getElementById('refFormTitle').textContent='➕ Nouvelle référence';document.getElementById('btnSaveReference').textContent='Enregistrer'}
+function chargerCataloguePerso(){try{const refs=JSON.parse(localStorage.getItem('cataloguePersoTerrasseBuilders')||'[]');refs.forEach(r=>{if(!r||!r.Reference)return;const existing=catalogue.find(x=>x.Reference===r.Reference);if(existing){Object.assign(existing,r,{Perso:true,BaseCatalogue:existing.BaseCatalogue===true||r.BaseCatalogue===true})}else{catalogue.push({...r,Perso:true,BaseCatalogue:false})}})}catch(e){console.warn(e)}}function sauvegarderCataloguePerso(){localStorage.setItem('cataloguePersoTerrasseBuilders',JSON.stringify(catalogue.filter(x=>x.Perso===true)))}
 function formatSelectLame(i){return `${i.Reference} — ${i.Designation} — ${n2(i.Largeur_mm)} mm — ${n2(i.Longueur_m)} m — ${n2(i.Prix_public_HT)} €/u${i.Perso?' — perso':''}`}function formatSimple(i){return `${i.Reference} — ${i.Designation} — ${n2(i.Prix_public_HT)} €/${i.Unite||'u'}${i.Perso?' — perso':''}`}function getSectionLabelFromLambourde(l){if(!l)return'';const a=n0(l.Epaisseur_mm),b=n0(l.Largeur_mm);return `${a}x${b}`}function getPorteeLambourde(ref){const l=getByReference(ref);if(!l)return 0;const key=getSectionLabelFromLambourde(l);return sections[key]||sections[`${n0(l.Largeur_mm)}x${n0(l.Epaisseur_mm)}`]||0}function getRefLambourdeReco(sectionKey){const exact='LAMB_'+sectionKey+'_4';if(getByReference(exact))return exact;const found=getByFamily('Lambourde').find(l=>getSectionLabelFromLambourde(l)===sectionKey||`${n0(l.Largeur_mm)}x${n0(l.Epaisseur_mm)}`===sectionKey);return found?found.Reference:''}function formatLambourde(i){const portee=getPorteeLambourde(i.Reference);return `${i.Reference} — ${i.Designation} — ${n2(i.Epaisseur_mm)}x${n2(i.Largeur_mm)} mm — ${n2(i.Longueur_m)} m — ${n2(i.Prix_public_HT)} €/u${portee?` — portée ${n2(portee)} m`:''}${i.Perso?' — perso':''}`}
 function rechargerSelectsCatalogue(){const vals={lame:document.getElementById('lame')?.value,plotRef:document.getElementById('plotRef')?.value,visRef:document.getElementById('visRef')?.value,section:document.getElementById('section')?.value};populateSelect('lame',getByFamily('Lame'),formatSelectLame);populateSelect('section',getByFamily('Lambourde'),formatLambourde);populateSelect('plotRef',getByFamily('Plot'),formatSimple);populateSelect('visRef',getByFamily('Vis'),formatSimple);['lame','section','plotRef','visRef'].forEach(id=>{if(vals[id]&&catalogue.some(x=>x.Reference===vals[id]))document.getElementById(id).value=vals[id]});afficherRefsPerso()}
-function ajouterReferenceCatalogue(){const famille=document.getElementById('newFamille').value,reference=document.getElementById('newReference').value.trim(),designation=document.getElementById('newDesignation').value.trim(),epaisseur=parseFloat(document.getElementById('newEpaisseur').value)||null,largeur=parseFloat(document.getElementById('newLargeur').value)||null,longueur=parseFloat(document.getElementById('newLongueur').value)||null,unite=document.getElementById('newUnite').value,prix=parseFloat(document.getElementById('newPrix').value)||0,fournisseur=document.getElementById('newFournisseur').value.trim()||'';if(!reference||!designation||prix<=0){alert('Il faut au minimum une référence, une désignation et un prix HT.');return}if(catalogue.some(x=>x.Reference===reference)){alert('Cette référence existe déjà.');return}if((famille==='Lame'||famille==='Lambourde')&&(!longueur||longueur<=0)){alert('Pour une lame ou une lambourde, indique une longueur en m.');return}if(famille==='Lame'&&(!largeur||largeur<=0)){alert('Pour une lame, indique une largeur en mm.');return}catalogue.push({Perso:true,Famille:famille,Reference:reference,Designation:designation,Epaisseur_mm:epaisseur,Largeur_mm:largeur,Longueur_m:longueur,Unite:unite,Prix_public_HT:prix,Prix_pro_HT:null,Fournisseur:fournisseur});sauvegarderCataloguePerso();rechargerSelectsCatalogue();document.getElementById(famille==='Lame'?'lame':famille==='Lambourde'?'section':famille==='Plot'?'plotRef':famille==='Vis'?'visRef':'lame').value=reference;autoDimensionnerGlobal();resetAjoutReference();alert('Référence ajoutée et sauvegardée.')} 
-function afficherRefsPerso(){const el=document.getElementById('listeRefsPerso');if(!el)return;const refs=catalogue.filter(x=>x.Perso===true);el.innerHTML=refs.length?refs.map(r=>`<div class="ref-pill"><div><strong>${r.Reference}</strong><br><span class="small">${r.Famille} · ${r.Designation} · ${n2(r.Prix_public_HT)} €/${r.Unite||'u'}</span></div><button type="button" class="danger" onclick="supprimerRefPerso('${r.Reference.replace(/'/g,"\\'")}')">Supprimer</button></div>`).join(''):'<p class="small">Aucune référence perso pour le moment.</p>'}function supprimerRefPerso(ref){if(!confirm('Supprimer cette référence perso ?'))return;catalogue=catalogue.filter(x=>x.Reference!==ref||x.Perso!==true);sauvegarderCataloguePerso();rechargerSelectsCatalogue();calculTerrasseMulti()}function supprimerToutesRefsPerso(){if(!confirm('Supprimer toutes les références perso ?'))return;catalogue=catalogue.filter(x=>x.Perso!==true);sauvegarderCataloguePerso();rechargerSelectsCatalogue();calculTerrasseMulti()}function exporterRefsPerso(){const blob=new Blob([JSON.stringify(catalogue.filter(x=>x.Perso===true),null,2)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='references_perso_terrasse_builders.json';a.click();URL.revokeObjectURL(a.href)}function importerRefsPerso(e){const file=e.target.files[0];if(!file)return;const reader=new FileReader();reader.onload=()=>{try{const refs=JSON.parse(reader.result);if(!Array.isArray(refs))throw new Error('Format invalide');refs.forEach(r=>{if(r.Reference&&!catalogue.some(x=>x.Reference===r.Reference))catalogue.push({...r,Perso:true})});sauvegarderCataloguePerso();rechargerSelectsCatalogue();alert('Import terminé.')}catch(err){alert('Fichier JSON invalide.')}};reader.readAsText(file);e.target.value=''}
-function initForm(){chargerCataloguePerso();populateSelect('lame',getByFamily('Lame'),formatSelectLame);populateSelect('section',getByFamily('Lambourde'),formatLambourde);document.getElementById('section').value=getByReference('LAMB_45x95_4')?'LAMB_45x95_4':(getByFamily('Lambourde')[0]?.Reference||'');populateSelect('plotRef',getByFamily('Plot'),formatSimple);populateSelect('visRef',getByFamily('Vis'),formatSimple);['lame','entraxePlot'].forEach(id=>document.getElementById(id).addEventListener('change',autoDimensionnerGlobal));ajouterZone();autoDimensionnerGlobal()}
+function getReferenceFormPayload(){
+ const famille=document.getElementById('newFamille').value,
+ reference=document.getElementById('newReference').value.trim(),
+ designation=document.getElementById('newDesignation').value.trim(),
+ epaisseur=parseFloat(document.getElementById('newEpaisseur').value)||null,
+ largeur=parseFloat(document.getElementById('newLargeur').value)||null,
+ longueur=parseFloat(document.getElementById('newLongueur').value)||null,
+ unite=document.getElementById('newUnite').value,
+ prix=parseFloat(document.getElementById('newPrix').value)||0,
+ fournisseur=document.getElementById('newFournisseur').value.trim()||'';
+ if(!reference||!designation||prix<=0){alert('Il faut au minimum une référence, une désignation et un prix HT.');return null}
+ if((famille==='Lame'||famille==='Lambourde')&&(!longueur||longueur<=0)){alert('Pour une lame ou une lambourde, indique une longueur en m.');return null}
+ if(famille==='Lame'&&(!largeur||largeur<=0)){alert('Pour une lame, indique une largeur en mm.');return null}
+ return{Famille:famille,Reference:reference,Designation:designation,Epaisseur_mm:epaisseur,Largeur_mm:largeur,Longueur_m:longueur,Unite:unite,Prix_public_HT:prix,Prix_pro_HT:null,Fournisseur:fournisseur}
+}
+function ajouterReferenceCatalogue(){
+ const data=getReferenceFormPayload();if(!data)return;
+ if(referenceEnCoursEdition){
+  const existing=getByReference(referenceEnCoursEdition);
+  if(!existing){alert('Référence à modifier introuvable.');resetAjoutReference();return}
+  const wasBase=existing.BaseCatalogue===true;
+  Object.assign(existing,data,{Reference:referenceEnCoursEdition,Perso:true,BaseCatalogue:wasBase});
+  sauvegarderCataloguePerso();rechargerSelectsCatalogue();
+  const selectId=data.Famille==='Lame'?'lame':data.Famille==='Lambourde'?'section':data.Famille==='Plot'?'plotRef':data.Famille==='Vis'?'visRef':'lame';
+  if(document.getElementById(selectId))document.getElementById(selectId).value=referenceEnCoursEdition;
+  autoDimensionnerGlobal();resetAjoutReference();alert('Référence mise à jour et sauvegardée.');return;
+ }
+ if(catalogue.some(x=>x.Reference===data.Reference)){alert('Cette référence existe déjà. Clique sur Modifier si tu veux la changer.');return}
+ catalogue.push({...data,Perso:true,BaseCatalogue:false});sauvegarderCataloguePerso();rechargerSelectsCatalogue();
+ const selectId=data.Famille==='Lame'?'lame':data.Famille==='Lambourde'?'section':data.Famille==='Plot'?'plotRef':data.Famille==='Vis'?'visRef':'lame';
+ if(document.getElementById(selectId))document.getElementById(selectId).value=data.Reference;
+ autoDimensionnerGlobal();resetAjoutReference();alert('Référence ajoutée et sauvegardée.');
+}
+function escapeAttr(v){return String(v||'').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
+function jsRef(ref){return String(ref||'').replace(/\\/g,'\\\\').replace(/'/g,"\\'")}
+function afficherRefsPerso(){
+ const el=document.getElementById('listeRefsPerso');if(!el)return;
+ const refs=[...catalogue].sort((a,b)=>String(a.Famille||'').localeCompare(String(b.Famille||''))||String(a.Reference||'').localeCompare(String(b.Reference||'')));
+ el.innerHTML=refs.length?refs.map(r=>{
+  const isBase=r.BaseCatalogue===true,isPerso=r.Perso===true,isModifiedBase=isBase&&isPerso;
+  const badge=isModifiedBase?'modifiée':isPerso?'perso':'base';
+  const resetBtn=isModifiedBase?`<button type="button" class="secondary" onclick="reinitialiserRefCatalogue('${jsRef(r.Reference)}')">Réinitialiser</button>`:'';
+  const deleteBtn=(!isBase&&isPerso)?`<button type="button" class="danger" onclick="supprimerRefPerso('${jsRef(r.Reference)}')">Supprimer</button>`:'';
+  return `<div class="ref-pill"><div><strong>${escapeAttr(r.Reference)}</strong> <span class="small">${badge}</span><br><span class="small">${escapeAttr(r.Famille)} · ${escapeAttr(r.Designation)} · ${n2(r.Prix_public_HT)} €/${escapeAttr(r.Unite||'u')}</span></div><div class="actions" style="margin:0"><button type="button" class="secondary" onclick="modifierRefCatalogue('${jsRef(r.Reference)}')">Modifier</button>${resetBtn}${deleteBtn}</div></div>`
+ }).join(''):'<p class="small">Aucune référence pour le moment.</p>'
+}
+function modifierRefCatalogue(ref){
+ const r=getByReference(ref);if(!r){alert('Référence introuvable.');return}
+ document.getElementById('blocAjoutReference').classList.remove('hidden');
+ referenceEnCoursEdition=ref;
+ document.getElementById('newFamille').value=r.Famille||'Lame';
+ document.getElementById('newReference').value=r.Reference||'';
+ document.getElementById('newReference').disabled=true;
+ document.getElementById('newDesignation').value=r.Designation||'';
+ document.getElementById('newEpaisseur').value=r.Epaisseur_mm||'';
+ document.getElementById('newLargeur').value=r.Largeur_mm||'';
+ document.getElementById('newLongueur').value=r.Longueur_m||'';
+ document.getElementById('newUnite').value=r.Unite||'u';
+ document.getElementById('newPrix').value=r.Prix_public_HT||'';
+ document.getElementById('newFournisseur').value=r.Fournisseur||'';
+ document.getElementById('refFormTitle').textContent='✏️ Modifier une référence';
+ document.getElementById('btnSaveReference').textContent='Mettre à jour';
+ document.getElementById('blocAjoutReference').scrollIntoView({behavior:'smooth',block:'start'});
+}
+function reinitialiserRefCatalogue(ref){
+ const base=catalogueInitial.find(x=>x.Reference===ref);if(!base){alert('Référence de base introuvable.');return}
+ if(!confirm('Réinitialiser cette référence avec les valeurs de base ?'))return;
+ const idx=catalogue.findIndex(x=>x.Reference===ref);
+ if(idx>=0)catalogue[idx]={...JSON.parse(JSON.stringify(base)),BaseCatalogue:true};
+ sauvegarderCataloguePerso();rechargerSelectsCatalogue();calculTerrasseMulti();
+}
+function supprimerRefPerso(ref){if(!confirm('Supprimer cette référence perso ?'))return;catalogue=catalogue.filter(x=>x.Reference!==ref||x.Perso!==true||x.BaseCatalogue===true);sauvegarderCataloguePerso();rechargerSelectsCatalogue();calculTerrasseMulti()}
+function supprimerToutesRefsPerso(){if(!confirm('Supprimer toutes les références perso non natives ? Les références de base modifiées seront conservées.'))return;catalogue=catalogue.filter(x=>x.Perso!==true||x.BaseCatalogue===true);sauvegarderCataloguePerso();rechargerSelectsCatalogue();calculTerrasseMulti()}
+function exporterRefsPerso(){const blob=new Blob([JSON.stringify(catalogue.filter(x=>x.Perso===true),null,2)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='references_perso_terrasse_builders.json';a.click();URL.revokeObjectURL(a.href)}function importerRefsPerso(e){const file=e.target.files[0];if(!file)return;const reader=new FileReader();reader.onload=()=>{try{const refs=JSON.parse(reader.result);if(!Array.isArray(refs))throw new Error('Format invalide');refs.forEach(r=>{if(!r.Reference)return;const existing=catalogue.find(x=>x.Reference===r.Reference);if(existing)Object.assign(existing,{...r,Perso:true,BaseCatalogue:existing.BaseCatalogue===true||r.BaseCatalogue===true});else catalogue.push({...r,Perso:true,BaseCatalogue:false})});sauvegarderCataloguePerso();rechargerSelectsCatalogue();alert('Import terminé.')}catch(err){alert('Fichier JSON invalide.')}};reader.readAsText(file);e.target.value=''}
+
+
+function getSavedChantiers(){try{return JSON.parse(localStorage.getItem(STORAGE_CHANTIERS_KEY)||'[]')}catch(e){return[]}}
+function setSavedChantiers(list){localStorage.setItem(STORAGE_CHANTIERS_KEY,JSON.stringify(list||[]))}
+function getGlobalFormState(){return{chantierNom:document.getElementById('chantierNom')?.value||'',lame:document.getElementById('lame')?.value||'',jeuLame:document.getElementById('jeuLame')?.value||'',margeDecoupe:document.getElementById('margeDecoupe')?.value||'',entraxe:document.getElementById('entraxe')?.value||'',section:document.getElementById('section')?.value||'',entraxePlot:document.getElementById('entraxePlot')?.value||'',plotRef:document.getElementById('plotRef')?.value||'',visRef:document.getElementById('visRef')?.value||'',bandeBitume:document.getElementById('bandeBitume')?.value||'oui',geotextile:document.getElementById('geotextile')?.value||'oui',mutualiser:document.getElementById('mutualiser')?.value||'non',mainOeuvreActive:document.getElementById('mainOeuvreActive')?.value||'non',prixMainOeuvreM2:document.getElementById('prixMainOeuvreM2')?.value||'65',tauxTVA:document.getElementById('tauxTVA')?.value||'20',tauxTVAManuel:document.getElementById('tauxTVAManuel')?.value||''}}
+function getZonesFormState(){return Array.from(document.querySelectorAll('.zone-card')).map(el=>{const id=Number(el.id.split('-')[1]);return{id,nom:document.getElementById(`zoneNom-${id}`)?.value||`Zone ${id}`,forme:document.getElementById(`forme-${id}`)?.value||'rectangle',longueur:document.getElementById(`longueur-${id}`)?.value||'',largeur:document.getElementById(`largeur-${id}`)?.value||'',diametre:document.getElementById(`diametre-${id}`)?.value||'',decoupeLongueur:document.getElementById(`decoupeLongueur-${id}`)?.value||'',decoupeLargeur:document.getElementById(`decoupeLargeur-${id}`)?.value||'',videLongueur:document.getElementById(`videLongueur-${id}`)?.value||'',videLargeur:document.getElementById(`videLargeur-${id}`)?.value||'',sensPose:document.getElementById(`sensPose-${id}`)?.value||'auto'}})}
+function setValueSafe(id,val){const el=document.getElementById(id);if(el&&val!==undefined&&val!==null)el.value=val}
+function appliquerGlobalState(g){if(!g)return;['chantierNom','lame','jeuLame','margeDecoupe','entraxe','section','entraxePlot','plotRef','visRef','bandeBitume','geotextile','mutualiser','mainOeuvreActive','prixMainOeuvreM2','tauxTVA','tauxTVAManuel'].forEach(id=>setValueSafe(id,g[id]))}
+function appliquerZonesState(zones){const cont=document.getElementById('zonesContainer');if(!cont)return;cont.innerHTML='';zoneCount=0;(zones&&zones.length?zones:[{}]).forEach(z=>{ajouterZone();const id=zoneCount;setValueSafe(`zoneNom-${id}`,z.nom||`Zone ${id}`);setValueSafe(`forme-${id}`,z.forme||'rectangle');updateZoneFields(id);setValueSafe(`longueur-${id}`,z.longueur||4);setValueSafe(`largeur-${id}`,z.largeur||3);setValueSafe(`diametre-${id}`,z.diametre||4);setValueSafe(`decoupeLongueur-${id}`,z.decoupeLongueur||1.5);setValueSafe(`decoupeLargeur-${id}`,z.decoupeLargeur||1.5);setValueSafe(`videLongueur-${id}`,z.videLongueur||2);setValueSafe(`videLargeur-${id}`,z.videLargeur||1.5);setValueSafe(`sensPose-${id}`,z.sensPose||'auto')})}
+function rafraichirListeChantiers(){const sel=document.getElementById('listeChantiers');if(!sel)return;const current=sel.value;const list=getSavedChantiers().sort((a,b)=>(b.updatedAt||'').localeCompare(a.updatedAt||''));sel.innerHTML=list.length?list.map(c=>`<option value="${c.id}">${c.name||'Chantier sans nom'} — ${new Date(c.updatedAt||c.createdAt).toLocaleString('fr-FR')}</option>`).join(''):'<option value="">Aucun chantier sauvegardé</option>';if(current&&list.some(c=>c.id===current))sel.value=current}
+function sauvegarderChantier(){const g=getGlobalFormState();let name=(g.chantierNom||'').trim();if(!name){name='Chantier '+new Date().toLocaleDateString('fr-FR');document.getElementById('chantierNom').value=name;g.chantierNom=name}const list=getSavedChantiers();const selected=document.getElementById('listeChantiers')?.value||'';const existingIndex=selected?list.findIndex(c=>c.id===selected):list.findIndex(c=>c.name===name);const now=new Date().toISOString();const payload={id:existingIndex>=0?list[existingIndex].id:'chantier_'+Date.now(),name,createdAt:existingIndex>=0?list[existingIndex].createdAt:now,updatedAt:now,globals:g,zones:getZonesFormState()};if(existingIndex>=0)list[existingIndex]=payload;else list.push(payload);setSavedChantiers(list);rafraichirListeChantiers();setValueSafe('listeChantiers',payload.id);alert('Chantier sauvegardé.')} 
+function chargerChantierSelectionne(){const id=document.getElementById('listeChantiers')?.value;if(!id){alert('Aucun chantier sélectionné.');return}const chantier=getSavedChantiers().find(c=>c.id===id);if(!chantier){alert('Chantier introuvable.');return}appliquerGlobalState(chantier.globals);appliquerZonesState(chantier.zones);calculTerrasseMulti();alert('Chantier chargé.')} 
+function supprimerChantierSelectionne(){const id=document.getElementById('listeChantiers')?.value;if(!id){alert('Aucun chantier sélectionné.');return}if(!confirm('Supprimer ce chantier sauvegardé ?'))return;setSavedChantiers(getSavedChantiers().filter(c=>c.id!==id));rafraichirListeChantiers()}
+
+function initForm(){chargerCataloguePerso();populateSelect('lame',getByFamily('Lame'),formatSelectLame);populateSelect('section',getByFamily('Lambourde'),formatLambourde);document.getElementById('section').value=getByReference('LAMB_45x95_4')?'LAMB_45x95_4':(getByFamily('Lambourde')[0]?.Reference||'');populateSelect('plotRef',getByFamily('Plot'),formatSimple);populateSelect('visRef',getByFamily('Vis'),formatSimple);['lame','entraxePlot'].forEach(id=>document.getElementById(id).addEventListener('change',autoDimensionnerGlobal));ajouterZone();autoDimensionnerGlobal();rafraichirListeChantiers()}
 function getEntaxeLambourdeMax(lame){if(!lame)return .4;const e=Number(lame.Epaisseur_mm||0),l=Number(lame.Largeur_mm||0);if(e<=21&&l>=140)return .40;if(e<=21)return .40;if(e<=23)return .45;if(e<=27)return .45;return .50}function getLambourdeMargin(f){if(f==='L')return 10;if(f==='rectangle_vide')return 12;if(f==='cercle'||f==='demi_cercle')return 15;return 5}function getSectionMini(entraxePlotM){const o=Object.entries(sections).sort((a,b)=>a[1]-b[1]);const found=o.find(([s,p])=>entraxePlotM<=p);return found?found[0]:o[o.length-1][0]}function autoDimensionnerGlobal(){const lame=getByReference(document.getElementById('lame').value),cm=parseFloat(document.getElementById('entraxePlot').value)||50;document.getElementById('entraxe').value=Math.round(getEntaxeLambourdeMax(lame)*100);const reco=getRefLambourdeReco(getSectionMini(cm/100));if(reco)document.getElementById('section').value=reco}
 function zoneTemplate(id){return `<div class="zone-card" id="zone-${id}"><div class="zone-head"><div class="zone-title">Zone ${id}</div><button type="button" class="secondary" onclick="supprimerZone(${id})">Supprimer</button></div><div class="form-grid"><div style="grid-column:1/-1"><label for="zoneNom-${id}">Nom de zone</label><input id="zoneNom-${id}" type="text" value="Zone ${id}"></div><div style="grid-column:1/-1"><label for="forme-${id}">Forme</label><select id="forme-${id}" onchange="updateZoneFields(${id})"><option value="rectangle">Rectangle</option><option value="L">Forme en L</option><option value="rectangle_vide">Rectangle avec vide central / piscine</option><option value="cercle">Cercle</option><option value="demi_cercle">Demi-cercle</option></select></div><div class="section-block"><h3>Géométrie principale</h3><div class="form-grid"><div id="blocLongueur-${id}"><label for="longueur-${id}">Longueur hors tout (m)</label><input id="longueur-${id}" type="number" min="0" step="0.01" value="4"></div><div id="blocLargeur-${id}"><label for="largeur-${id}">Largeur hors tout (m)</label><input id="largeur-${id}" type="number" min="0" step="0.01" value="3"></div><div id="blocDiametre-${id}" class="hidden"><label for="diametre-${id}">Diamètre (m)</label><input id="diametre-${id}" type="number" min="0" step="0.01" value="4"></div></div></div><div id="blocL-${id}" class="section-block hidden"><h3>Découpe de l'angle (forme en L)</h3><div class="form-grid"><div><label for="decoupeLongueur-${id}">Longueur découpe (m)</label><input id="decoupeLongueur-${id}" type="number" min="0" step="0.01" value="1.5"></div><div><label for="decoupeLargeur-${id}">Largeur découpe (m)</label><input id="decoupeLargeur-${id}" type="number" min="0" step="0.01" value="1.5"></div></div></div><div id="blocVide-${id}" class="section-block hidden"><h3>Vide intérieur / piscine</h3><div class="form-grid"><div><label for="videLongueur-${id}">Longueur vide (m)</label><input id="videLongueur-${id}" type="number" min="0" step="0.01" value="2"></div><div><label for="videLargeur-${id}">Largeur vide (m)</label><input id="videLargeur-${id}" type="number" min="0" step="0.01" value="1.5"></div></div></div><div style="grid-column:1/-1"><label for="sensPose-${id}">Sens des lames pour cette zone</label><select id="sensPose-${id}"><option value="longueur">Lames dans la longueur</option><option value="largeur">Lames dans la largeur</option><option value="auto" selected>Auto (le moins cher)</option></select></div></div></div>`}function ajouterZone(){zoneCount++;document.getElementById('zonesContainer').insertAdjacentHTML('beforeend',zoneTemplate(zoneCount));updateZoneFields(zoneCount)}function supprimerZone(id){const zones=document.querySelectorAll('.zone-card');if(zones.length<=1){alert('Il faut garder au moins une zone.');return}document.getElementById(`zone-${id}`)?.remove()}
 function updateZoneFields(id){const f=document.getElementById(`forme-${id}`).value,isCircle=f==='cercle'||f==='demi_cercle';document.getElementById(`blocDiametre-${id}`).classList.toggle('hidden',!isCircle);document.getElementById(`blocLongueur-${id}`).classList.toggle('hidden',isCircle);document.getElementById(`blocLargeur-${id}`).classList.toggle('hidden',isCircle);document.getElementById(`blocL-${id}`).classList.toggle('hidden',f!=='L');document.getElementById(`blocVide-${id}`).classList.toggle('hidden',f!=='rectangle_vide')}
@@ -116,11 +419,226 @@ function getGeometryFromZone(id){const f=document.getElementById(`forme-${id}`).
 function calculateRectangleScenario(p){const{orientation,outerLength:L,outerWidth:W,entraxeLambCm,entraxePlotCm,jeuLameMm,margePct,lame,plot,vis,section,bandeBitumeActive,geotextileActive,geometry}=p,lambourde=getByReference(section),bandeBitume=getByReference('BANDE_BITUME'),geotextile=getByReference('GEOTEXTILE'),surface=geometry.surface,perimeter=geometry.perimeter,entraxeLamb=entraxeLambCm/100,entraxePlot=entraxePlotCm/100,dimPose=orientation==='longueur'?{longueurLame:L,largeurCouverture:W}:{longueurLame:W,largeurCouverture:L},largeurUtile=(lame.Largeur_mm+jeuLameMm)/1000,nbRangees=Math.ceil((dimPose.largeurCouverture+(jeuLameMm/1000))/largeurUtile),piecesParRangee=Math.ceil(dimPose.longueurLame/lame.Longueur_m),nbPiecesLames=Math.ceil(nbRangees*piecesParRangee*(1+margePct/100)),mlLamesAchetes=nbPiecesLames*lame.Longueur_m,mlLamesUtiles=nbRangees*dimPose.longueurLame,chuteLamesMl=Math.max(0,mlLamesAchetes-mlLamesUtiles),prixUnitaireLame=lame.Prix_public_HT,prixMlLame=lame.Longueur_m?prixUnitaireLame/lame.Longueur_m:0,coutLames=nbPiecesLames*prixUnitaireLame,margeLambourdesPct=Math.max(5,getLambourdeMargin(geometry.forme)),nbLambourdes=Math.floor(dimPose.largeurCouverture/entraxeLamb)+1,mlLambourdesBase=nbLambourdes*dimPose.longueurLame,mlLambourdes=mlLambourdesBase*(1+margeLambourdesPct/100),nbPiecesLambourdes=Math.ceil(mlLambourdes/lambourde.Longueur_m),mlLambourdesAchetes=nbPiecesLambourdes*lambourde.Longueur_m,coutLambourdes=coutSelonUnite(lambourde,nbPiecesLambourdes,mlLambourdesAchetes),plotsParLambourde=Math.floor(dimPose.longueurLame/entraxePlot)+1,nbPlots=nbLambourdes*plotsParLambourde,coutPlots=nbPlots*plot.Prix_public_HT,nbVis=nbRangees*nbLambourdes*2,coutVis=nbVis*vis.Prix_public_HT,mlBandeBitume=bandeBitumeActive?mlLambourdesAchetes:0,coutBandeBitume=mlBandeBitume*(bandeBitume?bandeBitume.Prix_public_HT:0),m2Geotextile=geotextileActive?surface:0,coutGeotextile=m2Geotextile*(geotextile?geotextile.Prix_public_HT:0),prixDallette=2,nbDallettes=nbPlots,coutDallettes=nbDallettes*prixDallette,totalHT=coutLames+coutLambourdes+coutPlots+coutVis+coutBandeBitume+coutGeotextile+coutDallettes;return{orientation,dimPose,surface,perimeter,entraxeLamb,entraxePlot,jeuLameMm,nbRangees,nbPiecesLames,mlLamesAchetes,mlLamesUtiles,chuteLamesMl,prixUnitaireLame,prixMlLame,coutLames,nbLambourdes,mlLambourdesBase,mlLambourdes,nbPiecesLambourdes,mlLambourdesAchetes,coutLambourdes,plotsParLambourde,nbPlots,coutPlots,nbVis,coutVis,mlBandeBitume,coutBandeBitume,m2Geotextile,coutGeotextile,nbDallettes,prixDallette,coutDallettes,totalHT,prixM2:totalHT/surface,lambourde,bandeBitume,geotextile,lame,plot,vis,section,marginApplied:margePct,margeLambourdesPct}}
 function calculateComplexScenario(p){const{orientation,entraxeLambCm,entraxePlotCm,jeuLameMm,margePct,lame,plot,vis,section,bandeBitumeActive,geotextileActive,geometry}=p,lambourde=getByReference(section),bandeBitume=getByReference('BANDE_BITUME'),geotextile=getByReference('GEOTEXTILE'),surface=geometry.surface,perimeter=geometry.perimeter,entraxeLamb=entraxeLambCm/100,entraxePlot=entraxePlotCm/100,largeurUtile=(lame.Largeur_mm+jeuLameMm)/1000,marginFactor=1+margePct/100,complexityBoost=geometry.forme==='L'?1.04:geometry.forme==='rectangle_vide'?1.08:1.10,mlLamesUtiles=surface/(lame.Largeur_mm/1000),nbPiecesBase=Math.ceil(surface/(lame.Longueur_m*largeurUtile)),nbPiecesLames=Math.ceil(nbPiecesBase*marginFactor*complexityBoost),mlLamesAchetes=nbPiecesLames*lame.Longueur_m,chuteLamesMl=Math.max(0,mlLamesAchetes-mlLamesUtiles),prixUnitaireLame=lame.Prix_public_HT,prixMlLame=lame.Longueur_m?prixUnitaireLame/lame.Longueur_m:0,coutLames=nbPiecesLames*prixUnitaireLame,frameExtra=geometry.forme==='rectangle_vide'?2*(geometry.holeL+geometry.holeW):0,shapeStructureFactor=geometry.forme==='L'?1.06:geometry.forme==='rectangle_vide'?1.12:1.10,margeLambourdesPct=getLambourdeMargin(geometry.forme),mlLambourdesBase=(surface/Math.max(entraxeLamb,.01))*shapeStructureFactor+frameExtra,mlLambourdes=mlLambourdesBase*(1+margeLambourdesPct/100),nbLambourdes=Math.max(1,Math.round(mlLambourdesBase/Math.max(geometry.outerLength||geometry.outerWidth||1,1))),nbPiecesLambourdes=Math.ceil(mlLambourdes/lambourde.Longueur_m),mlLambourdesAchetes=nbPiecesLambourdes*lambourde.Longueur_m,coutLambourdes=coutSelonUnite(lambourde,nbPiecesLambourdes,mlLambourdesAchetes),nbPlots=Math.ceil(mlLambourdes/Math.max(entraxePlot,.01)),plotsParLambourde=Math.max(1,Math.round(nbPlots/Math.max(nbLambourdes,1))),coutPlots=nbPlots*plot.Prix_public_HT,nbVis=Math.ceil(surface/Math.max(largeurUtile*entraxeLamb,.01)*2),coutVis=nbVis*vis.Prix_public_HT,mlBandeBitume=bandeBitumeActive?mlLambourdesAchetes:0,coutBandeBitume=mlBandeBitume*(bandeBitume?bandeBitume.Prix_public_HT:0),m2Geotextile=geotextileActive?surface:0,coutGeotextile=m2Geotextile*(geotextile?geotextile.Prix_public_HT:0),prixDallette=2,nbDallettes=nbPlots,coutDallettes=nbDallettes*prixDallette,totalHT=coutLames+coutLambourdes+coutPlots+coutVis+coutBandeBitume+coutGeotextile+coutDallettes,longueurTrav=orientation==='longueur'?geometry.outerLength:geometry.outerWidth,largeurCov=orientation==='longueur'?geometry.outerWidth:geometry.outerLength;return{orientation,dimPose:{longueurLame:longueurTrav,largeurCouverture:largeurCov},surface,perimeter,entraxeLamb,entraxePlot,jeuLameMm,nbRangees:Math.ceil(largeurCov/largeurUtile),nbPiecesLames,mlLamesAchetes,mlLamesUtiles,chuteLamesMl,prixUnitaireLame,prixMlLame,coutLames,nbLambourdes,mlLambourdesBase,mlLambourdes,nbPiecesLambourdes,mlLambourdesAchetes,coutLambourdes,plotsParLambourde,nbPlots,coutPlots,nbVis,coutVis,mlBandeBitume,coutBandeBitume,m2Geotextile,coutGeotextile,nbDallettes,prixDallette,coutDallettes,totalHT,prixM2:totalHT/surface,lambourde,bandeBitume,geotextile,lame,plot,vis,section,marginApplied:margePct*complexityBoost,margeLambourdesPct}}
 function calculScenario(params){return params.geometry.forme==='rectangle'?calculateRectangleScenario(params):calculateComplexScenario(params)}function calculerZone(id,globals){const geometry=getGeometryFromZone(id);if(!geometryValid(geometry))throw new Error(`Zone ${id} : dimensions invalides.`);const nom=document.getElementById(`zoneNom-${id}`).value.trim()||`Zone ${id}`,sensPose=document.getElementById(`sensPose-${id}`).value,margePct=Math.max(globals.margeSaisie,geometry.recommendedMargin),baseParams={outerLength:geometry.outerLength,outerWidth:geometry.outerWidth,entraxeLambCm:globals.entraxeLambCm,entraxePlotCm:globals.entraxePlotCm,jeuLameMm:globals.jeuLameMm,margePct,lame:globals.lame,plot:globals.plot,vis:globals.vis,section:globals.section,bandeBitumeActive:globals.bandeBitumeActive,geotextileActive:globals.geotextileActive,geometry},scenarios=['longueur','largeur'].map(orientation=>calculScenario({...baseParams,orientation})),choisi=sensPose==='auto'?scenarios.sort((a,b)=>a.totalHT-b.totalHT)[0]:scenarios.find(s=>s.orientation===sensPose);return{id,nom,geometry,sensPose,...choisi}}
-function calculTerrasseMulti(){try{const globals={entraxeLambCm:parseFloat(document.getElementById('entraxe').value)||50,entraxePlotCm:parseFloat(document.getElementById('entraxePlot').value)||50,jeuLameMm:parseFloat(document.getElementById('jeuLame').value)||5,margeSaisie:parseFloat(document.getElementById('margeDecoupe').value)||0,lame:getByReference(document.getElementById('lame').value),plot:getByReference(document.getElementById('plotRef').value),vis:getByReference(document.getElementById('visRef').value),section:document.getElementById('section').value,bandeBitumeActive:document.getElementById('bandeBitume').value==='oui',geotextileActive:document.getElementById('geotextile').value==='oui',mutualiser:document.getElementById('mutualiser').value==='oui'};const zoneIds=Array.from(document.querySelectorAll('.zone-card')).map(el=>Number(el.id.split('-')[1])),zones=zoneIds.map(id=>calculerZone(id,globals)),totalSurface=zones.reduce((s,z)=>s+z.surface,0),totalPerimetre=zones.reduce((s,z)=>s+z.perimeter,0),totalLamesBrut=zones.reduce((s,z)=>s+z.coutLames,0),totalLambourdes=zones.reduce((s,z)=>s+z.coutLambourdes,0),totalPlots=zones.reduce((s,z)=>s+z.coutPlots,0),totalVis=zones.reduce((s,z)=>s+z.coutVis,0),totalBitume=zones.reduce((s,z)=>s+z.coutBandeBitume,0),totalGeotextile=zones.reduce((s,z)=>s+z.coutGeotextile,0),totalDallettes=zones.reduce((s,z)=>s+z.coutDallettes,0);let remiseChutes=0;if(globals.mutualiser)remiseChutes=Math.min(totalLamesBrut*.04,zones.reduce((s,z)=>s+(z.chuteLamesMl*z.prixMlLame),0)*.45);const totalLames=totalLamesBrut-remiseChutes,totalHT=totalLames+totalLambourdes+totalPlots+totalVis+totalBitume+totalGeotextile+totalDallettes,prixM2=totalSurface>0?totalHT/totalSurface:0;document.getElementById('kpiSurface').textContent=n2(totalSurface)+' m²';document.getElementById('kpiPerimetre').textContent=n2(totalPerimetre)+' m';document.getElementById('kpiTotal').textContent=euro(totalHT);document.getElementById('kpiM2').textContent=euro(prixM2);const qLames=zones.reduce((s,z)=>s+z.nbPiecesLames,0),qLamb=zones.reduce((s,z)=>s+z.nbPiecesLambourdes,0),qPlots=zones.reduce((s,z)=>s+z.nbPlots,0),qVis=zones.reduce((s,z)=>s+z.nbVis,0),qDallettes=zones.reduce((s,z)=>s+z.nbDallettes,0),mlBitume=zones.reduce((s,z)=>s+z.mlBandeBitume,0),qGeotextile=zones.reduce((s,z)=>s+z.m2Geotextile,0);const lambRef=getByReference(globals.section);const rows=[['Lames',`${n0(qLames)} pièces`,`${n2(globals.lame.Prix_public_HT)} €/u`,euro(totalLames),`${globals.lame.Reference} — remise chutes mutualisées : ${euro(remiseChutes)}`],['Lambourdes',`${n0(qLamb)} pièces de 4 m`,`${n2(prixUnitaireAchat(lambRef))} €/u`,euro(totalLambourdes),`${lambRef?lambRef.Reference:globals.section} · soit ${n2(prixParMl(lambRef))} €/ml`],['Plots',`${n0(qPlots)} u`,euro(globals.plot.Prix_public_HT),euro(totalPlots),globals.plot.Reference],['Dallettes',`${n0(qDallettes)} u`,euro(2),euro(totalDallettes),'1 dalette par plot'],['Vis inox',`${n0(qVis)} u`,euro(globals.vis.Prix_public_HT),euro(totalVis),globals.vis.Reference],['Bande bitume',mlBitume?`${n2(mlBitume)} ml`:'Non',mlBitume?`${n2(getByReference('BANDE_BITUME').Prix_public_HT)} €/ml`:'-',euro(totalBitume),'sur lambourdes'],['Géotextile',qGeotextile?`${n2(qGeotextile)} m²`:'Non',qGeotextile?`${n2(getByReference('GEOTEXTILE').Prix_public_HT)} €/m²`:'-',euro(totalGeotextile),'sous terrasse']];document.querySelector('#tableResult tbody').innerHTML=rows.map(r=>`<tr><td><strong>${r[0]}</strong><br><span class="small">${r[4]}</span></td><td>${r[1]}</td><td>${r[2]}</td><td>${r[3]}</td></tr>`).join('')+`<tr class="total-row"><td>Total matériaux HT</td><td></td><td></td><td>${euro(totalHT)}</td></tr>`;const lame=globals.lame,entraxeLamb=globals.entraxeLambCm/100,entraxePlot=globals.entraxePlotCm/100,porteeMax=getPorteeLambourde(globals.section),entraxeLambMaxReco=getEntaxeLambourdeMax(lame),sectionMiniReco=getSectionMini(entraxePlot);let badgeClass='ok',badgeText='OK';if(!porteeMax){badgeClass='warn';badgeText='À vérifier'}else if(entraxePlot>porteeMax&&entraxePlot<=porteeMax*1.2){badgeClass='warn';badgeText='Limite'}else if(entraxePlot>porteeMax*1.2){badgeClass='bad';badgeText='Non conforme'}let badgeLamesClass='ok',badgeLamesText='OK';if(entraxeLamb>entraxeLambMaxReco&&entraxeLamb<=entraxeLambMaxReco*1.15){badgeLamesClass='warn';badgeLamesText='Limite'}else if(entraxeLamb>entraxeLambMaxReco*1.15){badgeLamesClass='bad';badgeLamesText='Non conforme'}document.getElementById('blocTechnique').innerHTML=`<div class="muted-box"><strong>Contrôle technique simplifié global</strong><br><br>Lame : <strong>${lame.Reference}</strong> (${n0(lame.Epaisseur_mm)}x${n0(lame.Largeur_mm)} mm)<br>Entraxe lambourdes saisi : <strong>${n2(entraxeLamb)} m</strong> — recommandé max : <strong>${n2(entraxeLambMaxReco)} m</strong> <span class="badge ${badgeLamesClass}">${badgeLamesText}</span><br>Lambourde : <strong>${lambRef?lambRef.Reference:globals.section}</strong> — section mini recommandée : <strong>${sectionMiniReco}</strong><br>Portée admissible simplifiée : <strong>${porteeMax?n2(porteeMax)+' m':'non renseignée'}</strong><br>Entraxe plots saisi : <strong>${n2(entraxePlot)} m</strong> <span class="badge ${badgeClass}">${badgeText}</span><br><br><ul class="clean"><li>Nombre de zones : <strong>${zones.length}</strong></li><li>Mutualisation des chutes : <strong>${globals.mutualiser?'Oui':'Non'}</strong></li><li>Remise chutes appliquée sur lames : <strong>${euro(remiseChutes)}</strong></li><li>Surface totale : <strong>${n2(totalSurface)} m²</strong></li><li>Périmètre total : <strong>${n2(totalPerimetre)} m</strong></li></ul></div>`;document.getElementById('zoneDetails').innerHTML=zones.map(z=>`<div class="zone-summary-card"><strong>${z.nom}</strong><br>${z.geometry.label} — ${n2(z.surface)} m² — ${euro(z.totalHT)} HT<br><span class="small">Pose lames : ${z.orientation==='longueur'?'longueur':'largeur'} · ${n0(z.nbPiecesLames)} lames · ${n0(z.nbPlots)} plots · ${n0(z.nbDallettes)} dallettes</span></div>`).join('');dernierCalculZones=zones;alimenterSelectZones(zones);dessinerProjetZones(zones);dessinerZoneSelectionnee();document.getElementById('zoneLegend').innerHTML=zones.map((z,i)=>`<div style="display:flex;align-items:flex-start;gap:10px;margin-bottom:8px"><span style="display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:999px;background:${getZoneColor(i).fill};border:2px solid ${getZoneColor(i).stroke};font-weight:700;font-size:12px">Z${i+1}</span><div><strong>${z.nom}</strong><br><span class="small">${z.geometry.label} · ${n2(z.surface)} m² · ${euro(z.totalHT)} HT</span></div></div>`).join('');document.getElementById('resumePose').innerHTML=`Projet affiché : <strong>${zones.length}</strong> zone(s). Surface totale : <strong>${n2(totalSurface)} m²</strong>.`}catch(err){alert(err.message||'Erreur de calcul.');console.error(err)}}
+
+function getVal(id,def=''){const el=document.getElementById(id);return el?el.value:def}
+function getLibelleSelect(id){const el=document.getElementById(id);return el&&el.selectedOptions[0]?el.selectedOptions[0].textContent:''}
+function statutBadgeHtml(cls,txt){return `<span class="badge ${cls}">${txt}</span>`}
+function noteAlerte(cls,titre,texte){return `<div class="verify-alert ${cls}"><strong>${titre}</strong><br><span class="verify-note">${texte}</span></div>`}
+function getChargeUsage(){
+  const usage=getVal('usageTerrasse','privatif');
+  if(usage==='frequent')return{label:'Fréquent / HPA',kg:250,kn:2.5,info:'Hypothèse interne renforcée pour zones plus fréquentées. À valider selon destination réelle de l’ouvrage.'};
+  if(usage==='renforce')return{label:'Renforcé',kg:350,kn:3.5,info:'Hypothèse prudente pour terrasse très sollicitée. Une vraie note de calcul est recommandée.'};
+  return{label:'Privatif',kg:150,kn:1.5,info:'Hypothèse simplifiée pour usage résidentiel léger. À adapter si public, mobilier lourd, spa, jardinières ou contraintes particulières.'};
+}
+
+function afficherVerificationsTechniques({lame,lambRef,globals,zones,totalSurface,totalPerimetre,remiseChutes,entraxeLamb,entraxePlot,porteeMax,entraxeLambMaxReco,sectionMiniReco,badgeClass,badgeText,badgeLamesClass,badgeLamesText}){
+  const hauteur=parseFloat(getVal('hauteurSousTerrasse','8'))||0;
+  const ventilation=getVal('ventilationTerrasse','moyenne');
+  const pente=parseFloat(getVal('penteTerrasse','1'))||0;
+  const classe=getVal('classeEmploi','4');
+  const support=getVal('typeSupport','plots');
+  const charge=getChargeUsage();
+  const chargeTotaleKg=totalSurface*charge.kg;
+  const chargeTotaleKn=totalSurface*charge.kn;
+  let ventilationClass='ok', ventilationTxt='OK';
+  if(ventilation==='moyenne'||hauteur<10){ventilationClass='warn';ventilationTxt='À surveiller'}
+  if(ventilation==='faible'||hauteur<5){ventilationClass='bad';ventilationTxt='Risque élevé'}
+  let penteClass='ok', penteTxt='OK';
+  if(pente<1){penteClass='warn';penteTxt='Faible'}
+  if(pente===0){penteClass='bad';penteTxt='Nulle'}
+  let classeClass=classe==='4'||classe==='5'?'ok':'warn';
+  let supportClass=support==='terre'?'warn':'ok';
+  const zonesHtml=zones.map(z=>{
+    const densitePlots=z.surface>0?z.nbPlots/z.surface:0;
+    const classeDensite=densitePlots>=3.2?'ok':densitePlots>=2.2?'warn':'bad';
+    return `<tr><td><strong>${z.nom}</strong><br><span class="small">${z.geometry.label}</span></td><td>${n2(z.surface)} m²</td><td>${n0(z.nbPlots)} plots<br><span class="small">${n2(densitePlots)} plots/m²</span></td><td>${n2(z.entraxeLamb)} m</td><td>${n2(z.entraxePlot)} m</td><td>${statutBadgeHtml(classeDensite,classeDensite==='ok'?'OK':classeDensite==='warn'?'Moyen':'Faible')}</td></tr>`;
+  }).join('');
+  const recommandations=[];
+  if(badgeLamesClass!=='ok')recommandations.push(noteAlerte(badgeLamesClass==='bad'?'bad':'warn','Entraxe lambourdes à revoir',`L’entraxe saisi est de ${n2(entraxeLamb)} m pour une lame ${n0(lame.Epaisseur_mm)}x${n0(lame.Largeur_mm)} mm. Le calculateur recommande ${n2(entraxeLambMaxReco)} m max.`));
+  if(badgeClass!=='ok')recommandations.push(noteAlerte(badgeClass==='bad'?'bad':'warn','Portée entre appuis à revoir',`Entraxe plots saisi : ${n2(entraxePlot)} m. Portée simplifiée retenue pour la lambourde : ${porteeMax?n2(porteeMax)+' m':'non renseignée'}.`));
+  if(ventilationClass!=='ok')recommandations.push(noteAlerte(ventilationClass,'Ventilation sous platelage',`Hauteur libre indiquée : ${n0(hauteur)} cm. Le DTU et les guides pros insistent sur la ventilation de la sous-face pour limiter l’humidité durable.`));
+  if(penteClass!=='ok')recommandations.push(noteAlerte(penteClass,'Écoulement / pente',`Pente saisie : ${n2(pente)} %. Prévoir un écoulement de l’eau et éviter les pièges à humidité.`));
+  if(classeClass!=='ok')recommandations.push(noteAlerte('warn','Classe d’emploi',`Classe ${classe} sélectionnée : à valider. Pour une terrasse extérieure exposée, vise généralement des bois/produits compatibles extérieur sévère et hors contact direct avec le sol.`));
+  if(supportClass!=='ok')recommandations.push(noteAlerte('warn','Support sol naturel',`Prévoir préparation, stabilité, drainage, géotextile selon le cas, et éviter tout contact bois/sol.`));
+  const recoHtml=recommandations.length?recommandations.join(''):noteAlerte('ok','Aucune alerte majeure détectée','Les paramètres principaux sont cohérents avec les seuils simplifiés du calculateur. Garde quand même une vérification chantier réelle avant devis final.');
+  document.getElementById('blocTechnique').innerHTML=`
+    <div class="verify-cards">
+      <div class="verify-card"><h3>🪵 Entraxe lames</h3><div class="big">${n2(entraxeLamb)} m</div>Recommandé max : <strong>${n2(entraxeLambMaxReco)} m</strong><br>${statutBadgeHtml(badgeLamesClass,badgeLamesText)}</div>
+      <div class="verify-card"><h3>🧱 Portée appuis</h3><div class="big">${n2(entraxePlot)} m</div>Portée simplifiée : <strong>${porteeMax?n2(porteeMax)+' m':'non renseignée'}</strong><br>${statutBadgeHtml(badgeClass,badgeText)}</div>
+      <div class="verify-card"><h3>💨 Ventilation</h3><div class="big">${n0(hauteur)} cm</div>${getLibelleSelect('ventilationTerrasse')}<br>${statutBadgeHtml(ventilationClass,ventilationTxt)}</div>
+      <div class="verify-card"><h3>💧 Écoulement</h3><div class="big">${n2(pente)} %</div>Pente / évacuation de l’eau<br>${statutBadgeHtml(penteClass,penteTxt)}</div>
+    </div>
+    <hr class="soft">
+    <div class="charge-box">
+      <div class="muted-box"><strong>Usage</strong><br>${charge.label}<br><span class="small">${charge.info}</span></div>
+      <div class="muted-box"><strong>Charge hypothèse</strong><br>${n0(charge.kg)} kg/m²<br><span class="small">≈ ${n2(charge.kn)} kN/m²</span></div>
+      <div class="muted-box"><strong>Charge totale indicative</strong><br>${n0(chargeTotaleKg)} kg<br><span class="small">≈ ${n2(chargeTotaleKn)} kN sur ${n2(totalSurface)} m²</span></div>
+    </div>
+    <hr class="soft">
+    <h3>📋 Détail technique par zone</h3>
+    <table class="mini-table"><thead><tr><th>Zone</th><th>Surface</th><th>Plots</th><th>Entraxe lamb.</th><th>Entraxe plots</th><th>Densité</th></tr></thead><tbody>${zonesHtml}</tbody></table>
+    <hr class="soft">
+    <h3>⚠️ Notes / points de vigilance</h3>${recoHtml}
+    <div class="source-box"><strong>Note importante :</strong> ces vérifications sont des seuils simplifiés de pré-dimensionnement chantier. Elles ne remplacent pas le NF DTU 51.4, les prescriptions fabricant, ni une note de calcul pour ouvrage surélevé, ERP, spa, toiture-terrasse ou charge lourde.</div>`;
+}
+
+function calculTerrasseMulti(){
+  try{
+    const globals={entraxeLambCm:parseFloat(document.getElementById('entraxe').value)||50,entraxePlotCm:parseFloat(document.getElementById('entraxePlot').value)||50,jeuLameMm:parseFloat(document.getElementById('jeuLame').value)||5,margeSaisie:parseFloat(document.getElementById('margeDecoupe').value)||0,lame:getByReference(document.getElementById('lame').value),plot:getByReference(document.getElementById('plotRef').value),vis:getByReference(document.getElementById('visRef').value),section:document.getElementById('section').value,bandeBitumeActive:document.getElementById('bandeBitume').value==='oui',geotextileActive:document.getElementById('geotextile').value==='oui',mutualiser:document.getElementById('mutualiser').value==='oui'};
+    const zoneIds=Array.from(document.querySelectorAll('.zone-card')).map(el=>Number(el.id.split('-')[1]));
+    const zones=zoneIds.map(id=>calculerZone(id,globals));
+    const totalSurface=zones.reduce((s,z)=>s+z.surface,0),totalPerimetre=zones.reduce((s,z)=>s+z.perimeter,0),totalLamesBrut=zones.reduce((s,z)=>s+z.coutLames,0),totalLambourdes=zones.reduce((s,z)=>s+z.coutLambourdes,0),totalPlots=zones.reduce((s,z)=>s+z.coutPlots,0),totalVis=zones.reduce((s,z)=>s+z.coutVis,0),totalBitume=zones.reduce((s,z)=>s+z.coutBandeBitume,0),totalGeotextile=zones.reduce((s,z)=>s+z.coutGeotextile,0),totalDallettes=zones.reduce((s,z)=>s+z.coutDallettes,0);
+    let remiseChutes=0;
+    if(globals.mutualiser)remiseChutes=Math.min(totalLamesBrut*.04,zones.reduce((s,z)=>s+(z.chuteLamesMl*z.prixMlLame),0)*.45);
+    const totalLames=totalLamesBrut-remiseChutes;
+    const totalMateriauxHT=totalLames+totalLambourdes+totalPlots+totalVis+totalBitume+totalGeotextile+totalDallettes;
+    const moActive=document.getElementById('mainOeuvreActive')?.value==='oui';
+    const prixMoM2=parseFloat(document.getElementById('prixMainOeuvreM2')?.value)||0;
+    const coutMainOeuvre=moActive?totalSurface*prixMoM2:0;
+    const totalChantierHT=totalMateriauxHT+coutMainOeuvre;
+    const tauxTVASelect=parseFloat(document.getElementById('tauxTVA')?.value)||0;
+    const tauxTVAManuelRaw=document.getElementById('tauxTVAManuel')?.value;
+    const tauxTVA=tauxTVAManuelRaw!==''&&!isNaN(parseFloat(tauxTVAManuelRaw))?parseFloat(tauxTVAManuelRaw):tauxTVASelect;
+    const montantTVA=totalChantierHT*(tauxTVA/100);
+    const totalChantierTTC=totalChantierHT+montantTVA;
+    const prixM2HT=totalSurface>0?totalChantierHT/totalSurface:0;
+    const prixM2TTC=totalSurface>0?totalChantierTTC/totalSurface:0;
+    document.getElementById('kpiSurface').textContent=n2(totalSurface)+' m²';
+    document.getElementById('kpiTotal').textContent=euro(totalChantierHT);
+    document.getElementById('kpiTVA').textContent=euro(montantTVA);
+    document.getElementById('kpiTTC').textContent=euro(totalChantierTTC);
+    const resumeMo=document.getElementById('resumeMainOeuvre');
+    if(resumeMo)resumeMo.innerHTML=moActive?`Main-d’œuvre : <strong>${n2(totalSurface)} m² × ${euro(prixMoM2)}/m² = ${euro(coutMainOeuvre)} HT</strong><br><span class="small">Prix saisi manuellement. À ajuster selon accès, découpes, dépose, hauteur et finitions.</span>`:'Main-d’œuvre non ajoutée au chiffrage. Le total affiché correspond aux matériaux uniquement.';
+    const resumeTVA=document.getElementById('resumeTVA');
+    if(resumeTVA)resumeTVA.innerHTML=`Base HT : <strong>${euro(totalChantierHT)}</strong><br>TVA ${n2(tauxTVA)} % : <strong>${euro(montantTVA)}</strong><br>Total TTC client : <strong>${euro(totalChantierTTC)}</strong><br><span class="small">Prix moyen : ${euro(prixM2HT)}/m² HT · ${euro(prixM2TTC)}/m² TTC</span>`;
+    const qLames=zones.reduce((s,z)=>s+z.nbPiecesLames,0),qLamb=zones.reduce((s,z)=>s+z.nbPiecesLambourdes,0),qPlots=zones.reduce((s,z)=>s+z.nbPlots,0),qVis=zones.reduce((s,z)=>s+z.nbVis,0),qDallettes=zones.reduce((s,z)=>s+z.nbDallettes,0),mlBitume=zones.reduce((s,z)=>s+z.mlBandeBitume,0),qGeotextile=zones.reduce((s,z)=>s+z.m2Geotextile,0);
+    const lambRef=getByReference(globals.section);
+    const rows=[['Lames',`${n0(qLames)} pièces`,`${n2(globals.lame.Prix_public_HT)} €/u`,euro(totalLames),`${globals.lame.Reference} — remise chutes mutualisées : ${euro(remiseChutes)}`],['Lambourdes',`${n0(qLamb)} pièces de 4 m`,`${n2(prixUnitaireAchat(lambRef))} €/u`,euro(totalLambourdes),`${lambRef?lambRef.Reference:globals.section} · soit ${n2(prixParMl(lambRef))} €/ml`],['Plots',`${n0(qPlots)} u`,euro(globals.plot.Prix_public_HT),euro(totalPlots),globals.plot.Reference],['Dallettes',`${n0(qDallettes)} u`,euro(2),euro(totalDallettes),'1 dalette par plot'],['Vis inox',`${n0(qVis)} u`,euro(globals.vis.Prix_public_HT),euro(totalVis),globals.vis.Reference],['Bande bitume',mlBitume?`${n2(mlBitume)} ml`:'Non',mlBitume?`${n2(getByReference('BANDE_BITUME').Prix_public_HT)} €/ml`:'-',euro(totalBitume),'sur lambourdes'],['Géotextile',qGeotextile?`${n2(qGeotextile)} m²`:'Non',qGeotextile?`${n2(getByReference('GEOTEXTILE').Prix_public_HT)} €/m²`:'-',euro(totalGeotextile),'sous terrasse']];
+    let totalRows=`<tr class="total-row"><td>Total matériaux HT</td><td></td><td></td><td>${euro(totalMateriauxHT)}</td></tr>`;
+    if(moActive)totalRows+=`<tr><td><strong>Main-d’œuvre</strong><br><span class="small">Prix manuel au m²</span></td><td>${n2(totalSurface)} m²</td><td>${euro(prixMoM2)}/m²</td><td>${euro(coutMainOeuvre)}</td></tr>`;
+    totalRows+=`<tr class="total-row"><td>Total chantier HT</td><td></td><td></td><td>${euro(totalChantierHT)}</td></tr><tr><td><strong>TVA</strong><br><span class="small">Taux appliqué : ${n2(tauxTVA)} %</span></td><td></td><td>${n2(tauxTVA)} %</td><td>${euro(montantTVA)}</td></tr><tr class="total-row"><td>Total TTC client</td><td></td><td></td><td>${euro(totalChantierTTC)}</td></tr>`;
+    document.querySelector('#tableResult tbody').innerHTML=rows.map(r=>`<tr><td><strong>${r[0]}</strong><br><span class="small">${r[4]}</span></td><td>${r[1]}</td><td>${r[2]}</td><td>${r[3]}</td></tr>`).join('')+totalRows;
+    const lame=globals.lame,entraxeLamb=globals.entraxeLambCm/100,entraxePlot=globals.entraxePlotCm/100,porteeMax=getPorteeLambourde(globals.section),entraxeLambMaxReco=getEntaxeLambourdeMax(lame),sectionMiniReco=getSectionMini(entraxePlot);
+    let badgeClass='ok',badgeText='OK';
+    if(!porteeMax){badgeClass='warn';badgeText='À vérifier'}else if(entraxePlot>porteeMax&&entraxePlot<=porteeMax*1.2){badgeClass='warn';badgeText='Limite'}else if(entraxePlot>porteeMax*1.2){badgeClass='bad';badgeText='Non conforme'}
+    let badgeLamesClass='ok',badgeLamesText='OK';
+    if(entraxeLamb>entraxeLambMaxReco&&entraxeLamb<=entraxeLambMaxReco*1.15){badgeLamesClass='warn';badgeLamesText='Limite'}else if(entraxeLamb>entraxeLambMaxReco*1.15){badgeLamesClass='bad';badgeLamesText='Non conforme'}
+    afficherVerificationsTechniques({lame,lambRef,globals,zones,totalSurface,totalPerimetre,remiseChutes,entraxeLamb,entraxePlot,porteeMax,entraxeLambMaxReco,sectionMiniReco,badgeClass,badgeText,badgeLamesClass,badgeLamesText});
+    document.getElementById('zoneDetails').innerHTML=zones.map(z=>`<div class="zone-summary-card"><strong>${z.nom}</strong><br>${z.geometry.label} — ${n2(z.surface)} m² — ${euro(z.totalHT)} HT matériaux<br><span class="small">Pose lames : ${z.orientation==='longueur'?'longueur':'largeur'} · ${n0(z.nbPiecesLames)} lames · ${n0(z.nbPlots)} plots · ${n0(z.nbDallettes)} dallettes</span></div>`).join('');
+    dernierCalculZones=zones;alimenterSelectZones(zones);dessinerProjetZones(zones);dessinerZoneSelectionnee();
+    document.getElementById('zoneLegend').innerHTML=zones.map((z,i)=>`<div style="display:flex;align-items:flex-start;gap:10px;margin-bottom:8px"><span style="display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:999px;background:${getZoneColor(i).fill};border:2px solid ${getZoneColor(i).stroke};font-weight:700;font-size:12px">Z${i+1}</span><div><strong>${z.nom}</strong><br><span class="small">${z.geometry.label} · ${n2(z.surface)} m² · ${euro(z.totalHT)} HT matériaux</span></div></div>`).join('');
+    document.getElementById('resumePose').innerHTML=`Projet affiché : <strong>${zones.length}</strong> zone(s). Surface totale : <strong>${n2(totalSurface)} m²</strong>.`;
+  }catch(err){alert(err.message||'Erreur de calcul.');console.error(err)}
+}
 function drawPath(ctx,g,x0,y0,scale){if(g.pathType==='rectangle'){ctx.beginPath();ctx.rect(x0,y0,g.outerLength*scale,g.outerWidth*scale);return}if(g.pathType==='L'){const W=g.outerLength*scale,H=g.outerWidth*scale,cutW=g.cutL*scale,cutH=g.cutW*scale;ctx.beginPath();ctx.moveTo(x0,y0);ctx.lineTo(x0+W,y0);ctx.lineTo(x0+W,y0+H-cutH);ctx.lineTo(x0+W-cutW,y0+H-cutH);ctx.lineTo(x0+W-cutW,y0+H);ctx.lineTo(x0,y0+H);ctx.closePath();return}if(g.pathType==='rectangle_hole'){ctx.beginPath();ctx.rect(x0,y0,g.outerLength*scale,g.outerWidth*scale);return}if(g.pathType==='circle'){ctx.beginPath();ctx.arc(x0+(g.outerLength*scale)/2,y0+(g.outerWidth*scale)/2,(g.diameter*scale)/2,0,Math.PI*2);return}if(g.pathType==='semi_circle'){ctx.beginPath();ctx.arc(x0+(g.outerLength*scale)/2,y0+g.outerWidth*scale,(g.diameter*scale)/2,Math.PI,2*Math.PI);ctx.closePath();return}}function getHoleRect(g,x0,y0,scale){if(g.pathType!=='rectangle_hole')return null;const holeW=g.holeL*scale,holeH=g.holeW*scale,outerW=g.outerLength*scale,outerH=g.outerWidth*scale;return{x:x0+(outerW-holeW)/2,y:y0+(outerH-holeH)/2,w:holeW,h:holeH}}function drawGeometryWithDimensions(ctx,canvas,g,x0,y0,echelle,drawHole=true){drawPath(ctx,g,x0,y0,echelle);ctx.strokeStyle='#1f2937';ctx.lineWidth=3;ctx.stroke();const h=getHoleRect(g,x0,y0,echelle);if(drawHole&&h){ctx.fillStyle='#dbeafe';ctx.fillRect(h.x,h.y,h.w,h.h);ctx.strokeStyle='#1e3a8a';ctx.lineWidth=3;ctx.strokeRect(h.x,h.y,h.w,h.h);ctx.fillStyle='#1e3a8a';ctx.font='13px Arial';ctx.fillText('Piscine / vide',h.x+8,h.y+18)}const w=g.outerLength*echelle,hh=g.outerWidth*echelle;ctx.fillStyle='#111827';ctx.font='14px Arial';ctx.fillText(g.outerLength.toFixed(2).replace('.',',')+' m',x0+w/2-25,y0+hh+28);ctx.save();ctx.translate(x0-36,y0+hh/2);ctx.rotate(-Math.PI/2);ctx.fillText(g.outerWidth.toFixed(2).replace('.',',')+' m',0,0);ctx.restore()}function getZoneColor(i){const c=[{fill:'rgba(19,111,99,.18)',stroke:'#136f63'},{fill:'rgba(37,99,235,.18)',stroke:'#2563eb'},{fill:'rgba(234,88,12,.18)',stroke:'#ea580c'},{fill:'rgba(147,51,234,.18)',stroke:'#9333ea'},{fill:'rgba(220,38,38,.18)',stroke:'#dc2626'},{fill:'rgba(8,145,178,.18)',stroke:'#0891b2'}];return c[i%c.length]}function drawZoneShape(ctx,g,x0,y0,scale,fill,stroke){ctx.save();drawPath(ctx,g,x0,y0,scale);ctx.fillStyle=fill;ctx.fill('evenodd');ctx.lineWidth=3;ctx.strokeStyle=stroke;ctx.stroke();const h=getHoleRect(g,x0,y0,scale);if(h){ctx.fillStyle='rgba(255,255,255,.95)';ctx.fillRect(h.x,h.y,h.w,h.h);ctx.lineWidth=2;ctx.strokeStyle=stroke;ctx.strokeRect(h.x,h.y,h.w,h.h)}ctx.restore()}function getGeometryCenter(g,x0,y0,scale){if(g.pathType==='circle')return{x:x0+(g.outerLength*scale)/2,y:y0+(g.outerWidth*scale)/2};if(g.pathType==='semi_circle')return{x:x0+(g.outerLength*scale)/2,y:y0+(g.outerWidth*scale)*.65};return{x:x0+(g.outerLength*scale)/2,y:y0+(g.outerWidth*scale)/2}}function drawZoneLabel(ctx,label,g,x0,y0,scale,stroke){const c=getGeometryCenter(g,x0,y0,scale);ctx.save();ctx.beginPath();ctx.arc(c.x,c.y,24,0,Math.PI*2);ctx.fillStyle='rgba(255,255,255,.96)';ctx.fill();ctx.lineWidth=2;ctx.strokeStyle=stroke;ctx.stroke();ctx.fillStyle='#111827';ctx.font='bold 16px Arial';const w=ctx.measureText(label).width;ctx.fillText(label,c.x-w/2,c.y+6);ctx.restore()}
-function dessinerProjetZones(zones){const canvas=document.getElementById('canvasTerrasse'),ctx=canvas.getContext('2d');ctx.clearRect(0,0,canvas.width,canvas.height);if(!zones||!zones.length)return;const cols=zones.length<=2?zones.length:2,rows=Math.ceil(zones.length/cols),outerPad=28,gutter=18,cellW=(canvas.width-outerPad*2-gutter*(cols-1))/cols,cellH=(canvas.height-outerPad*2-gutter*(rows-1))/rows;ctx.fillStyle='#f8fafc';ctx.fillRect(0,0,canvas.width,canvas.height);zones.forEach((zone,i)=>{const col=i%cols,row=Math.floor(i/cols),cellX=outerPad+col*(cellW+gutter),cellY=outerPad+row*(cellH+gutter);ctx.save();ctx.fillStyle='#fff';ctx.strokeStyle='#d9e1e7';ctx.lineWidth=1.5;ctx.beginPath();ctx.roundRect(cellX,cellY,cellW,cellH,14);ctx.fill();ctx.stroke();ctx.restore();const title=`Z${i+1} — ${zone.nom}`;ctx.fillStyle='#17212b';ctx.font='bold 14px Arial';ctx.fillText(title.length>30?title.slice(0,29)+'…':title,cellX+12,cellY+22);ctx.fillStyle='#6b7280';ctx.font='12px Arial';ctx.fillText(`${zone.geometry.label} · ${n2(zone.surface)} m²`,cellX+12,cellY+40);const drawPadX=18,drawPadTop=54,drawPadBottom=20,availW=cellW-drawPadX*2,availH=cellH-drawPadTop-drawPadBottom,g=zone.geometry,scale=Math.min(availW/Math.max(g.outerLength,.1),availH/Math.max(g.outerWidth,.1)),shapeW=g.outerLength*scale,shapeH=g.outerWidth*scale,x0=cellX+(cellW-shapeW)/2,y0=cellY+drawPadTop+(availH-shapeH)/2,color=getZoneColor(i);drawZoneShape(ctx,g,x0,y0,scale,color.fill,color.stroke);drawZoneLabel(ctx,`Z${i+1}`,g,x0,y0,scale,color.stroke)})}function alimenterSelectZones(zones){const sel=document.getElementById('zoneSelectDetail'),current=sel.value;sel.innerHTML=zones.map((z,i)=>`<option value="${i}">Z${i+1} — ${z.nom}</option>`).join('');if(current&&Number(current)<zones.length)sel.value=current;else sel.value='0'}function detailZoomIn(){detailZoomLevel=Math.min(3,detailZoomLevel*1.2);dessinerZoneSelectionnee()}function detailZoomOut(){detailZoomLevel=Math.max(.6,detailZoomLevel/1.2);dessinerZoneSelectionnee()}function detailZoomReset(){detailZoomLevel=1;dessinerZoneSelectionnee()}
-function dessinerZoneSelectionnee(){const canvas=document.getElementById('canvasZoneDetail'),ctx=canvas.getContext('2d');ctx.clearRect(0,0,canvas.width,canvas.height);if(!dernierCalculZones.length)return;const sel=document.getElementById('zoneSelectDetail'),zoneIndex=Math.min(Number(sel.value||0),dernierCalculZones.length-1),zone=dernierCalculZones[zoneIndex];if(!zone)return;const g=zone.geometry,color=getZoneColor(zoneIndex),paddingX=70,paddingTop=70,paddingBottom=70,availW=canvas.width-paddingX*2,availH=canvas.height-paddingTop-paddingBottom,baseScale=Math.min(availW/Math.max(g.outerLength,.1),availH/Math.max(g.outerWidth,.1)),scale=baseScale*detailZoomLevel,shapeW=g.outerLength*scale,shapeH=g.outerWidth*scale,x0=(canvas.width-shapeW)/2,y0=paddingTop+(availH-shapeH)/2;ctx.fillStyle='#f8fafc';ctx.fillRect(0,0,canvas.width,canvas.height);ctx.fillStyle='#17212b';ctx.font='bold 18px Arial';ctx.fillText(`Z${zoneIndex+1} — ${zone.nom}`,24,30);ctx.fillStyle='#6b7280';ctx.font='13px Arial';ctx.fillText(`${g.label} · ${n2(zone.surface)} m² · pose des lames : ${zone.orientation==='longueur'?'longueur':'largeur'}`,24,52);drawZoneShape(ctx,g,x0,y0,scale,color.fill,color.stroke);ctx.save();drawPath(ctx,g,x0,y0,scale);ctx.clip();const pasLame=Math.max(((zone.lame.Largeur_mm/1000)+(zone.jeuLameMm/1000))*scale,6);ctx.strokeStyle='#c08a57';ctx.lineWidth=1;if(zone.orientation==='longueur'){for(let y=y0;y<=y0+shapeH+.1;y+=pasLame){ctx.beginPath();ctx.moveTo(x0-12,y);ctx.lineTo(x0+shapeW+12,y);ctx.stroke()}}else{for(let x=x0;x<=x0+shapeW+.1;x+=pasLame){ctx.beginPath();ctx.moveTo(x,y0-12);ctx.lineTo(x,y0+shapeH+12);ctx.stroke()}}const pasLamb=Math.max(zone.entraxeLamb*scale,12);ctx.strokeStyle='#475569';ctx.lineWidth=2;if(zone.orientation==='longueur'){for(let x=x0;x<=x0+shapeW+.1;x+=pasLamb){ctx.beginPath();ctx.moveTo(x,y0-8);ctx.lineTo(x,y0+shapeH+8);ctx.stroke()}}else{for(let y=y0;y<=y0+shapeH+.1;y+=pasLamb){ctx.beginPath();ctx.moveTo(x0-8,y);ctx.lineTo(x0+shapeW+8,y);ctx.stroke()}}ctx.restore();drawGeometryWithDimensions(ctx,canvas,g,x0,y0,scale,true);drawZoneLabel(ctx,`Z${zoneIndex+1}`,g,x0,y0,scale,color.stroke);ctx.font='12px Arial';const legendY=canvas.height-36;ctx.fillStyle='#c08a57';ctx.fillRect(24,legendY-10,26,3);ctx.fillStyle='#111827';ctx.fillText('Sens des lames',58,legendY);ctx.fillStyle='#475569';ctx.fillRect(180,legendY-10,26,3);ctx.fillText('Lambourdes',214,legendY);document.getElementById('zoneDetailResume').innerHTML=`<strong>${zone.nom}</strong><br>${g.label} · <strong>${n2(zone.surface)} m²</strong> · <strong>${euro(zone.totalHT)} HT</strong><br>Lames dans la <strong>${zone.orientation==='longueur'?'longueur':'largeur'}</strong> · ${n0(zone.nbPiecesLames)} lames · ${n0(zone.nbLambourdes)} lambourdes estimées · ${n0(zone.nbPlots)} plots · ${n0(zone.nbDallettes)} dallettes`}
-initForm();calculTerrasseMulti();
+function dessinerProjetZones(zones){const canvas=document.getElementById('canvasTerrasse'),ctx=canvas.getContext('2d');ctx.clearRect(0,0,canvas.width,canvas.height);if(!zones||!zones.length)return;const cols=zones.length<=2?zones.length:2,rows=Math.ceil(zones.length/cols),outerPad=28,gutter=18,cellW=(canvas.width-outerPad*2-gutter*(cols-1))/cols,cellH=(canvas.height-outerPad*2-gutter*(rows-1))/rows;ctx.fillStyle='#f8fafc';ctx.fillRect(0,0,canvas.width,canvas.height);zones.forEach((zone,i)=>{const col=i%cols,row=Math.floor(i/cols),cellX=outerPad+col*(cellW+gutter),cellY=outerPad+row*(cellH+gutter);ctx.save();ctx.fillStyle='#fff';ctx.strokeStyle='#d9e1e7';ctx.lineWidth=1.5;ctx.beginPath();ctx.roundRect(cellX,cellY,cellW,cellH,14);ctx.fill();ctx.stroke();ctx.restore();const title=`Z${i+1} — ${zone.nom}`;ctx.fillStyle='#17212b';ctx.font='bold 14px Arial';ctx.fillText(title.length>30?title.slice(0,29)+'…':title,cellX+12,cellY+22);ctx.fillStyle='#6b7280';ctx.font='12px Arial';ctx.fillText(`${zone.geometry.label} · ${n2(zone.surface)} m²`,cellX+12,cellY+40);const drawPadX=18,drawPadTop=54,drawPadBottom=20,availW=cellW-drawPadX*2,availH=cellH-drawPadTop-drawPadBottom,g=zone.geometry,scale=Math.min(availW/Math.max(g.outerLength,.1),availH/Math.max(g.outerWidth,.1))*projetZoomLevel,shapeW=g.outerLength*scale,shapeH=g.outerWidth*scale,x0=cellX+(cellW-shapeW)/2,y0=cellY+drawPadTop+(availH-shapeH)/2,color=getZoneColor(i);drawZoneShape(ctx,g,x0,y0,scale,color.fill,color.stroke);drawZoneLabel(ctx,`Z${i+1}`,g,x0,y0,scale,color.stroke)})}function alimenterSelectZones(zones){const sel=document.getElementById('zoneSelectDetail'),current=sel.value;sel.innerHTML=zones.map((z,i)=>`<option value="${i}">Z${i+1} — ${z.nom}</option>`).join('');if(current&&Number(current)<zones.length)sel.value=current;else sel.value='0'}function detailZoomIn(){detailZoomLevel=Math.min(5,detailZoomLevel*1.2);dessinerZoneSelectionnee()}function detailZoomOut(){detailZoomLevel=Math.max(.5,detailZoomLevel/1.2);dessinerZoneSelectionnee()}function resetDetailPan(){detailPanX=0;detailPanY=0}function detailZoomReset(){detailZoomLevel=1;resetDetailPan();dessinerZoneSelectionnee()}
+
+function drawEntraxeSolives(ctx,zone,x0,y0,shapeW,shapeH,scale){
+  const pas=zone.entraxeLamb*scale;
+  if(!isFinite(pas)||pas<24)return;
+  ctx.save();
+  ctx.strokeStyle='#0f766e';ctx.fillStyle='#0f766e';ctx.lineWidth=2;ctx.font='bold 13px Arial';
+  const label=`Entraxe solives ${Math.round(zone.entraxeLamb*100)} cm`;
+  function arrow(x1,y1,x2,y2){ctx.beginPath();ctx.moveTo(x1,y1);ctx.lineTo(x2,y2);ctx.stroke();const a=Math.atan2(y2-y1,x2-x1),h=7;ctx.beginPath();ctx.moveTo(x2,y2);ctx.lineTo(x2-h*Math.cos(a-Math.PI/6),y2-h*Math.sin(a-Math.PI/6));ctx.lineTo(x2-h*Math.cos(a+Math.PI/6),y2-h*Math.sin(a+Math.PI/6));ctx.closePath();ctx.fill();ctx.beginPath();ctx.moveTo(x1,y1);ctx.lineTo(x1+h*Math.cos(a-Math.PI/6),y1+h*Math.sin(a-Math.PI/6));ctx.lineTo(x1+h*Math.cos(a+Math.PI/6),y1+h*Math.sin(a+Math.PI/6));ctx.closePath();ctx.fill()}
+  if(zone.orientation==='longueur'){
+    const x1=x0,x2=x0+pas,y=Math.max(74,y0-22);
+    if(x2<=x0+shapeW+2){arrow(x1,y,x2,y);ctx.fillText(label,x1+8,y-8);ctx.beginPath();ctx.moveTo(x1,y+5);ctx.lineTo(x1,y0+shapeH);ctx.moveTo(x2,y+5);ctx.lineTo(x2,y0+shapeH);ctx.stroke()}
+  }else{
+    const y1=y0,y2=y0+pas,x=Math.max(24,x0-26);
+    if(y2<=y0+shapeH+2){arrow(x,y1,x,y2);ctx.save();ctx.translate(x-10,y1+pas/2+ctx.measureText(label).width/2);ctx.rotate(-Math.PI/2);ctx.fillText(label,0,0);ctx.restore();ctx.beginPath();ctx.moveTo(x+5,y1);ctx.lineTo(x0+shapeW,y1);ctx.moveTo(x+5,y2);ctx.lineTo(x0+shapeW,y2);ctx.stroke()}
+  }
+  ctx.restore();
+}
+function dessinerZoneSelectionnee(){
+  const canvas=document.getElementById('canvasZoneDetail'),ctx=canvas.getContext('2d');
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  if(!dernierCalculZones.length)return;
+  const sel=document.getElementById('zoneSelectDetail');
+  const zoneIndex=Math.min(Number(sel.value||0),dernierCalculZones.length-1);
+  if(detailSelectedZoneIndex!==zoneIndex){detailSelectedZoneIndex=zoneIndex;resetDetailPan()}
+  const zone=dernierCalculZones[zoneIndex];
+  if(!zone)return;
+  const g=zone.geometry,color=getZoneColor(zoneIndex),paddingX=70,paddingTop=70,paddingBottom=70;
+  const availW=canvas.width-paddingX*2,availH=canvas.height-paddingTop-paddingBottom;
+  const baseScale=Math.min(availW/Math.max(g.outerLength,.1),availH/Math.max(g.outerWidth,.1));
+  const scale=baseScale*detailZoomLevel,shapeW=g.outerLength*scale,shapeH=g.outerWidth*scale;
+  const x0=(canvas.width-shapeW)/2+detailPanX;
+  const y0=paddingTop+(availH-shapeH)/2+detailPanY;
+
+  ctx.fillStyle='#f8fafc';ctx.fillRect(0,0,canvas.width,canvas.height);
+  ctx.fillStyle='#17212b';ctx.font='bold 18px Arial';ctx.fillText(`Z${zoneIndex+1} — ${zone.nom}`,24,30);
+  ctx.fillStyle='#6b7280';ctx.font='13px Arial';
+  ctx.fillText(`${g.label} · ${n2(zone.surface)} m² · pose des lames : ${zone.orientation==='longueur'?'longueur':'largeur'} · zoom ${Math.round(detailZoomLevel*100)}%`,24,52);
+  ctx.fillStyle='#6b7280';ctx.font='12px Arial';ctx.fillText('Astuce : clique-glisse dans ce plan pour te déplacer après avoir zoomé.',24,70);
+
+  drawZoneShape(ctx,g,x0,y0,scale,color.fill,color.stroke);
+  ctx.save();drawPath(ctx,g,x0,y0,scale);ctx.clip();
+  const pasLame=Math.max(((zone.lame.Largeur_mm/1000)+(zone.jeuLameMm/1000))*scale,6);
+  ctx.strokeStyle='#c08a57';ctx.lineWidth=1;
+  if(zone.orientation==='longueur'){
+    for(let y=y0;y<=y0+shapeH+.1;y+=pasLame){ctx.beginPath();ctx.moveTo(x0-12,y);ctx.lineTo(x0+shapeW+12,y);ctx.stroke()}
+  }else{
+    for(let x=x0;x<=x0+shapeW+.1;x+=pasLame){ctx.beginPath();ctx.moveTo(x,y0-12);ctx.lineTo(x,y0+shapeH+12);ctx.stroke()}
+  }
+  const pasLamb=Math.max(zone.entraxeLamb*scale,12);
+  ctx.strokeStyle='#475569';ctx.lineWidth=2;
+  if(zone.orientation==='longueur'){
+    for(let x=x0;x<=x0+shapeW+.1;x+=pasLamb){ctx.beginPath();ctx.moveTo(x,y0-8);ctx.lineTo(x,y0+shapeH+8);ctx.stroke()}
+  }else{
+    for(let y=y0;y<=y0+shapeH+.1;y+=pasLamb){ctx.beginPath();ctx.moveTo(x0-8,y);ctx.lineTo(x0+shapeW+8,y);ctx.stroke()}
+  }
+  ctx.restore();
+
+  if(afficherCotes){drawEntraxeSolives(ctx,zone,x0,y0,shapeW,shapeH,scale);drawGeometryWithDimensions(ctx,canvas,g,x0,y0,scale,true)}
+  drawZoneLabel(ctx,`Z${zoneIndex+1}`,g,x0,y0,scale,color.stroke);
+  ctx.font='12px Arial';const legendY=canvas.height-36;
+  ctx.fillStyle='#c08a57';ctx.fillRect(24,legendY-10,26,3);ctx.fillStyle='#111827';ctx.fillText('Sens des lames',58,legendY);
+  ctx.fillStyle='#475569';ctx.fillRect(180,legendY-10,26,3);ctx.fillText('Solives / lambourdes',214,legendY);
+  ctx.fillStyle='#0f766e';ctx.fillRect(386,legendY-10,26,3);ctx.fillText('Entraxe',420,legendY);
+  document.getElementById('zoneDetailResume').innerHTML=`<strong>${zone.nom}</strong><br>${g.label} · <strong>${n2(zone.surface)} m²</strong> · <strong>${euro(zone.totalHT)} HT</strong><br>Lames dans la <strong>${zone.orientation==='longueur'?'longueur':'largeur'}</strong> · ${n0(zone.nbPiecesLames)} lames · ${n0(zone.nbLambourdes)} lambourdes estimées · ${n0(zone.nbPlots)} plots · ${n0(zone.nbDallettes)} dallettes<br><span class="small">Zoom centré avec les boutons, déplacement libre au clic-glissé.</span>`
+}
+
+function initDetailPanControls(){
+  const canvas=document.getElementById('canvasZoneDetail');
+  if(!canvas||canvas.dataset.panReady==='1')return;
+  canvas.dataset.panReady='1';
+  const pos=e=>{const r=canvas.getBoundingClientRect();const p=e.touches?e.touches[0]:e;return{x:p.clientX-r.left,y:p.clientY-r.top}};
+  const start=e=>{detailIsDragging=true;detailLastPointer=pos(e);canvas.classList.add('dragging');e.preventDefault()};
+  const move=e=>{if(!detailIsDragging||!detailLastPointer)return;const p=pos(e);detailPanX+=p.x-detailLastPointer.x;detailPanY+=p.y-detailLastPointer.y;detailLastPointer=p;dessinerZoneSelectionnee();e.preventDefault()};
+  const stop=()=>{detailIsDragging=false;detailLastPointer=null;canvas.classList.remove('dragging')};
+  canvas.addEventListener('mousedown',start);
+  window.addEventListener('mousemove',move);
+  window.addEventListener('mouseup',stop);
+  canvas.addEventListener('touchstart',start,{passive:false});
+  window.addEventListener('touchmove',move,{passive:false});
+  window.addEventListener('touchend',stop);
+  canvas.addEventListener('wheel',e=>{e.preventDefault();const oldZoom=detailZoomLevel;detailZoomLevel=e.deltaY<0?Math.min(5,detailZoomLevel*1.12):Math.max(.5,detailZoomLevel/1.12);if(detailZoomLevel!==oldZoom)dessinerZoneSelectionnee()},{passive:false});
+}
+
+function ouvrirOnglet(id){
+  document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  const panel=document.getElementById(id);
+  if(panel) panel.classList.add('active');
+  const btn=document.querySelector(`[data-tab="${id}"]`);
+  if(btn) btn.classList.add('active');
+  setTimeout(()=>{ if(dernierCalculZones.length){ dessinerProjetZones(dernierCalculZones); dessinerZoneSelectionnee(); } },50);
+}
+function projetZoomIn(){projetZoomLevel=Math.min(2.5,projetZoomLevel*1.15);dessinerProjetZones(dernierCalculZones)}
+function projetZoomOut(){projetZoomLevel=Math.max(.7,projetZoomLevel/1.15);dessinerProjetZones(dernierCalculZones)}
+function projetZoomReset(){projetZoomLevel=1;dessinerProjetZones(dernierCalculZones)}
+function toggleCotes(){afficherCotes=document.getElementById('toggleCotes')?.checked!==false;dessinerZoneSelectionnee()}
+function agrandirCanvas(sourceId){
+  const src=document.getElementById(sourceId), modal=document.getElementById('modalVisuel'), dst=document.getElementById('canvasAgrandissement');
+  if(!src||!modal||!dst)return;
+  dst.width=src.width; dst.height=src.height;
+  const ctx=dst.getContext('2d');
+  ctx.clearRect(0,0,dst.width,dst.height); ctx.drawImage(src,0,0);
+  modal.classList.add('open');
+}
+function fermerAgrandissement(){document.getElementById('modalVisuel')?.classList.remove('open')}
+
+initDetailPanControls();initForm();calculTerrasseMulti();
 </script>
 </body>
 </html>
