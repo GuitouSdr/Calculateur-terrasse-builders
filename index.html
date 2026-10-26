@@ -21,7 +21,7 @@
     h1 { margin:0 0 10px; font-size:34px; }
     p { margin:0; color:var(--muted); font-size:16px; line-height:1.5; }
     .grid {
-      display:grid; grid-template-columns:repeat(2, 1fr); gap:18px; margin-top:28px;
+      display:grid; grid-template-columns:repeat(3, 1fr); gap:18px; margin-top:28px;
     }
     .card {
       background:var(--card); border:1px solid var(--line); border-radius:20px; padding:24px;
@@ -66,7 +66,7 @@
         <h2>Calculateur Terrasse</h2>
         <p>Terrasse bois avec géométrie avancée, choix des lames, lambourdes, plots et chiffrage complet.</p>
         <div class="meta">
-          <div>• Rectangle, L, vide central, cercle, demi-cercle</div>
+          <div>• Multi-zones : rectangle, L, vide central, cercle, demi-cercle</div>
           <div>• Résultat HT, prix au m², quantités et croquis</div>
           <div>• Interface déjà utilisée par l’équipe</div>
         </div>
@@ -84,10 +84,11 @@
         </div>
         <a class="btn" href="pergola.html">Ouvrir le calculateur pergola</a>
       </div>
+      <div class="card"><div class="icon">↗</div><h2>Calculateur Escalier</h2><p>Escalier bois droit ou deux volées avec palier. Géométrie, structure et devis.</p><div class="meta"><div>• Calcul · Structure · Plan · 3D</div><div>• Contrôle technique · Chiffrage</div><div>• Catalogues fournisseurs partagés</div></div><a class="btn" href="escalier.html">CRÉER UN ESCALIER</a></div>
     </div>
 
     <div class="footer">
-      Conseil : gardez les 3 fichiers au même niveau dans le repo : <strong>index.html</strong>, <strong>terrasse.html</strong> et <strong>pergola.html</strong>.
+      Gardez les pages et les fichiers <strong>catalogues.js</strong> et <strong>calcul-utils.js</strong> dans le même dossier. Les tarifs CSV peuvent être importés depuis chaque calculateur.
     </div>
   </div>
 </body>

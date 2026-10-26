@@ -21,17 +21,22 @@ p.small, .small { color:var(--muted); font-size:14px; margin:0; }
   background:var(--card); border:1px solid var(--line); border-radius:16px; padding:18px;
   box-shadow:0 4px 14px rgba(0,0,0,0.05);
 }
-.form-grid { display:grid; grid-template-columns:1fr 1fr; gap:10px 12px; }
+.form-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px 12px; }
+.form-grid > div, .grid > div, .result-grid > div { min-width:0; }
+.form-grid > div:has(#sectionPoutre) { grid-column:1 / -1; }
 label { font-size:14px; font-weight:700; display:block; margin-bottom:5px; }
 input, select {
-  width:100%; padding:10px 11px; border-radius:10px; border:1px solid #cbd5e1; background:#fff;
+  width:100%; min-width:0; padding:10px 11px; border-radius:10px; border:1px solid #cbd5e1; background:#fff;
 }
 button {
   width:100%; padding:12px 14px; border:none; border-radius:12px; background:var(--brand); color:#fff;
   font-weight:700; cursor:pointer; margin-top:8px;
 }
+dialog { border:1px solid var(--line); border-radius:16px; padding:24px; max-width:560px; width:90%; }
+dialog::backdrop { background:#17212b66; }
+button:disabled { opacity:.55; cursor:wait; }
 button:hover { background:var(--brand-2); }
-.result-grid { display:grid; gap:16px; grid-template-columns: 1.1fr 0.9fr; }
+.result-grid { display:grid; gap:16px; grid-template-columns:minmax(0,1fr); }
 .kpi-grid { display:grid; grid-template-columns: repeat(4, 1fr); gap:10px; margin-bottom:16px; }
 .kpi { background:#f8fafc; border:1px solid var(--line); border-radius:14px; padding:12px; }
 .kpi .label { font-size:12px; color:var(--muted); margin-bottom:4px; }
@@ -58,12 +63,24 @@ ul.clean { margin:10px 0 0 18px; padding:0; }
 </head>
 <body>
 <div class="wrapper">
+<div class="note" style="margin:14px 0"><a href="index.html">← Accueil</a> · <label style="display:inline;font-weight:400" for="tarifFile">Importer les prix HT (CSV)</label> <input style="width:auto" id="tarifFile" type="file" accept=".csv,text/csv" onchange="BuilderUtils.importPrices(this, catalogue, actualiserTarifs)"><span id="tarifStatus">Tarifs du catalogue intégré. L’import s’applique à cette session.</span></div>
   <h1>🪵 Calculateur pergola Builders</h1>
   <p class="small">Base de chiffrage rapide : pergola adossée ou autoportée, toiture ajourée, polycarbonate ou bac acier. Catalogue préchargé avec références type Vivre en Bois.</p>
 
+  <section class="card" style="margin-top:18px;" aria-label="Projet pergola">
+    <label for="projectName">Nom du projet</label><input id="projectName" value="Projet pergola" maxlength="100">
+    <div class="form-grid" style="margin:8px 0 12px;"><button id="projectSave" type="button">Enregistrer</button><button id="projectSaveAs" type="button">Enregistrer sous…</button></div>
+    <details><summary>Ouvrir un chantier ou créer un nouveau projet</summary>
+      <button id="projectNew" type="button">Nouveau projet</button>
+      <label for="projectList" style="margin-top:12px;">Projets enregistrés dans ce navigateur</label><select id="projectList"><option value="">Choisir un projet…</option></select><button id="projectOpen" type="button">Ouvrir le projet sélectionné</button>
+      <label for="projectFile" style="margin-top:12px;">Ouvrir un fichier projet (.pergola.json)</label><input id="projectFile" type="file" accept=".json,application/json">
+    </details>
+    <a id="projectDownload" hidden download>Télécharger le projet</a><p id="projectStatus" class="small" role="status" style="margin-top:10px;">Premier enregistrement : choisissez le nom et le dossier du fichier. Enregistrer sous… permet de créer une autre sauvegarde.</p>
+  </section>
   <div class="grid" style="margin-top:18px;">
     <div class="card">
       <h2>🔧 Données chantier</h2>
+      <p id="pergolaCatalogueStatus" class="note" style="margin-bottom:12px"></p>
       <div class="form-grid">
         <div style="grid-column:1 / -1">
           <label for="typePergola">Type de pergola</label>
@@ -116,6 +133,21 @@ ul.clean { margin:10px 0 0 18px; padding:0; }
           <input id="nbPoteauxArriere" type="number" min="0" step="1" value="0">
         </div>
 
+        <div class="section-block">
+          <label for="woodSelection">Choix des bois</label>
+          <select id="woodSelection"><option value="auto">Automatique — proposer les références fournisseur</option><option value="manual">Manuel — conserver mes références</option></select>
+          <label for="woodEssence" style="margin-top:10px">Essence souhaitée</label>
+          <select id="woodEssence"><option value="all">Pin ou Douglas</option><option value="douglas">Douglas</option><option value="pin">Pin</option></select>
+          <details style="margin-top:10px"><summary>Hypothèses de présélection · estimation</summary>
+            <label for="woodLoad" style="margin-top:10px">Charge verticale toiture, hors poids des bois (kN/m²)</label>
+            <input id="woodLoad" type="number" min="0.1" max="20" step="0.05" placeholder="Automatique : 0,75 ajourée / 1,25 couverte">
+            <label for="woodE" style="margin-top:10px">Module d’élasticité supposé (MPa)</label>
+            <input id="woodE" type="number" min="1000" max="30000" step="100" value="7000">
+            <label for="woodStress" style="margin-top:10px">Seuil de flexion indicatif (MPa)</label>
+            <input id="woodStress" type="number" min="1" max="40" step="0.5" value="8">
+            <p class="note">Hypothèses internes modifiables, sans classe mécanique certifiée. Charge uniforme ; poids propre ajouté avec une densité supposée de 550 kg/m³ ; flèche instantanée limitée à L/300. Neige, vent, fluage, stabilité et assemblages à vérifier selon le chantier.</p>
+          </details>
+        </div>
         <div>
           <label for="sectionPoteau">Section poteaux</label>
           <select id="sectionPoteau"></select>
@@ -164,6 +196,13 @@ ul.clean { margin:10px 0 0 18px; padding:0; }
       </div>
 
       <button onclick="calculPergola()">Calculer</button>
+      <p id="beamStockStatus" class="note" aria-live="polite" style="margin-top:12px"></p>
+      <div id="beamAlternatives" class="section-block hidden" style="margin-top:10px">
+        <label for="compatibleBeam">Stocks assez longs pour les appuis prévus</label>
+        <select id="compatibleBeam"></select>
+        <button type="button" onclick="appliquerStockPoutre()">Utiliser cette référence et recalculer</button>
+        <p class="note">La longueur convient au débit. La section et les assemblages restent à vérifier.</p>
+      </div>
 
       <div class="note" style="margin-top:12px;">
         Outil de pré-chiffrage Builders pour cadrer une pergola rapidement.
@@ -201,6 +240,22 @@ ul.clean { margin:10px 0 0 18px; padding:0; }
             <tbody></tbody>
           </table>
 
+          <section class="section-block" style="margin-top:18px;" aria-labelledby="pergolaQuoteTitle">
+            <h3 id="pergolaQuoteTitle">Pré-devis PDF</h3>
+            <p class="small" style="margin-bottom:12px;">Estimation des matériaux, hors pose. Le PDF reprend le calcul et les références sélectionnées.</p>
+            <div class="form-grid">
+              <div><label for="pdfCompany">Entreprise</label><input id="pdfCompany" value="SA BUILDERS" maxlength="150"></div>
+              <div><label for="pdfClient">Client</label><input id="pdfClient" placeholder="Nom du client" maxlength="150"></div>
+              <div><label for="pdfProject">Nom du chantier</label><input id="pdfProject" value="Projet pergola" maxlength="150"></div>
+              <div><label for="pdfSite">Adresse du chantier</label><input id="pdfSite" maxlength="250"></div>
+              <div><label for="pdfReference">Référence du pré-devis</label><input id="pdfReference" placeholder="PERGO-2026-001" maxlength="100"></div>
+              <div><label for="pdfVat">TVA (%)</label><input id="pdfVat" type="number" min="0" max="100" step="0.1" value="20"></div>
+            </div>
+            <label for="pdfNotes" style="margin-top:12px;">Notes complémentaires</label><input id="pdfNotes" maxlength="1500" placeholder="Livraison, conditions, remarques…">
+            <button id="pergolaQuotePDF" type="button" onclick="exporterPreDevisPergola()">Télécharger le pré-devis PDF</button>
+            <p id="pergolaPDFStatus" class="small" role="status" style="margin-top:8px;"></p>
+          </section>
+          <div id="woodProposal" class="section-block" aria-live="polite" style="margin-top:14px;"></div>
           <div id="blocTechnique" style="margin-top:14px;"></div>
         </div>
 
@@ -220,32 +275,42 @@ ul.clean { margin:10px 0 0 18px; padding:0; }
   </div>
 </div>
 
+<dialog id="projectSaveAsDialog" aria-labelledby="projectSaveAsTitle"><h2 id="projectSaveAsTitle">Enregistrer sous…</h2><p></p><label for="projectSaveAsName">Nom de la sauvegarde</label><input id="projectSaveAsName" maxlength="100" required><button id="projectSaveAsAccept" type="button">Télécharger le projet</button><button id="projectSaveAsCancel" type="button">Annuler</button></dialog>
+<dialog id="projectConfirmDialog"><h2>Projet pergola</h2><p id="projectConfirmText"></p><button id="projectConfirmAccept" type="button">Continuer</button><button id="projectConfirmCancel" type="button">Annuler</button></dialog>
+<script src="builder-project-store.js"></script>
+<script src="catalogues.js"></script>
+<script src="calcul-utils.js"></script>
+<script src="commercial.js"></script>
+<script src="pre-devis-pdf.js"></script>
 <script>
-const catalogue = [
-  {"Famille":"Poteau","Reference":"P2AA22398-A00","Designation":"Poteau pour platine bois lamellé-collé pin marron 90x90","Largeur_mm":90,"Hauteur_mm":90,"Longueur_m":2,"Unite":"u","Prix_public_HT":26.70,"Fournisseur":"Vivre en Bois"},
-  {"Famille":"Poteau","Reference":"P2A072004-008","Designation":"Poteau bois raboté pin marron 120x120","Largeur_mm":120,"Hauteur_mm":120,"Longueur_m":3,"Unite":"u","Prix_public_HT":54.24,"Fournisseur":"Vivre en Bois"},
-  {"Famille":"Poteau","Reference":"P3A191806-003","Designation":"Poteau bois lamellé-collé pin marron 140x140","Largeur_mm":140,"Hauteur_mm":140,"Longueur_m":3,"Unite":"u","Prix_public_HT":98.35,"Fournisseur":"Vivre en Bois"},
-
-  {"Famille":"Poutre","Reference":"D29082003-001","Designation":"Madrier bois raboté Douglas pré-grisé 45x145","Largeur_mm":45,"Hauteur_mm":145,"Longueur_m":5,"Unite":"u","Prix_public_HT":30.53,"Fournisseur":"Vivre en Bois"},
-  {"Famille":"Poutre","Reference":"P2A072002-012","Designation":"Chevron lambourde bois raboté pin marron 68x120","Largeur_mm":68,"Hauteur_mm":120,"Longueur_m":4,"Unite":"u","Prix_public_HT":36.18,"Fournisseur":"Vivre en Bois"},
-  {"Famille":"Poutre","Reference":"P27072003-015","Designation":"Madrier bois raboté pin marron 68x145","Largeur_mm":68,"Hauteur_mm":145,"Longueur_m":4,"Unite":"u","Prix_public_HT":39.74,"Fournisseur":"Vivre en Bois"},
-
-  {"Famille":"Chevron","Reference":"P2A072002-023","Designation":"Chevron lambourde bois raboté pin marron 45x68","Largeur_mm":45,"Hauteur_mm":68,"Longueur_m":4,"Unite":"u","Prix_public_HT":13.75,"Fournisseur":"Vivre en Bois"},
-  {"Famille":"Chevron","Reference":"P2A072002-031","Designation":"Chevron lambourde bois raboté pin marron 45x90","Largeur_mm":45,"Hauteur_mm":90,"Longueur_m":5,"Unite":"u","Prix_public_HT":22.61,"Fournisseur":"Vivre en Bois"},
-  {"Famille":"Chevron","Reference":"D28082002-001","Designation":"Chevron bois raboté Douglas 45x120","Largeur_mm":45,"Hauteur_mm":120,"Longueur_m":5,"Unite":"u","Prix_public_HT":22.50,"Fournisseur":"Vivre en Bois"},
-
-  {"Famille":"Couverture","Reference":"POLY_16_VEB","Designation":"Plaque polycarbonate 16 mm (base Vivre en Bois)","Unite":"m2","Prix_public_HT":29.00,"Fournisseur":"Vivre en Bois"},
-  {"Famille":"Couverture","Reference":"BAC_ACIER_VEB","Designation":"Bac acier simple peau (base Vivre en Bois)","Unite":"m2","Prix_public_HT":18.50,"Fournisseur":"Vivre en Bois"},
-  {"Famille":"Couverture","Reference":"AJOUREE","Designation":"Toiture ajourée","Unite":"m2","Prix_public_HT":0,"Fournisseur":"Vivre en Bois"},
-
-  {"Famille":"Accessoire","Reference":"730530125","Designation":"Pied de poteau carré fermé à boulonner 91x91","Unite":"u","Prix_public_HT":20.50,"Fournisseur":"Vivre en Bois"},
-  {"Famille":"Accessoire","Reference":"730500594","Designation":"Pied de poteau réglable 100x100 noir","Unite":"u","Prix_public_HT":23.09,"Fournisseur":"Vivre en Bois"},
-  {"Famille":"Accessoire","Reference":"730530460","Designation":"Grand sabot à ailes extérieures 90x90x255","Unite":"u","Prix_public_HT":16.58,"Fournisseur":"Vivre en Bois"},
-  {"Famille":"Accessoire","Reference":"730500061","Designation":"Sabot à ailes extérieures 84x76x182","Unite":"u","Prix_public_HT":6.58,"Fournisseur":"Vivre en Bois"},
-  {"Famille":"Accessoire","Reference":"730520848","Designation":"Visserie structure / charpente inox","Unite":"forfait","Prix_public_HT":70.83,"Fournisseur":"Vivre en Bois"},
-  {"Famille":"Accessoire","Reference":"SATURATEUR","Designation":"Finition saturateur","Unite":"m2","Prix_public_HT":6.50,"Fournisseur":"Vivre en Bois"},
-  {"Famille":"Accessoire","Reference":"LASURE","Designation":"Finition lasure","Unite":"m2","Prix_public_HT":8.20,"Fournisseur":"Vivre en Bois"}
-];
+const catalogue = BuilderCatalogues.pergola;
+let dernierPreDevisPergola = null;
+function donneesPreDevisPergola() {
+  if (!dernierPreDevisPergola) throw new Error('Calculez une pergola valide avant de télécharger le pré-devis.');
+  const value=id=>document.getElementById(id).value.trim();
+  const vatRate=BuilderUtils.number('pdfVat',0,100);
+  const commercial={laborLines:[],otherLines:[],vatRate,quoteReference:value('pdfReference')||'PERGO-'+new Date().toISOString().slice(0,10),quoteNotes:[
+    'Pré-devis matériaux estimatif, hors main-d’œuvre, livraison et pose. Prix du catalogue local à confirmer auprès du fournisseur. Visserie : forfait estimatif.',
+    'Ce document ne constitue pas une validation structurelle : charges, sections, assemblages et ancrages restent à vérifier.', value('pdfNotes')].filter(Boolean).join('\n')};
+  return {company:{name:value('pdfCompany')},date:new Date().toLocaleDateString('fr-FR'),client:{name:value('pdfClient')},
+    projectInfo:{reference:value('pdfProject'),siteAddress:value('pdfSite'),notes:dernierPreDevisPergola.description},commercial,
+    materials:dernierPreDevisPergola.lines.map(l=>[l.description,n2(l.quantity),l.unit,euro(l.unitPriceHT),euro(l.totalHT)]),
+    totals:BuilderCommercial.calculateCommercialTotals(dernierPreDevisPergola.totalHT,commercial)};
+}
+async function exporterPreDevisPergola() {
+  const button=document.getElementById('pergolaQuotePDF'),status=document.getElementById('pergolaPDFStatus');
+  if(button.disabled)return;
+  button.disabled=true;status.textContent='Préparation du PDF…';
+  try {
+    // Toujours recalculer : un champ ou un tarif peut avoir changé depuis le dernier résultat.
+    calculPergola();
+    const data=donneesPreDevisPergola();
+    const doc=await BuilderQuotePDF.generate(data);
+    const name=(data.projectInfo.reference||'pergola').normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-zA-Z0-9_-]+/g,'-').slice(0,80);
+    doc.save('pre-devis-'+name+'.pdf');status.textContent='PDF téléchargé : matériaux, total HT, TVA et total TTC.';
+  } catch(error) {status.textContent=error.message||'Impossible de générer le PDF.';}
+  finally {button.disabled=false;}
+}
 
 
 const capacities = {
@@ -260,6 +325,65 @@ const capacities = {
   "D28082002-001": {maxSpan:3.6, badge:"ok"}
 };
 
+function actualiserTarifs() { const ids=['sectionPoteau','sectionPoutre','sectionChevron']; const families=['Poteau','Poutre','Chevron']; const values=ids.map(id=>document.getElementById(id).value); ids.forEach((id,i)=>{populateSelect(id,getByFamily(families[i]),formatArticlePergola);document.getElementById(id).value=values[i];}); calculPergola(); }
+function formatArticlePergola(item) {
+  return `${item.Largeur_mm} × ${item.Hauteur_mm} mm · ${n2(item.Longueur_m)} m · ${euro(item.Prix_public_HT)} HT — ${item.Designation} — réf ${item.Reference}`;
+}
+// Avant-métré indicatif : poutres simplement appuyées, charge uniforme et propriétés supposées.
+// Les seuils internes ci-dessous ne sont pas une certification Eurocode ni une fiche fabricant.
+function verifierBoisIndicatif(p, porteeM, chargeKNm, E, stress) {
+  const b=Number(p.Largeur_mm), h=Number(p.Hauteur_mm), L=porteeM*1000;
+  if (![b,h,L,chargeKNm,E,stress].every(Number.isFinite) || Math.min(b,h,L,E,stress)<=0 || chargeKNm<0) throw new Error('Hypothèses de présélection invalides.');
+  const poids=b*h*1e-6*550*9.81/1000; // kN/m, densité supposée de 550 kg/m³
+  const q=chargeKNm+poids; // 1 kN/m = 1 N/mm
+  const inertie=b*h**3/12, module=b*h**2/6;
+  const fleche=5*q*L**4/(384*E*inertie), limite=L/300;
+  const contrainte=q*L**2/(8*module);
+  const cisaillement=1.5*q*L/(2*b*h);
+  return {fleche,limite,contrainte,cisaillement,poids,ok:fleche<=limite+1e-9 && contrainte<=stress+1e-9 && cisaillement<=0.8+1e-9};
+}
+function proposerBoisPergola(p, articles=catalogue) {
+  const {largeur,avancee,hauteurAvant,hauteurMur,nbPoteauxFace,nbPoteauxArriere,entraxeChevron,marge,typePergola,formeToit,charge,E,stress,essence}=p;
+  if (![largeur,avancee,hauteurAvant,hauteurMur,entraxeChevron,charge,E,stress].every(v=>Number.isFinite(v)&&v>0) || !Number.isInteger(nbPoteauxFace) || nbPoteauxFace<2 || (typePergola==='autoportee' && (!Number.isInteger(nbPoteauxArriere)||nbPoteauxArriere<2))) throw new Error('Dimensions ou appuis invalides pour proposer les bois.');
+  const arriere=typePergola==='autoportee'?nbPoteauxArriere:nbPoteauxFace;
+  const portee=Math.max(largeur/(nbPoteauxFace-1),largeur/(arriere-1));
+  const longueurChevron=Math.hypot(avancee,formeToit==='plate'?0:hauteurMur-hauteurAvant);
+  const lignes=BuilderUtils.supports(largeur,entraxeChevron), espacement=largeur/(lignes-1);
+  const prixValide=x=>Number.isFinite(x.Prix_public_HT)&&x.Prix_public_HT>0;
+  const famille=(x,f)=>x.Famille===f||x.Usages?.includes(f);
+  const candidat=(x,f)=>famille(x,f)&&prixValide(x)&&Number.isFinite(x.Longueur_m)&&x.Longueur_m>0&&Number.isFinite(x.Largeur_mm)&&Number.isFinite(x.Hauteur_mm)&&(essence==='all'||x.Designation.toLowerCase().includes(essence))&&(!x.Classe_emploi||['3.2','4'].includes(String(x.Classe_emploi)));
+  const poutres=articles.filter(x=>candidat(x,'Poutre') && x.Largeur_mm>=68 && x.Longueur_m+1e-9>=portee).map(x=>{
+    const check=verifierBoisIndicatif(x,portee,charge*avancee/2,E,stress);
+    const front=decouperPoutreSurAppuis(largeur,nbPoteauxFace,x.Longueur_m,'Façade'), back=decouperPoutreSurAppuis(largeur,arriere,x.Longueur_m,'Arrière');
+    const count=BuilderUtils.pack([...front.cuts,...back.cuts],x.Longueur_m).length;
+    return {article:x,check,count,cost:count*x.Prix_public_HT,reason:`Portée ${n2(portee)} m · flèche estimée ${n2(check.fleche)} / ${n2(check.limite)} mm · ${count} stocks de ${n2(x.Longueur_m)} m`};
+  }).filter(x=>x.check.ok);
+  const chevrons=articles.filter(x=>candidat(x,'Chevron') && x.Longueur_m+1e-9>=longueurChevron).map(x=>{
+    const check=verifierBoisIndicatif(x,longueurChevron,charge*espacement,E,stress);
+    const count=Math.ceil(BuilderUtils.pack(Array.from({length:lignes},()=>({length:longueurChevron})),x.Longueur_m).length*(1+marge));
+    return {article:x,check,count,cost:count*x.Prix_public_HT,reason:`Longueur ${n2(longueurChevron)} m · flèche estimée ${n2(check.fleche)} / ${n2(check.limite)} mm · ${count} stocks de ${n2(x.Longueur_m)} m`};
+  }).filter(x=>x.check.ok);
+  const height=typePergola==='autoportee'?Math.max(hauteurAvant,hauteurMur):hauteurAvant;
+  const count=nbPoteauxFace+(typePergola==='autoportee'?nbPoteauxArriere:0);
+  const bestBeam=poutres.reduce((best,x)=>!best||x.cost<best.cost?x:best,null);
+  const reaction=1.25*portee*(charge*avancee/2+(bestBeam?.check.poids || 0));
+  const poteaux=articles.filter(x=>candidat(x,'Poteau') && x.Longueur_m+1e-9>=height && Math.min(x.Largeur_mm,x.Hauteur_mm)>=120 && height*1000/Math.min(x.Largeur_mm,x.Hauteur_mm)<=35 && reaction*1000/(x.Largeur_mm*x.Hauteur_mm)<=4).map(x=>({article:x,count,cost:count*x.Prix_public_HT,reason:`Hauteur ${n2(height)} m · ${count} poteaux · section minimale indicative 120 mm ; stabilité et contreventement à vérifier`}));
+  const rank=list=>list.sort((a,b)=>a.cost-b.cost || a.article.Longueur_m-b.article.Longueur_m || a.article.Reference.localeCompare(b.article.Reference));
+  return {params:p,portee,longueurChevron,groups:[{id:'sectionPoteau',label:'Poteaux',choices:rank(poteaux)},{id:'sectionPoutre',label:'Poutres / pannes',choices:rank(poutres)},{id:'sectionChevron',label:'Chevrons',choices:rank(chevrons)}]};
+}
+function afficherPropositionBois(proposal,appliquer=false) {
+  const escape=BuilderUtils.escape;
+  const missing=proposal.groups.filter(g=>!g.choices.length);
+  // Une proposition incomplète ne modifie aucun choix.
+  if (appliquer && !missing.length) for(const g of proposal.groups) document.getElementById(g.id).value=g.choices[0].article.Reference;
+  document.getElementById('woodProposal').innerHTML=`<h3>Bois proposés · estimation</h3><p class="note">Charge toiture ${n2(proposal.params.charge)} kN/m² · E supposé ${n0(proposal.params.E)} MPa · flexion ≤ ${n2(proposal.params.stress)} MPa · flèche L/300 · choix au coût de débit le plus bas parmi les candidats retenus. Largeur minimale de poutre : 68 mm (critère interne).</p>`+proposal.groups.map(g=>{
+    const best=g.choices[0];
+    if(!best)return `<p><strong>${g.label} : aucune référence retenue.</strong> Vérifiez les hypothèses, l’essence ou ajoutez des appuis.</p>`;
+    return `<p><strong>${g.label} : ${best.article.Largeur_mm} × ${best.article.Hauteur_mm} mm</strong> · ${escape(best.article.Reference)}<br>${escape(best.article.Designation)}<br><span class="note">${escape(best.reason)} · achat ${euro(best.cost)} HT${!appliquer?' · proposition à appliquer':''}</span></p>`;
+  }).join('')+`<p class="note">Préselection avec propriétés mécaniques supposées ; conformité et résistance réelle non certifiées. Vent, neige locale, fluage, déversement, stabilité, ancrages et assemblages à vérifier.</p><button type="button" onclick="appliquerBoisProposes()">Appliquer les bois proposés et recalculer</button>`;
+  return missing;
+}
+function appliquerBoisProposes() { document.getElementById('woodSelection').value='auto';choixManuelsPergola.delete('sectionPoteau');choixManuelsPergola.delete('sectionPoutre');choixManuelsPergola.delete('sectionChevron');calculPergola(); }
 function euro(v) {
   return new Intl.NumberFormat('fr-FR', { style:'currency', currency:'EUR' }).format(v || 0);
 }
@@ -273,7 +397,7 @@ function getByReference(ref) {
   return catalogue.find(x => x.Reference === ref);
 }
 function getByFamily(famille) {
-  return catalogue.filter(x => x.Famille.toLowerCase() === famille.toLowerCase());
+  return catalogue.filter(x => x.Famille.toLowerCase() === famille.toLowerCase() || x.Usages?.includes(famille));
 }
 
 function getAccessoryPlatine() {
@@ -290,13 +414,55 @@ function getAccessorySabot() {
 
 function populateSelect(selectId, items, formatter, valueField='Reference') {
   const sel = document.getElementById(selectId);
-  sel.innerHTML = items.map(item => `<option value="${item[valueField]}">${formatter(item)}</option>`).join('');
+  sel.innerHTML = items.map(item => `<option value="${BuilderUtils.escape(item[valueField])}">${BuilderUtils.escape(formatter(item))}</option>`).join('');
+}
+// Les raccords sont exclusivement placés sur les axes des appuis.
+function decouperPoutreSurAppuis(longueur, nombreAppuis, stock, owner) {
+  if (!Number.isFinite(longueur) || longueur <= 0 || !Number.isInteger(nombreAppuis) || nombreAppuis < 2 || !Number.isFinite(stock) || stock <= 0) throw new Error('Appuis ou stock invalides.');
+  const portee = longueur / (nombreAppuis - 1);
+  if (portee > stock + 1e-9) throw new Error(`Stock trop court : portée entre appuis ${portee.toFixed(3).replace('.', ',')} m, stock ${n2(stock)} m. Choisissez une référence plus longue ou ajoutez un poteau.`);
+  const cuts = [];
+  let start = 0;
+  while (start < nombreAppuis - 1) {
+    const spans = Math.min(nombreAppuis - 1 - start, Math.floor((stock + 1e-9) / portee));
+    const end = start + spans;
+    cuts.push({length:(end-start)*portee, from:start*portee, to:end*portee, owner});
+    start = end;
+  }
+  return {portee, cuts, joints:cuts.slice(0,-1).map(c=>c.to)};
+}
+const choixManuelsPergola = new Set();
+function actualiserStocksPoutre() {
+  const longueur = Number(document.getElementById('largeur').value);
+  const front = Number(document.getElementById('nbPoteauxFace').value);
+  const rear = document.getElementById('typePergola').value === 'autoportee' ? Number(document.getElementById('nbPoteauxArriere').value) : front;
+  const status = document.getElementById('beamStockStatus');
+  const alternatives = document.getElementById('beamAlternatives');
+  alternatives.classList.toggle('hidden',true);
+  if (![longueur,front,rear].every(Number.isFinite) || longueur <= 0 || !Number.isInteger(front) || !Number.isInteger(rear) || front < 2 || rear < 2) { status.textContent = 'Renseignez au moins deux appuis par rangée.'; return; }
+  const minimum = Math.max(longueur/(front-1),longueur/(rear-1));
+  const selected = getByReference(document.getElementById('sectionPoutre').value);
+  status.textContent = `Poteaux répartis régulièrement · portée maximale ${minimum.toFixed(3).replace('.', ',')} m · stock minimal ${minimum.toFixed(3).replace('.', ',')} m. Raccords sur appuis uniquement.`;
+  if (selected && selected.Longueur_m + 1e-9 < minimum) {
+    const choices = getByFamily('Poutre').filter(p=>p.Longueur_m + 1e-9 >= minimum).sort((a,b)=> (a.Longueur_m-b.Longueur_m)||(a.Prix_public_HT-b.Prix_public_HT));
+    status.textContent += ` La référence choisie (${n2(selected.Longueur_m)} m) est trop courte.`;
+    if (choices.length) {
+      populateSelect('compatibleBeam',choices,formatArticlePergola);
+      alternatives.classList.toggle('hidden',false);
+    } else status.textContent += ' Ajoutez des appuis intermédiaires.';
+  }
+}
+function appliquerStockPoutre() {
+  document.getElementById('sectionPoutre').value = document.getElementById('compatibleBeam').value;
+  choixManuelsPergola.add('sectionPoutre');
+  document.getElementById('woodSelection').value='manual';
+  calculPergola();
 }
 function initForm() {
+  document.getElementById('pergolaCatalogueStatus').textContent = `Catalogue : ${getByFamily('Poteau').length} poteaux · ${getByFamily('Poutre').length} poutres / pannes · ${getByFamily('Chevron').length} chevrons. Tarifs publics HT datés ; disponibilité à confirmer en agence.`;
   populateSelect('sectionPoteau', getByFamily('Poteau'), item =>
     `${item.Designation} — réf ${item.Reference} — ${n2(item.Longueur_m)} m — ${euro(item.Prix_public_HT)}`);
-  populateSelect('sectionPoutre', getByFamily('Poutre'), item =>
-    `${item.Designation} — réf ${item.Reference} — ${n2(item.Longueur_m)} m — ${euro(item.Prix_public_HT)}`);
+  populateSelect('sectionPoutre', getByFamily('Poutre'), formatArticlePergola);
   populateSelect('sectionChevron', getByFamily('Chevron'), item =>
     `${item.Designation} — réf ${item.Reference} — ${n2(item.Longueur_m)} m — ${euro(item.Prix_public_HT)}`);
 
@@ -307,20 +473,24 @@ function initForm() {
   ['typePergola','largeur','avancee','hauteurAvant','hauteurMur','formeToit'].forEach(id =>
     document.getElementById(id).addEventListener('change', autoConfig)
   );
+  ['nbPoteauxFace','nbPoteauxArriere','sectionChevron','sectionPoutre','sectionPoteau'].forEach(id=>document.getElementById(id).addEventListener('change',()=>{choixManuelsPergola.add(id);if(id.startsWith('section'))document.getElementById('woodSelection').value='manual';actualiserStocksPoutre();}));
+  ['nbPoteauxFace','nbPoteauxArriere'].forEach(id=>document.getElementById(id).addEventListener('input',()=>{choixManuelsPergola.add(id);actualiserStocksPoutre();}));
+  ['largeur','avancee'].forEach(id=>document.getElementById(id).addEventListener('input',actualiserStocksPoutre));
   autoConfig();
 }
 function autoConfig() {
   const typePergola = document.getElementById('typePergola').value;
-  const largeur = parseFloat(document.getElementById('largeur').value) || 0;
-  const avancee = parseFloat(document.getElementById('avancee').value) || 0;
+  const largeur = Number(document.getElementById('largeur').value);
+  const avancee = Number(document.getElementById('avancee').value);
+  if (![largeur,avancee].every(v=>Number.isFinite(v) && v > 0 && v <= 100)) return;
   if (typePergola === 'autoportee') {
-    document.getElementById('nbPoteauxFace').value = largeur > 5 ? 3 : 2;
-    document.getElementById('nbPoteauxArriere').value = largeur > 5 ? 3 : 2;
+    if (!choixManuelsPergola.has('nbPoteauxFace')) document.getElementById('nbPoteauxFace').value = largeur > 5 ? 3 : 2;
+    if (!choixManuelsPergola.has('nbPoteauxArriere') || Number(document.getElementById('nbPoteauxArriere').value) < 2) document.getElementById('nbPoteauxArriere').value = largeur > 5 ? 3 : 2;
   } else {
-    document.getElementById('nbPoteauxFace').value = largeur > 5 ? 3 : 2;
-    document.getElementById('nbPoteauxArriere').value = 0;
+    if (!choixManuelsPergola.has('nbPoteauxFace')) document.getElementById('nbPoteauxFace').value = largeur > 5 ? 3 : 2;
   }
 
+  if (!choixManuelsPergola.has('sectionChevron')) {
   if (avancee > 3.2) {
     document.getElementById('sectionChevron').value = 'D28082002-001';
   } else if (avancee > 2.2) {
@@ -328,12 +498,8 @@ function autoConfig() {
   } else {
     document.getElementById('sectionChevron').value = 'P2A072002-023';
   }
-
-  if (largeur > 4.2) {
-    document.getElementById('sectionPoutre').value = 'P27072003-015';
-  } else {
-    document.getElementById('sectionPoutre').value = 'P27072003-015';
   }
+  actualiserStocksPoutre();
 }
 function getBadgeClass(ok, limit=false) {
   if (ok) return ['ok', 'OK'];
@@ -341,17 +507,22 @@ function getBadgeClass(ok, limit=false) {
   return ['bad', 'À renforcer'];
 }
 function calculPergola() {
+  dernierPreDevisPergola=null;
+  document.getElementById('pergolaPDFStatus').textContent='';
+  actualiserStocksPoutre();
+  document.getElementById('woodProposal').innerHTML='';
+  try {
   const largeur = parseFloat(document.getElementById('largeur').value) || 0;
   const avancee = parseFloat(document.getElementById('avancee').value) || 0;
-  const hauteurAvant = parseFloat(document.getElementById('hauteurAvant').value) || 0;
-  const hauteurMur = parseFloat(document.getElementById('hauteurMur').value) || 0;
+  const hauteurAvant = BuilderUtils.number('hauteurAvant', 0.01, 100);
+  const hauteurMur = BuilderUtils.number('hauteurMur', 0.01, 100);
   const typePergola = document.getElementById('typePergola').value;
   const toiture = document.getElementById('toiture').value;
   const formeToit = document.getElementById('formeToit').value;
-  const nbPoteauxFace = Math.max(0, parseInt(document.getElementById('nbPoteauxFace').value || '0', 10));
-  const nbPoteauxArriere = Math.max(0, parseInt(document.getElementById('nbPoteauxArriere').value || '0', 10));
-  const entraxeChevron = (parseFloat(document.getElementById('entraxeChevron').value) || 60) / 100;
-  const marge = (parseFloat(document.getElementById('marge').value) || 0) / 100;
+  const nbPoteauxFace = BuilderUtils.number('nbPoteauxFace', 2, 100);
+  const nbPoteauxArriere = BuilderUtils.number('nbPoteauxArriere', 0, 100);
+  const entraxeChevron = BuilderUtils.number('entraxeChevron', 20, 1000) / 100;
+  const marge = BuilderUtils.number('marge', 0, 100) / 100;
   const platinesActive = document.getElementById('platines').value === 'oui';
   const sabotsActive = document.getElementById('sabots').value === 'oui';
   const finitions = document.getElementById('finitions').value;
@@ -360,7 +531,16 @@ function calculPergola() {
     alert('Entre des dimensions valides.');
     return;
   }
+  if (formeToit === 'plate' && Math.abs(hauteurMur-hauteurAvant) > .001) throw new Error('Pour une toiture plate, les deux hauteurs doivent être identiques.');
 
+  const chargeRaw=document.getElementById('woodLoad').value.trim();
+  const charge=chargeRaw?BuilderUtils.number('woodLoad',0.1,20):(toiture==='ajouree'?0.75:1.25);
+  const E=BuilderUtils.number('woodE',1000,30000), stress=BuilderUtils.number('woodStress',1,40);
+  const proposal=proposerBoisPergola({largeur,avancee,hauteurAvant,hauteurMur,typePergola,formeToit,nbPoteauxFace,nbPoteauxArriere,entraxeChevron,marge,charge,E,stress,essence:document.getElementById('woodEssence').value});
+  const automatique=document.getElementById('woodSelection').value==='auto';
+  const missing=afficherPropositionBois(proposal,automatique);
+  if(automatique && missing.length) throw new Error('Présélection impossible : '+missing.map(g=>g.label).join(', ')+'. Voir les propositions de bois.');
+  actualiserStocksPoutre();
   const poteau = getByReference(document.getElementById('sectionPoteau').value);
   const poutre = getByReference(document.getElementById('sectionPoutre').value);
   const chevron = getByReference(document.getElementById('sectionChevron').value);
@@ -373,17 +553,26 @@ function calculPergola() {
     ? nbPoteauxFace + nbPoteauxArriere
     : nbPoteauxFace;
 
-  const pente = Math.max(0, hauteurMur - hauteurAvant);
+  if (!Number.isInteger(nbPoteauxFace) || !Number.isInteger(nbPoteauxArriere) || (typePergola === 'autoportee' && nbPoteauxArriere < 2)) throw new Error('Nombre de poteaux invalide.');
+  if (!poteau || !poutre || !chevron) throw new Error('Section inconnue.');
+  if (formeToit === 'plate' && Math.abs(hauteurMur-hauteurAvant) > .001) throw new Error('Pour une toiture plate, les deux hauteurs doivent être identiques.');
+  const pente = hauteurMur - hauteurAvant;
   const longueurChevron = formeToit === 'plate'
     ? avancee
     : Math.sqrt(Math.pow(avancee, 2) + Math.pow(pente, 2));
 
-  const nbChevrons = Math.max(2, Math.floor(largeur / entraxeChevron) + 1);
+  const nbChevrons = BuilderUtils.supports(largeur, entraxeChevron);
   const surface = largeur * avancee;
-  const lineairePoutres = typePergola === 'autoportee' ? largeur * 2 : largeur * 2;
-  const nbPoutres = Math.ceil(lineairePoutres / poutre.Longueur_m);
+  const lineairePoutres = largeur * 2;
+  const poutreAvant = decouperPoutreSurAppuis(largeur, nbPoteauxFace, poutre.Longueur_m, 'Façade');
+  // Une muralière est fixée au mur, avec appuis/ancrages à prévoir à chaque raccord.
+  const poutreArriere = decouperPoutreSurAppuis(largeur, typePergola === 'autoportee' ? nbPoteauxArriere : nbPoteauxFace, poutre.Longueur_m, typePergola === 'autoportee' ? 'Arrière' : 'Muralière');
+  const debitPoutres = [...poutreAvant.cuts, ...poutreArriere.cuts];
+  const stocksPoutres = BuilderUtils.pack(debitPoutres, poutre.Longueur_m);
+  const nbPoutres = stocksPoutres.length;
 
-  const mlPoteauxUtiles = nbPoteaux * ((hauteurAvant + (typePergola === 'autoportee' ? hauteurMur : 0)) / Math.max(nbPoteaux,1));
+  const mlPoteauxUtiles = nbPoteauxFace * hauteurAvant + (typePergola === 'autoportee' ? nbPoteauxArriere * hauteurMur : 0);
+  if (hauteurAvant > poteau.Longueur_m || (typePergola === 'autoportee' && hauteurMur > poteau.Longueur_m)) throw new Error('Les poteaux sélectionnés sont trop courts.');
   const nbPoteauxPieces = nbPoteaux;
   const coutPoteaux = nbPoteauxPieces * poteau.Prix_public_HT;
 
@@ -391,10 +580,10 @@ function calculPergola() {
   const coutPoutres = nbPoutres * poutre.Prix_public_HT;
 
   const mlChevronsUtiles = nbChevrons * longueurChevron;
-  const nbChevronsPieces = Math.ceil((mlChevronsUtiles * (1 + marge)) / chevron.Longueur_m);
+  const nbChevronsPieces = Math.ceil(BuilderUtils.pack(Array.from({length:nbChevrons}, () => ({length:longueurChevron})), chevron.Longueur_m).length * (1 + marge));
   const coutChevrons = nbChevronsPieces * chevron.Prix_public_HT;
 
-  const surfaceCouverture = toiture === 'ajouree' ? 0 : surface * (1 + marge);
+  const surfaceCouverture = toiture === 'ajouree' ? 0 : largeur * longueurChevron * (1 + marge);
   const coutCouverture = surfaceCouverture * couverture.Prix_public_HT;
 
   const nbPlatines = platinesActive ? nbPoteaux : 0;
@@ -452,19 +641,20 @@ function calculPergola() {
     </tr>
   `;
 
-  const poteauCheck = capacities[poteau.Reference] || {maxHeight:999};
-  const poutreCheck = capacities[poutre.Reference] || {maxSpan:999};
-  const chevronCheck = capacities[chevron.Reference] || {maxSpan:999};
+  const poteauCheck = capacities[poteau.Reference] || {};
+  const poutreCheck = capacities[poutre.Reference] || {};
+  const chevronCheck = capacities[chevron.Reference] || {};
+  const hauteurPoteauMax = typePergola === 'autoportee' ? Math.max(hauteurAvant,hauteurMur) : hauteurAvant;
 
-  const [badgePClass, badgePText] = getBadgeClass(
-    Math.max(hauteurAvant, hauteurMur) <= poteauCheck.maxHeight,
-    Math.max(hauteurAvant, hauteurMur) <= poteauCheck.maxHeight * 1.1
+  const [badgePClass, badgePText] = !poteauCheck.maxHeight ? ['warn','À vérifier'] : getBadgeClass(
+    hauteurPoteauMax <= poteauCheck.maxHeight,
+    hauteurPoteauMax <= poteauCheck.maxHeight * 1.1
   );
-  const [badgePuClass, badgePuText] = getBadgeClass(
-    largeur <= poutreCheck.maxSpan,
-    largeur <= poutreCheck.maxSpan * 1.12
+  const [badgePuClass, badgePuText] = !poutreCheck.maxSpan ? ['warn','À vérifier'] : getBadgeClass(
+    largeur / (Math.min(nbPoteauxFace, typePergola === 'autoportee' ? nbPoteauxArriere : nbPoteauxFace)-1) <= poutreCheck.maxSpan,
+    largeur / (Math.min(nbPoteauxFace, typePergola === 'autoportee' ? nbPoteauxArriere : nbPoteauxFace)-1) <= poutreCheck.maxSpan * 1.12
   );
-  const [badgeCClass, badgeCText] = getBadgeClass(
+  const [badgeCClass, badgeCText] = !chevronCheck.maxSpan ? ['warn','À vérifier'] : getBadgeClass(
     longueurChevron <= chevronCheck.maxSpan,
     longueurChevron <= chevronCheck.maxSpan * 1.12
   );
@@ -476,22 +666,27 @@ function calculPergola() {
       Toiture : <strong>${toiture}</strong> — forme : <strong>${formeToit}</strong><br>
       Pente calculée : <strong>${n2(pente)} m</strong><br><br>
 
-      Poteaux : <strong>${poteau.Designation}</strong> — hauteur max simplifiée <strong>${n2(poteauCheck.maxHeight)} m</strong>
+      Poteaux : <strong>${poteau.Designation}</strong> — hauteur max simplifiée <strong>${poteauCheck.maxHeight ? n2(poteauCheck.maxHeight)+' m' : 'non renseignée'}</strong>
       <span class="badge ${badgePClass}">${badgePText}</span><br>
-      Poutres : <strong>${poutre.Designation}</strong> — portée max simplifiée <strong>${n2(poutreCheck.maxSpan)} m</strong>
+      Poutres : <strong>${poutre.Designation}</strong> — portée max simplifiée <strong>${poutreCheck.maxSpan ? n2(poutreCheck.maxSpan)+' m' : 'non renseignée'}</strong>
       <span class="badge ${badgePuClass}">${badgePuText}</span><br>
-      Chevrons : <strong>${chevron.Designation}</strong> — portée max simplifiée <strong>${n2(chevronCheck.maxSpan)} m</strong>
+      Chevrons : <strong>${chevron.Designation}</strong> — portée max simplifiée <strong>${chevronCheck.maxSpan ? n2(chevronCheck.maxSpan)+' m' : 'non renseignée'}</strong>
       <span class="badge ${badgeCClass}">${badgeCText}</span><br><br>
 
       <ul class="clean">
         <li>Surface projet : <strong>${n2(surface)} m²</strong></li>
         <li>Nombre total de poteaux : <strong>${n0(nbPoteaux)}</strong></li>
         <li>Nombre de chevrons : <strong>${n0(nbChevrons)}</strong></li>
-        <li>Entraxe chevrons : <strong>${n2(entraxeChevron)} m</strong></li>
+        <li>Entraxe chevrons réel : <strong>${n2(largeur/(nbChevrons-1))} m réel</strong> (maximum saisi : ${n2(entraxeChevron)} m)</li>
         <li>Longueur réelle d’un chevron : <strong>${n2(longueurChevron)} m</strong></li>
         <li>Bois total estimé : <strong>${n2(mlBois)} ml</strong></li>
         <li>Marge pertes appliquée : <strong>${n2(marge * 100)} %</strong></li>
       </ul>
+      <h3 style="margin-top:18px">Débit des poutres / pannes</h3>
+      <p class="note">${n0(nbPoutres)} pièces de stock de ${n2(poutre.Longueur_m)} m · ${n0(debitPoutres.length)} tronçons · trait de scie 3 mm entre coupes.</p>
+      <table><thead><tr><th>Rangée</th><th>Tronçon</th><th>Coupe finie</th></tr></thead><tbody>${debitPoutres.map(c=>`<tr><td>${c.owner}</td><td>${c.from.toFixed(3).replace('.',',')} → ${c.to.toFixed(3).replace('.',',')} m</td><td><strong>${c.length.toFixed(3).replace('.',',')} m</strong></td></tr>`).join('')}</tbody></table>
+      <p class="note" style="margin-top:10px">Raccords en façade : ${poutreAvant.joints.length ? poutreAvant.joints.map(x=>x.toFixed(3).replace('.',',')+' m').join(' ; ')+' sur poteau' : 'poutre continue'}. ${typePergola === 'adossee' && poutreArriere.joints.length ? 'Muralière : prévoir un appui mural et des ancrages de chaque côté de chaque raccord.' : 'Raccords arrière uniquement sur poteaux.'} Assemblages à dimensionner ; le débit ne valide pas la résistance.</p>
+      <p class="note">${poutre.Source ? 'Tarif public HT · '+BuilderUtils.escape(poutre.Date_tarif || '')+' · <a href="'+BuilderUtils.escape(poutre.Source)+'" target="_blank" rel="noopener">Fiche fournisseur</a> · disponibilité à confirmer.' : ''}</p>
     </div>
   `;
 
@@ -505,8 +700,33 @@ function calculPergola() {
     pente simplifiée <strong>${n2(pente)} m</strong>. Base utile pour valider rapidement un avant-métré.
   `;
 
-  dessinerPlan({largeur, avancee, typePergola, nbPoteauxFace, nbPoteauxArriere, nbChevrons});
+  dessinerPlan({largeur, avancee, typePergola, nbPoteauxFace, nbPoteauxArriere, nbChevrons, poutreAvant, poutreArriere});
   dessinerCote({largeur, avancee, hauteurAvant, hauteurMur, typePergola});
+  const quoteLines=[];
+  const addQuoteLine=(label,article,quantity,unit='u',detail='')=>{
+    if(quantity<=0)return;
+    const unitPriceHT=article.Prix_public_HT;
+    quoteLines.push({description:label+' - '+article.Designation+' - Réf. '+article.Reference+(detail?' - '+detail:''),quantity,unit,unitPriceHT,totalHT:quantity*unitPriceHT});
+  };
+  addQuoteLine('Poteaux',poteau,nbPoteauxPieces,'u',n2(poteau.Longueur_m)+' m / pièce');
+  addQuoteLine('Poutres',poutre,nbPoutres,'u',n2(poutre.Longueur_m)+' m / pièce');
+  addQuoteLine('Chevrons / traverses',chevron,nbChevronsPieces,'u',n2(chevron.Longueur_m)+' m / pièce');
+  addQuoteLine('Couverture',couverture,surfaceCouverture,'m²');
+  addQuoteLine('Platines',getAccessoryPlatine(),nbPlatines);
+  addQuoteLine('Sabots / équerres',getAccessorySabot(),nbSabots);
+  if(visserie)addQuoteLine('Visserie structure (estimation)',visserie,1,'forfait');
+  if(finitions!=='brut')addQuoteLine('Finition',getByReference(finitions==='sature'?'SATURATEUR':'LASURE'),surface,'m²');
+  dernierPreDevisPergola={lines:quoteLines,totalHT,description:[
+    'Pergola '+(typePergola==='autoportee'?'autoportée':'adossée')+' : '+n2(largeur)+' × '+n2(avancee)+' m ; surface '+n2(surface)+' m².',
+    'Hauteurs avant / arrière : '+n2(hauteurAvant)+' / '+n2(hauteurMur)+' m ; '+nbPoteaux+' poteaux ; '+nbChevrons+' chevrons ; marge '+n2(marge*100)+' %.',
+    'Toiture : '+toiture+' ; forme : '+formeToit+'.',
+    'Présélection indicative : charge '+n2(charge)+' kN/m² ; E '+n0(E)+' MPa ; contrainte '+n2(stress)+' MPa.'
+  ].join('\n')};
+  } catch (err) {
+    BuilderUtils.invalidate(['kpiSurface','kpiBois','kpiTotal','kpiM2'], ['canvasPlan','canvasSide']);
+    document.getElementById('resumeStructure').innerHTML = '';
+    alert(err.message || 'Erreur de calcul.');
+  }
 }
 function dessinerPlan(data) {
   const canvas = document.getElementById('canvasPlan');
@@ -562,6 +782,18 @@ function dessinerPlan(data) {
     ctx.fillText('Mur / support', x0 + 10, y0 - 10);
   }
 
+  ctx.strokeStyle = '#d97706';
+  ctx.lineWidth = 3;
+  for (const [beam,y] of [[data.poutreAvant,y0+h],[data.poutreArriere,y0]]) {
+    for (const joint of beam.joints) {
+      const x = x0 + joint*scale;
+      ctx.beginPath();ctx.moveTo(x-5,y-12);ctx.lineTo(x+5,y+12);ctx.stroke();
+    }
+    ctx.fillStyle = '#136f63';ctx.font = '13px Arial';ctx.textAlign = 'center';
+    for (const cut of beam.cuts) ctx.fillText(cut.length.toFixed(3).replace('.',',')+' m',x0+(cut.from+cut.to)/2*scale,y===y0 ? y-30 : y+52);
+  }
+  ctx.textAlign = 'left';
+  ctx.fillStyle = '#d97706';ctx.font = '13px Arial';ctx.fillText('Repères orange : raccords sur appuis',x0,y0+h+78);
   ctx.fillStyle = '#111827';
   ctx.font = '14px Arial';
   ctx.fillText(`${data.largeur.toFixed(2).replace('.', ',')} m`, x0 + w / 2 - 22, y0 + h + 28);
@@ -635,5 +867,6 @@ function dessinerCote(data) {
 initForm();
 calculPergola();
 </script>
+<script src="pergola-projets.js"></script>
 </body>
 </html>

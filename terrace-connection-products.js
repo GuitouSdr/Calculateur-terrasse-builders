@@ -1,0 +1,17 @@
+'use strict';
+// Tarifs publics consultés le 12/10/2026 ; pas de tarif professionnel supposé.
+const TerraceConnectionProducts=(()=>{
+  const date='2026-10-12',rows=[];
+  for(const [ref,length,count,boxHT] of [['WV010916',80,100,83.32],['WV010908',120,50,60.82],['WV010911',160,50,91.66]])rows.push({Fournisseur:'Wovar',Reference:ref,Famille:'FIXATION',Designation:`Vis bois tête disque inox A4 8 × ${length} mm`,Unite:'u',Prix_public_HT:boxHT/count,Pack_size:count,Pack_price_HT:boxHT,Diameter_mm:8,Screw_length_mm:length,Source:`https://www.wovar.fr/vis-tete-disque-inox-a4-8x${length}mm-torx-40/`,Date_tarif:date,Disponible:'A vérifier en agence',Notes:`Boîte de ${count} à ${boxHT} EUR HT. Contrôle géométrique seulement ; résistance, filetage et distances aux bords à vérifier selon la fiche fabricant.`});
+  rows.push({Fournisseur:'Vivre en Bois',Reference:'P2A072003-006',Famille:'STRUCTURE',Designation:'Madrier pin marron classe 4 — 68 × 220 mm — 3 m',Essence:'Pin',Epaisseur_mm:68,Largeur_mm:220,Longueur_m:3,Unite:'u',Prix_public_HT:45.13,Classe_emploi:'4',Source:'https://www.vivreenbois.com/produits/bois-de-construction?grid%5Bfrontend-product-search-grid%5D=i%3D11',Date_tarif:date,Disponible:'A vérifier en agence',Notes:'Brut de limon à découper. Classe mécanique et section résiduelle après entaillage à vérifier.'});
+  rows.push({Fournisseur:'DECKiBOIS',Reference:'DBK-CAT-VIS-A4-5X70',Famille:'VIS',Designation:'Vis terrasse inox A4 5 × 70 mm',Unite:'u',Prix_public_HT:6.72/40,Pack_size:200,Pack_price_HT:33.6,Diameter_mm:5,Screw_length_mm:70,Source:'https://deckibois.fr/Docs/catalogue-et-tarif-2026-DECKiBOIS.pdf#page=36',Date_tarif:date,Disponible:'A vérifier en agence',Notes:'Tarif catalogue 6,72 EUR HT/m² ; 40 vis/m² (200 vis / 5 m²). Montant boîte déduit du tarif catalogue, à confirmer au devis.'});
+  rows.push({Fournisseur:'DECKiBOIS',Reference:'DBK-CAT-PIN-LANDES-28X160-3000',Famille:'LAME',Designation:'Pin des Landes classe 4 — 28 × 160 mm — 3 m',Essence:'Pin',Epaisseur_mm:28,Largeur_mm:160,Longueur_m:3,Unite:'u',Prix_public_HT:35*3*.16,Classe_emploi:'4',Type_fixation:'vis',Source:'https://deckibois.fr/Docs/catalogue-et-tarif-2026-DECKiBOIS.pdf#page=28',Date_tarif:date,Disponible:'A vérifier en agence',Notes:'Tarif public 35 EUR HT/m², conversion à la pièce de 3 m × 0,16 m ; référence interne de variante. Planches à déligner selon la profondeur des marches.'});
+  for(const p of rows){p.id=JSON.stringify([p.Fournisseur.toLocaleLowerCase('fr'),p.Reference]);p.supplierId=p.Fournisseur.toLocaleLowerCase('fr');p.Active=true;p.Sur_devis=false;p.Prix_pro_HT=null;}
+  return rows;
+})();
+if(typeof BuilderCatalogues!=='undefined'){
+  BuilderCatalogues.connectionProducts=TerraceConnectionProducts;
+  for(const p of TerraceConnectionProducts.filter(p=>p.Famille==='FIXATION'))if(!BuilderCatalogues.terrasse.some(a=>a.Reference==='STRUCT_'+p.Reference))BuilderCatalogues.terrasse.push({Famille:'Accessoire',type:'Vis structure',Reference:'STRUCT_'+p.Reference,Designation:p.Designation,Fournisseur:p.Fournisseur,Unite:'u',Prix_public_HT:p.Prix_public_HT,Pack_size:p.Pack_size,Pack_price_HT:p.Pack_price_HT,Diameter_mm:p.Diameter_mm,Screw_length_mm:p.Screw_length_mm,Source:p.Source,Date_tarif:p.Date_tarif,Notes:p.Notes});
+}
+if(typeof window!=='undefined')window.StaircaseSupplierProducts=[...(window.StaircaseSupplierProducts||[]),...TerraceConnectionProducts.filter(p=>!(window.StaircaseSupplierProducts||[]).some(x=>x.id===p.id))];
+if(typeof module!=='undefined')module.exports=TerraceConnectionProducts;

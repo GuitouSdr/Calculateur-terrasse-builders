@@ -1,0 +1,54 @@
+#supplierDialog{width:min(1100px,94vw);max-height:90vh;border:1px solid #d5dce3;border-radius:14px;padding:22px;overflow:auto}#supplierDialog::backdrop{background:#18343b88}.supplier-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px}.supplier-card{border:1px solid #dce4e9;border-radius:10px;padding:14px;background:#fff}.supplier-card h3{margin:0 0 8px}.supplier-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}.supplier-actions button{width:auto}.supplier-thumb{width:100px;height:65px;object-fit:cover;float:right;margin-left:8px;border-radius:5px}.supplier-mapping{max-height:270px;overflow:auto}.supplier-mapping select{min-width:160px}.supplier-filters{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px}.supplier-error{color:#a12727}#supplierProducts{margin-top:14px}#supplierImportPreview{white-space:pre-wrap}#supplierTextureImage{max-width:100%;max-height:250px}#supplierTextureEditor{border:1px solid #dce4e9;padding:14px;margin:12px 0}.supplier-card select{margin-top:8px}.supplier-card .small{overflow-wrap:anywhere}#supplierProgress{white-space:pre-wrap}#supplierRoot{margin:14px 0}.supplier-heading{display:flex;justify-content:space-between;align-items:center;gap:12px}#supplierDownload{display:block;margin:10px 0}
+
+/* Le catalogue reste un bandeau ; il ne consomme pas une colonne du calculateur. */
+#supplierRoot{grid-column:1/-1;margin:0;display:flex;align-items:center;justify-content:space-between;gap:20px;padding:18px 22px;background:#f8fbfa}
+#supplierRoot h2{margin:0 0 6px;font-size:19px;color:var(--brand)}
+#supplierRoot .supplier-intro{min-width:0}
+#supplierSummary{margin:8px 0 0}
+#supplierOpen{flex-shrink:0;margin:0;width:auto}
+#calculateurSection>.card,#calculateurSection .result-grid>*,#calculateurSection .form-grid>*{min-width:0}
+#calculateurSection input,#calculateurSection select{max-width:100%;min-width:0}
+#calculateurSection select{text-overflow:ellipsis}
+#calculateurSection .kpi-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+#calculateurSection .kpi{min-width:0}
+#calculateurSection .kpi .value{font-size:clamp(18px,2vw,24px);overflow-wrap:anywhere}
+#tableResult{table-layout:fixed}
+#tableResult th:first-child{width:43%}
+#tableResult td{overflow-wrap:anywhere}
+#supplierChooseBoard{width:100%;margin-top:8px}
+.catalogue-import-bar{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.catalogue-import-bar #tarifFile{max-width:100%;width:280px!important}
+.catalogue-import-bar #tarifStatus{flex:1 1 230px;line-height:1.5}
+#supplierDialog .supplier-grid{grid-template-columns:repeat(auto-fit,minmax(min(260px,100%),1fr))}
+#supplierDialog .supplier-card{min-width:0;overflow-wrap:anywhere}
+#supplierDialog .supplier-filters{grid-template-columns:repeat(auto-fit,minmax(min(170px,100%),1fr))}
+#supplierDialog input,#supplierDialog select{min-width:0;max-width:100%}
+#supplierDialog input[type=checkbox]{width:auto}
+#supplierDialog .supplier-heading h2{margin:0}
+#supplierDialog .supplier-heading button{margin:0;flex-shrink:0;width:auto}
+#supplierDialog .supplier-actions>label{flex:1 1 280px;min-width:0}
+#supplierDialog .supplier-actions button{margin:0}
+#supplierDialog .supplier-card .supplier-actions{align-items:stretch}
+#supplierDialog .supplier-card .supplier-actions button{flex:1 1 110px}
+#supplierDialog .supplier-mapping th:first-child{width:45%}
+@media(max-width:1040px){
+ #supplierRoot{gap:16px}
+ #calculateurSection .kpi-grid{grid-template-columns:repeat(4,minmax(0,1fr))}
+ .module-tabs{flex-wrap:wrap}
+ .module-tabs button{width:auto;flex:1 1 180px}
+}
+@media(max-width:600px){
+ .wrapper{padding:14px}
+ #supplierRoot{flex-direction:column;align-items:stretch;padding:16px;gap:14px}
+ #supplierOpen{width:100%}
+ #calculateurSection .kpi-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+ #calculateurSection .card{padding:14px}
+ .catalogue-import-bar #tarifFile{width:100%!important}
+ .module-tabs{gap:6px}
+ .module-tabs button{flex:1 1 40%;font-size:12px;padding:12px 8px}
+ #supplierDialog{width:calc(100vw - 20px);max-height:94vh;padding:16px}
+ #supplierDialog .supplier-heading{align-items:flex-start;gap:8px}
+ #supplierDialog .supplier-heading h2{font-size:20px}
+ #supplierDialog .supplier-thumb{width:80px;height:55px}
+ #tableResult th,#tableResult td{padding:8px 4px;font-size:12px}
+}

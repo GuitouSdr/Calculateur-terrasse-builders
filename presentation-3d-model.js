@@ -1,0 +1,28 @@
+'use strict';
+// Données de présentation uniquement : aucun accès au calculateur ni au catalogue.
+const Presentation3D=(()=>{
+  const finishes={pine:{label:'Pin',color:'#b88b59',roughness:.83},douglas:{label:'Douglas',color:'#bf8e69',roughness:.86},exoticBrown:{label:'Bois exotique brun',color:'#76513b',roughness:.8},exoticLight:{label:'Bois exotique clair',color:'#c5a57b',roughness:.85},compositeGrey:{label:'Composite gris clair',color:'#a2a6a5',roughness:.92},compositeAnthracite:{label:'Composite gris anthracite',color:'#454b4e',roughness:.94},compositeBrown:{label:'Composite brun',color:'#866956',roughness:.92},compositeSand:{label:'Composite sable',color:'#c6b89a',roughness:.92}};
+  for(const [id,f] of Object.entries(finishes)){f.map=`assets/textures/deck/${id}/color.png`;f.normalMap=`assets/textures/deck/${id}/normal.png`;f.tileLength=1.2;}
+  const grounds={grass:{label:'Pelouse',color:'#7c9463'},earth:{label:'Terre',color:'#92816d'},gravel:{label:'Gravier',color:'#a4a49b'},concrete:{label:'Dalle béton',color:'#b7b8b3'},sand:{label:'Sable',color:'#d1c29d'},neutral:{label:'Sol neutre',color:'#e4e5e2'}};
+  const types={house:{label:'Maison',dimensions:{width:6,depth:4,height:2.8},material:'#eee8db'},wall:{label:'Mur',dimensions:{width:4,depth:.2,height:1.8},material:'#e7e3da'},pool:{label:'Piscine',dimensions:{width:6,depth:3,height:1.2},material:'#e1dfd5'},bay:{label:'Baie vitrée',dimensions:{width:3,depth:.12,height:2.2},material:'#343b40'},post:{label:'Poteau',dimensions:{width:.15,depth:.15,height:2.4},material:'#aaa196'},step:{label:'Escalier / marche',dimensions:{width:2,depth:1.2,height:.45},material:'#b6b0a5'},lowWall:{label:'Muret',dimensions:{width:3,depth:.25,height:.6},material:'#d4cabc'}};
+  const defaults=()=>({mode:'technique',deckMaterial:'pine',groundMaterial:'grass',environment:'sky',sunPreset:'noon',terraceElevation:0,groundElevation:0,cameraPreset:'general',quality:'standard',snap:.05});
+  const copy=v=>JSON.parse(JSON.stringify(v));
+  function num(v,min,max,name){if(typeof v!=='number'||!Number.isFinite(v)||v<min||v>max)throw new Error(`${name} invalide.`);return v;}
+  function normalize(data={}){
+    if(data.presentation3D!==undefined&&(!data.presentation3D||typeof data.presentation3D!=='object'||Array.isArray(data.presentation3D)))throw new Error('Présentation 3D invalide.');
+    const p={...defaults(),...(data.presentation3D||{})};
+    for(const [key,choices] of Object.entries({mode:['technique','client'],deckMaterial:Object.keys(finishes),groundMaterial:Object.keys(grounds),environment:['sky','white','grey'],sunPreset:['morning','noon','evening'],cameraPreset:['general','terrace','garden','house','top','pedestrian'],quality:['standard','high']}))if(!choices.includes(p[key]))throw new Error(`Réglage 3D ${key} invalide.`);
+    num(p.terraceElevation,-5,10,'Niveau terrasse');num(p.groundElevation,-5,10,'Niveau terrain');if(![0,.01,.05,.1].includes(p.snap))throw new Error('Pas d’aimantation invalide.');
+    const allowed=Object.keys(defaults()),presentation3D=Object.fromEntries(allowed.map(k=>[k,p[k]]));
+    const input=data.contextObjects||[];if(!Array.isArray(input)||input.length>100)throw new Error('100 objets de contexte maximum.');const ids=new Set();
+    const contextObjects=input.map(o=>{if(!o||typeof o.id!=='string'||!/^[\w-]{1,80}$/.test(o.id)||ids.has(o.id)||!types[o.type])throw new Error('Objet de contexte invalide.');ids.add(o.id);if(!o.position||!o.dimensions)throw new Error('Dimensions ou position absentes.');const dimensions={};for(const k of ['width','depth','height'])dimensions[k]=num(o.dimensions[k],.01,100,`Dimension ${k}`);if(typeof o.material!=='string'||!/^#[0-9a-f]{6}$/i.test(o.material))throw new Error('Couleur invalide.');return {id:o.id,type:o.type,position:{x:num(o.position.x,-10000,10000,'Position X'),z:num(o.position.z,-10000,10000,'Position Z')},rotation:num(o.rotation,-3600,3600,'Rotation'),dimensions,elevation:num(o.elevation,-10,20,'Altitude'),material:o.material};});
+    return {presentation3D,contextObjects};
+  }
+  let state=normalize(),listeners=new Set(),selected=null,counter=0;
+  const notify=()=>listeners.forEach(fn=>fn(copy(state),selected));
+  function update(settings){state=normalize({...state,presentation3D:{...state.presentation3D,...settings}});notify();}
+  function add(type,position={x:0,z:0}){if(!types[type])throw new Error('Type inconnu.');const d=types[type],id=`context-${Date.now().toString(36)}-${++counter}`;state=normalize({...state,contextObjects:[...state.contextObjects,{id,type,position,rotation:0,dimensions:copy(d.dimensions),elevation:state.presentation3D.groundElevation,material:d.material}]});selected=id;notify();return id;}
+  function edit(id,patch){state=normalize({...state,contextObjects:state.contextObjects.map(o=>o.id===id?{...o,...patch,position:{...o.position,...patch.position},dimensions:{...o.dimensions,...patch.dimensions}}:o)});notify();}
+  return {finishes,grounds,types,defaults,normalize,update,add,edit,snapshot:()=>copy(state),subscribe(fn){listeners.add(fn);return ()=>listeners.delete(fn);},restore(data){state=normalize(data);selected=null;notify();},reset(){this.restore({});},select(id){selected=state.contextObjects.some(o=>o.id===id)?id:null;notify();},selected:()=>selected,remove(id){state.contextObjects=state.contextObjects.filter(o=>o.id!==id);if(selected===id)selected=null;notify();},duplicate(id){const o=state.contextObjects.find(o=>o.id===id);if(!o)return;const next=this.add(o.type,{x:o.position.x+.5,z:o.position.z+.5});this.edit(next,{...copy(o),id:next,position:{x:o.position.x+.5,z:o.position.z+.5}});return next;}};
+})();
+if(typeof window!=='undefined')window.Presentation3D=Presentation3D;
