@@ -52,7 +52,7 @@ const TerraceProjects=(()=>{
     $('projectName').addEventListener('input',()=>{$('planProject').value=$('projectName').value;});
     $('planProject').addEventListener('input',()=>{$('projectName').value=$('planProject').value;});
     list().catch(e=>status('Liste des projets indisponible : '+e.message+'. Utilisez Télécharger le projet complet.'));
-    return {capture,restore,save:()=>run(()=>save()),saveAs:()=>run(()=>save(true)),loadFile:file=>run(()=>loadFile(file))};
+    return {capture,restore,refresh:list,save:()=>run(()=>save()),saveAs:()=>run(()=>save(true)),loadFile:file=>run(()=>loadFile(file))};
   }
   return {validate,mount};
 })();
